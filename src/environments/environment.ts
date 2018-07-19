@@ -2,8 +2,11 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import {firebaseConfigDev} from '../config/firebase.config.dev';
+
 export const environment = {
-  production: false
+    production: false,
+    firebase: firebaseConfigDev
 };
 
 /*
