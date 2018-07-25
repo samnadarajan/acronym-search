@@ -7,10 +7,12 @@ import {environment} from "../environments/environment";
 import {AngularFirestoreModule} from "angularfire2/firestore";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireStorageModule} from "angularfire2/storage";
+import {SearchComponent} from "./components/search/search.component";
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        SearchComponent
     ],
     imports: [
         BrowserModule,
