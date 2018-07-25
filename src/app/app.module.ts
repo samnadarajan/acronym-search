@@ -8,6 +8,7 @@ import {AngularFirestoreModule} from "angularfire2/firestore";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireStorageModule} from "angularfire2/storage";
 import {SearchComponent} from "./components/search/search.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import {SearchComponent} from "./components/search/search.component";
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
         AngularFireAuthModule,
-        AngularFireStorageModule
+        AngularFireStorageModule,
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
