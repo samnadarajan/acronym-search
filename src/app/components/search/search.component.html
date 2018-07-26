@@ -1,3 +1,12 @@
-<p>
-  search works!
-</p>
+
+<mat-form-field>
+    <input matInput (keyup)="beginSearch(code.value)" placeholder="Search for an acronym" [formControl]="code">
+</mat-form-field>
+
+<div *ngFor="let acronym of list; let i = index">
+    {{acronym.code}} {{acronym.description}} {{acronym.meaning}}
+</div>
+
+
+
+Code: {{code.value}}

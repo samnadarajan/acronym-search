@@ -3,7 +3,8 @@
     <h4>
         Welcome to {{ title }}!
     </h4>
-</div>
+
+<app-search></app-search>
 
 <div *ngFor="let acronym of acronyms | async; let i = index">
     {{acronym.code}} {{acronym.description}} {{acronym.meaning}}
