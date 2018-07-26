@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {FormControl} from "@angular/forms";
 import {SearchService} from "../../services/search.service";
 import {Observable} from "rxjs";
-import {AngularFirestoreCollection} from "angularfire2/firestore";
+import {Acronym} from "../../model/acronym.model";
 
 @Component({
   selector: "app-search",
@@ -11,7 +11,7 @@ import {AngularFirestoreCollection} from "angularfire2/firestore";
 })
 export class SearchComponent implements OnInit {
     code = new FormControl("");
-    list: AngularFirestoreCollection<{}>;
+    list: Observable<Acronym[]>;
 
     constructor(private searchService: SearchService) { }
 
