@@ -1,13 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {FormControl} from "@angular/forms";
 import {SearchService} from "../../services/search.service";
 import {Observable} from "rxjs";
 import {Acronym} from "../../model/acronym.model";
 
 @Component({
-  selector: "app-search",
-  templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.css"]
+    selector: "app-search",
+    templateUrl: "./search.component.html",
+    styleUrls: ["./search.component.css"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchComponent {
     code = new FormControl("");
