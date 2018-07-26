@@ -9,14 +9,11 @@ import {Acronym} from "../../model/acronym.model";
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.css"]
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
     code = new FormControl("");
     list: Observable<Acronym[]>;
 
     constructor(private searchService: SearchService) { }
-
-    ngOnInit() {
-    }
 
     beginSearch(codeString: string) {
         if (codeString.length >= 2) {
