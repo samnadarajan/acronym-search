@@ -4,4 +4,4 @@
         Welcome to {{ title }}!
     </h4>
 
-<app-search></app-search>
+<app-search [list]="searchService.result" (searchString)="beginSearch($event)"></app-search>

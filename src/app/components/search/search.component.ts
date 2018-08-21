@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@angular/core";
 import {FormControl} from "@angular/forms";
 import {SearchService} from "../../services/search.service";
 import {Observable} from "rxjs";
@@ -12,13 +12,14 @@ import {Acronym} from "../../model/acronym.model";
 })
 export class SearchComponent {
     code = new FormControl("");
-    list: Observable<Acronym[]>;
+    @Input() list: Observable<Acronym[]>;
+    @Output() searchString = new EventEmitter<string>();
 
-    constructor(private searchService: SearchService) { }
+    constructor(public searchService: SearchService) { }
 
     beginSearch(codeString: string) {
         if (codeString.length >= 2) {
-            this.list = this.searchService.search(codeString);
+            this.searchString.emit(codeString);
         }
     }
 
