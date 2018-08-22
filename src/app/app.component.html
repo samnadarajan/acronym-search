@@ -3,9 +3,5 @@
     <h4>
         Welcome to {{ title }}!
     </h4>
-</div>
 
-<div *ngFor="let acronym of acronyms | async; let i = index">
-    {{acronym.code}} {{acronym.description}} {{acronym.meaning}}
-</div>
-
+<app-search [list]="searchService.result" (searchString)="beginSearch($event)"></app-search>
