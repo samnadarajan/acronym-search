@@ -1,15 +1,26 @@
-import { Component, OnInit } from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@angular/core";
+import {FormControl} from "@angular/forms";
+import {SearchService} from "../../services/search.service";
+import {Observable} from "rxjs";
+import {Acronym} from "../../model/acronym.model";
 
 @Component({
-  selector: "app-search",
-  templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.css"]
+    selector: "app-search",
+    templateUrl: "./search.component.html",
+    styleUrls: ["./search.component.css"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
+    code = new FormControl("");
+    @Input() list: Observable<Acronym[]>;
+    @Output() searchString = new EventEmitter<string>();
 
-  constructor() { }
+    constructor(public searchService: SearchService) { }
 
-  ngOnInit() {
-  }
+    beginSearch(codeString: string) {
+        if (codeString.length >= 2) {
+            this.searchString.emit(codeString);
+        }
+    }
 
 }

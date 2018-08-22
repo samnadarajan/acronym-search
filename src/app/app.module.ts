@@ -9,6 +9,8 @@ import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireStorageModule} from "angularfire2/storage";
 import {SearchComponent} from "./components/search/search.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MaterialModule} from "./material/material.module";
 
 @NgModule({
     declarations: [
@@ -21,7 +23,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         AngularFirestoreModule,
         AngularFireAuthModule,
         AngularFireStorageModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule
     ],
     providers: [],
     bootstrap: [AppComponent]

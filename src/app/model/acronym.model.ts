@@ -1,5 +1,5 @@
 export interface Acronym {
-    id: string;
+    id?: string;
     code: string;
     meaning: string;
     description: string;
