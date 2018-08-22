@@ -6,7 +6,7 @@ import {firebaseConfigDev} from "../config/firebase.config.dev";
 
 export const environment = {
     production: false,
-    firebase: firebaseConfigDev
+    firebase: {}
 };
 
 /*
