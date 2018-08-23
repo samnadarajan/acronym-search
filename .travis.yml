@@ -12,6 +12,7 @@ before_script:
    - npm install -g --silent @angular/cli
 
 script:
+   - ng lint
    - ng build --prod
 
 after_success:
