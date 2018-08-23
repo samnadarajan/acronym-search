@@ -6,6 +6,7 @@ echo ${GITHUB_TOKEN}
 echo ${TEST_TOKEN}
 cd src
 mkdir config
-echo "${TEST_TOKEN}" >> config/firebase.config.prod
-cat config/firebase.config.prod
+cd config
+echo "${TEST_TOKEN}" >> firebase.config.prod
+cat firebase.config.prod
 pwd
