@@ -12,7 +12,7 @@ before_script:
    - npm install -g --silent @angular/cli
 
 script:
-   - ./scripts/deploy-script.sh
+   - ./src/scripts/deploy-script.sh
    - ng lint
    - ng build --prod
 
