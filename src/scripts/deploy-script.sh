@@ -4,7 +4,7 @@ echo "OLLIE OLLIE OX AND FREE"
 echo ${FIREBASE_TOKEN}
 echo ${GITHUB_TOKEN}
 echo ${TEST_TOKEN}
-mkdir src/config
-echo "${TEST_TOKEN}" >> config/firebase.config.prod
+mkdir -p src/config
+echo "${TEST_TOKEN}" >> src/config/firebase.config.prod
 cat config/firebase.config.prod
 pwd
