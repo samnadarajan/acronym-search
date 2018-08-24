@@ -1,9 +1,6 @@
 #!/bin/bash
 set -ev
-echo "OLLIE OLLIE OX AND FREE"
-echo ${FIREBASE_TOKEN}
-echo ${GITHUB_TOKEN}
-echo ${TEST_TOKEN}
+cd src
 mkdir config
 cd config
 echo "export const firebaseConfigProd = {
@@ -15,7 +12,7 @@ echo "export const firebaseConfigProd = {
           messagingSenderId: \"\"
       }" >> firebase.config.prod
 echo "-----"
-ls src
+ls config
 echo "-----"
 
 
