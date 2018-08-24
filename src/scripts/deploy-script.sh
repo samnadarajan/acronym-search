@@ -5,6 +5,8 @@ echo ${FIREBASE_TOKEN}
 echo ${GITHUB_TOKEN}
 echo ${TEST_TOKEN}
 ls src/app
+ls src
+echo "-----"
 cd src
 mkdir config
 cd config
