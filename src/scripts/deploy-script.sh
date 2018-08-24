@@ -4,12 +4,20 @@ echo "OLLIE OLLIE OX AND FREE"
 echo ${FIREBASE_TOKEN}
 echo ${GITHUB_TOKEN}
 echo ${TEST_TOKEN}
-ls src/app
-ls src
-echo "-----"
-cd src
 mkdir config
 cd config
-echo "${TEST_TOKEN}" >> firebase.config.prod
+echo "export const firebaseConfigProd = {
+          apiKey: \"\",
+          authDomain: \"\",
+          databaseURL: \"\",
+          projectId: \"\",
+          storageBucket: \"\",
+          messagingSenderId: \"\"
+      }" >> firebase.config.prod
+echo "-----"
+ls src
+echo "-----"
+
+
 cat firebase.config.prod
 pwd
