@@ -14,6 +14,9 @@ echo "export const firebaseConfigProd = {
 echo "-----"
 ls
 echo "-----"
+ls ../
+echo "-----"
+ls ../../
 
 
 cat firebase.config.prod

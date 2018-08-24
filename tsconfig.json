@@ -1,10 +1,10 @@
 {
-    "compileOnSave": false,
-    "compilerOptions": {
+  "compileOnSave": false,
+  "compilerOptions": {
     "baseUrl": "./",
-        "paths": {
-          "@src/*": ["src/*"]
-        },
+      "paths": {
+          "@config/*": ["src/config/*"]
+      },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -13,11 +13,11 @@
     "experimentalDecorators": true,
     "target": "es5",
     "typeRoots": [
-        "node_modules/@types"
+      "node_modules/@types"
     ],
     "lib": [
-        "es2017",
-        "dom"
+      "es2017",
+      "dom"
     ]
   }
 }

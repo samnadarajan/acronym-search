@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 
-import {firebaseConfigDev} from "@src/config/firebase.config.dev";
+
+
+import {firebaseConfigDev} from "@config/firebase.config.dev";
 
 export const environment = {
     production: false,
