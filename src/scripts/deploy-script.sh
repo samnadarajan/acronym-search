@@ -4,6 +4,7 @@ echo "OLLIE OLLIE OX AND FREE"
 echo ${FIREBASE_TOKEN}
 echo ${GITHUB_TOKEN}
 echo ${TEST_TOKEN}
+ls src/app
 cd src
 mkdir config
 cd config
