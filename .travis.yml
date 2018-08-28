@@ -18,7 +18,7 @@ before_script:
 script:
    - ./src/scripts/deploy-script.sh
    - ng lint
-   - ng build --prod
+   - ng build
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN --non-interactive # firebase deploy after angular-cli build
