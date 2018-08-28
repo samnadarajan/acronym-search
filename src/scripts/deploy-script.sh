@@ -11,9 +11,18 @@ echo "export const firebaseConfigProd = {
           storageBucket: \"\",
           messagingSenderId: \"\"
       }" >> firebase.config.prod
+
+echo "export const firebaseConfigDev = {
+          apiKey: \"\",
+          authDomain: \"\",
+          databaseURL: \"\",
+          projectId: \"\",
+          storageBucket: \"\",
+          messagingSenderId: \"\"
+      }" >> firebase.config.dev
 echo "-----"
-cd ../../
+cd ../
 ls
 
 
-cat firebase.config.prod
+cat config/firebase.config.prod
