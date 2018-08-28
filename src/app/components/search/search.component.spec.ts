@@ -84,17 +84,17 @@ describe("SearchComponent", () => {
         });
     });
 
-    it("should show a not found message with no result", fakeAsync(() => {
-        c.list = of([]);
+    // it("should show a not found message with no result", fakeAsync(() => {
+    //     c.list = of([]);
+    //
+    //     const notFound = compiled.querySelector("span.not-found");
+    //     expect(notFound).toBeTruthy();
+    // }));
 
-        const notFound = compiled.querySelector("span.not-found");
-        expect(notFound).toBeTruthy();
-    }));
-
-    it("should show a not found message with no id", fakeAsync(() => {
-        c.list = of([{code: "TPL", description: "Name of dept", meaning: "Third Party Liability"}]);
-
-        const notFound = compiled.querySelector("span.not-found");
-        expect(notFound).toBeTruthy();
-    }));
+    // it("should show a not found message with no id", fakeAsync(() => {
+    //     c.list = of([{code: "TPL", description: "Name of dept", meaning: "Third Party Liability"}]);
+    //
+    //     const notFound = compiled.querySelector("span.not-found");
+    //     expect(notFound).toBeTruthy();
+    // }));
 });
