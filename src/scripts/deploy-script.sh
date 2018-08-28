@@ -16,13 +16,8 @@ echo "export const firebaseConfigDev = {
          apiKey: \"${FIREBASE_API}\",
          authDomain: \"${FIREBASE_DOMAIN}\",
          databaseURL: \"${FIREBASE_DB}\",
-         projectId: \"acronym-search\",
+         projectId: \"${FIREBASE_PROJECT_ID}\",
          storageBucket: \"${FIREBASE_STORAGE_BUCKET}\",
          messagingSenderId: \"${FIREBASE_SENDER_ID}\"
      };" >> firebase.config.dev.ts
-echo "-----"
-cd ../
-ls
 
-
-cat config/firebase.config.prod.ts
