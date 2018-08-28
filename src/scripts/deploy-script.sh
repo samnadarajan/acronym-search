@@ -10,7 +10,7 @@ echo "export const firebaseConfigProd = {
           projectId: \"\",
           storageBucket: \"\",
           messagingSenderId: \"\"
-      }" >> firebase.config.prod
+      }" >> firebase.config.prod.ts
 
 echo "export const firebaseConfigDev = {
           apiKey: \"\",
@@ -19,7 +19,7 @@ echo "export const firebaseConfigDev = {
           projectId: \"\",
           storageBucket: \"\",
           messagingSenderId: \"\"
-      }" >> firebase.config.dev
+      }" >> firebase.config.dev.ts
 echo "-----"
 cd ../
 ls
