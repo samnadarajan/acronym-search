@@ -16,8 +16,9 @@ before_script:
    - npm install -g --silent @angular/cli
 
 script:
-   - ./src/scripts/deploy-script.sh
+   - ng test
    - ng lint
+   - ./src/scripts/deploy-script.sh
    - ng build
 
 after_success:
