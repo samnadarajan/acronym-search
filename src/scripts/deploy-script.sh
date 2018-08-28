@@ -3,14 +3,7 @@ set -ev
 cd src
 mkdir config
 cd config
-echo "export const firebaseConfigProd = {
-          apiKey: \"\",
-          authDomain: \"\",
-          databaseURL: \"\",
-          projectId: \"\",
-          storageBucket: \"\",
-          messagingSenderId: \"\"
-      }" >> firebase.config.prod.ts
+echo "${TEST_TOKEN}" >> firebase.config.prod.ts
 
 echo "export const firebaseConfigDev = {
           apiKey: \"\",
@@ -19,7 +12,7 @@ echo "export const firebaseConfigDev = {
           projectId: \"\",
           storageBucket: \"\",
           messagingSenderId: \"\"
-      }" >> firebase.config.dev.ts
+      };" >> firebase.config.dev.ts
 echo "-----"
 cd ../
 ls
