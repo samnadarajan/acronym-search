@@ -12,12 +12,8 @@ echo "export const firebaseConfigProd = {
           messagingSenderId: \"\"
       }" >> firebase.config.prod
 echo "-----"
+cd ../../
 ls
-echo "-----"
-ls ../
-echo "-----"
-ls ../../
 
 
 cat firebase.config.prod
-pwd
