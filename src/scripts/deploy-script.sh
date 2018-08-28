@@ -13,13 +13,13 @@ echo "export const firebaseConfigProd = {
       };" >> firebase.config.prod.ts
 
 echo "export const firebaseConfigDev = {
-          apiKey: \"\",
-          authDomain: \"\",
-          databaseURL: \"\",
-          projectId: \"\",
-          storageBucket: \"\",
-          messagingSenderId: \"\"
-      };" >> firebase.config.dev.ts
+         apiKey: \"${FIREBASE_API}\",
+         authDomain: \"${FIREBASE_DOMAIN}\",
+         databaseURL: \"${FIREBASE_DB}\",
+         projectId: \"${FIREBASE_PROJECT_ID}\",
+         storageBucket: \"${FIREBASE_STORAGE_BUCKET}\",
+         messagingSenderId: \"${FIREBASE_SENDER_ID}\"
+     };" >> firebase.config.dev.ts
 echo "-----"
 cd ../
 ls
