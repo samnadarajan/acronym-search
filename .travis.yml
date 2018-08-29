@@ -1,12 +1,13 @@
+sudo: required
+addons:
+  chrome: stable
+  
 language: node_js
 cache:
   bundler: true
   directories:
   - node_modules # NPM packages
 
-addons:
-  chrome: stable
-  
 node_js:
    - node
 
