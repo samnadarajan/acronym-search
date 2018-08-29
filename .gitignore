@@ -7,7 +7,8 @@
 
 # dependencies
 /node_modules
-/src/config/*.ts
+/src/config/
+!src/config/firebase.config.prod.ts.enc
 
 # IDEs and editors
 /.idea
