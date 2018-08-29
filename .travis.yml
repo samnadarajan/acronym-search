@@ -1,0 +1,35 @@
+sudo: required
+
+addons:
+  chrome: stable
+
+language: node_js
+
+cache:
+  bundler: true
+  directories:
+  - node_modules
+
+node_js:
+- node
+
+branches:
+  only:
+  - master
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_ca75c2c8c2a6_key -iv $encrypted_ca75c2c8c2a6_iv -in src/config/firebase.config.prod.ts.enc -out src/config/firebase.config.prod.ts -d
+
+before_script:
+- npm install -g --silent firebase-tools
+- npm install -g --silent @angular/cli
+
+script:
+- ng test
+- ng lint
+- ng build --prod
+
+deploy:
+  provider: firebase
+  token:
+    secure: "$FIREBASE_TOKEN"

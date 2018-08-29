@@ -9,7 +9,7 @@ import {Observable} from "rxjs";
   providedIn: "root"
 })
 export class SearchService {
-  result: Observable<Acronym[]>
+  result: Observable<Acronym[]>;
 
   constructor(private db: AngularFirestore) {}
 
