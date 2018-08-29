@@ -1,7 +1,8 @@
 #!/bin/bash
 set -ev
-cd src
 ls
+cd src
+
 echo "----"
 mkdir config
 cd config
