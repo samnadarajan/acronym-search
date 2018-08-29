@@ -10,7 +10,7 @@
 /src/config/*
 
 # don't ignore these files
-!src/config/.gitkeep
+!src/config/.firebase.config.prod.ts.enc
 
 # IDEs and editors
 /.idea
