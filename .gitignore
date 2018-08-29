@@ -10,7 +10,7 @@
 /src/config/*
 
 # don't ignore these files
-!.gitkeep
+!src/config/.gitkeep
 
 # IDEs and editors
 /.idea
