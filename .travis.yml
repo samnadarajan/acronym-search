@@ -1,34 +1,37 @@
 sudo: required
+
 addons:
   chrome: stable
 
 language: node_js
+
 cache:
   bundler: true
   directories:
-  - node_modules # NPM packages
+  - node_modules
 
 node_js:
-   - node
+- node
 
 branches:
-   only:
-      - master # will only build for master branch commits
+  only:
+  - master
 
 before_install:
-    - openssl aes-256-cbc -K $encrypted_ca75c2c8c2a6_key -iv $encrypted_ca75c2c8c2a6_iv -in firebase.config.prod.ts.enc -out firebase.config.prod.ts -d
+- openssl aes-256-cbc -K $encrypted_ca75c2c8c2a6_key -iv $encrypted_ca75c2c8c2a6_iv
+  -in firebase.config.prod.ts.enc -out firebase.config.prod.ts -d
 
 before_script:
-   - npm install -g --silent firebase-tools # installs firebase to run firebase deploy
-   - npm install -g --silent @angular/cli
+- npm install -g --silent firebase-tools
+- npm install -g --silent @angular/cli
 
 script:
-   - ng test
-   - ng lint
-   - ./src/scripts/deploy-script.sh
-   - ng build --prod
+- ng test
+- ng lint
+- "./src/scripts/deploy-script.sh"
+- ng build --prod
 
 deploy:
-    provider: firebase
-    token:
-        secure: $FIREBASE_TOKEN
+  provider: firebase
+  token:
+    secure: "$FIREBASE_TOKEN"
