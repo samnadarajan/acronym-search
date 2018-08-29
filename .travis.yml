@@ -1,7 +1,7 @@
 sudo: required
 addons:
   chrome: stable
-  
+
 language: node_js
 cache:
   bundler: true
@@ -23,7 +23,7 @@ script:
    - ng test
    - ng lint
    - ./src/scripts/deploy-script.sh
-   - ng build
+   - ng build --prod
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN --non-interactive # firebase deploy after angular-cli build
