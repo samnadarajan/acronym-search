@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ev
 cd src
+ls
+echo "----"
 mkdir config
 cd config
 echo "export const firebaseConfigProd = {
