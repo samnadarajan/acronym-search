@@ -28,7 +28,6 @@ before_script:
 script:
 - ng test
 - ng lint
-- "./src/scripts/deploy-script.sh"
 - ng build --prod
 
 deploy:
