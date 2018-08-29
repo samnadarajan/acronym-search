@@ -19,7 +19,7 @@ branches:
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_ca75c2c8c2a6_key -iv $encrypted_ca75c2c8c2a6_iv
-  -in firebase.config.prod.ts.enc -out firebase.config.prod.ts -d
+  -in src/config/firebase.config.prod.ts.enc -out src/config/firebase.config.prod.ts -d
 
 before_script:
 - npm install -g --silent firebase-tools
