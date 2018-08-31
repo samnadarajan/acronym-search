@@ -27,4 +27,8 @@ export class SearchService {
               }
           }));
   }
+
+  updateAcronym(acronym: Acronym) {
+      console.log(acronym);
+  }
 }
