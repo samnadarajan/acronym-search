@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestore, AngularFirestoreModule} from "angularfire2/firestore";
 import {BehaviorSubject} from "rxjs";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ResultComponent} from "./components/result/result.component";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -23,7 +24,8 @@ describe("AppComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 AppComponent,
-                SearchComponent
+                SearchComponent,
+                ResultComponent
             ],
             imports: [
                 MaterialModule,
