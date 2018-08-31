@@ -12,7 +12,6 @@ import {Acronym} from "../../model/acronym.model";
 })
 export class SearchComponent {
     code = new FormControl("");
-    @Input() list: Observable<Acronym[]>;
     @Output() searchString = new EventEmitter<string>();
 
     constructor(public searchService: SearchService) { }
