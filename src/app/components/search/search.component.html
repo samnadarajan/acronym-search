@@ -1,15 +1,4 @@
-
 <mat-form-field>
     <input matInput (keyup)="beginSearch(code.value)" placeholder="Search for an acronym" [formControl]="code">
 </mat-form-field>
 
-<div *ngFor="let l of list | async">
-    <div *ngIf="l.id; else notFound" class="result">
-        {{l.code}} stands for {{l.meaning}} and it is {{l.description}}
-    </div>
-
-</div>
-
-<ng-template #notFound>
-    <span *ngIf="code.value.length >= 2" class="not-found">Acronym not found, would you like to add?</span>
-</ng-template>
