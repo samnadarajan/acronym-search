@@ -1,10 +1,18 @@
-<!--<div *ngFor="let l of list | async">-->
-    <!--<div *ngIf="l.id; else notFound" class="result">-->
-        <!--{{l.code}} stands for {{l.meaning}} and it is {{l.description}}-->
-    <!--</div>-->
+<div *ngFor="let l of result | async">
+    <div *ngIf="l.id; else notFound" class="result">
+        stands for {{l.meaning}} and it is {{l.description}}
+    </div>
 
-<!--</div>-->
+    <button mat-fab color="basic">
+        <mat-icon *ngIf="!l.id; else editIcon" aria-label="Add Acronym">add</mat-icon>
+    </button>
+</div>
 
-<!--<ng-template #notFound>-->
+<ng-template #editIcon>
+    <mat-icon aria-label="Save Acronym">save</mat-icon>
+</ng-template>
+
+<ng-template #notFound>
+    NOT FOUND OKAY??
     <!--<span *ngIf="code.value.length >= 2" class="not-found">Acronym not found, would you like to add?</span>-->
-<!--</ng-template>-->
+</ng-template>
