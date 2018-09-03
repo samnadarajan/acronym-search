@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {Observable} from "rxjs";
 import {Acronym} from "../../model/acronym.model";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
     selector: "app-result",
@@ -9,12 +9,27 @@ import {Acronym} from "../../model/acronym.model";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResultComponent implements OnInit {
-    @Input() result: Observable<Acronym[]>
+    @Input() result: Acronym;
     @Output() updatedAcronym = new EventEmitter();
 
-    constructor() { }
+    acronymForm: FormGroup;
+
+    constructor(private formBuilder: FormBuilder) { }
 
     ngOnInit() {
+        console.log(this.result)
+        this.acronymForm = this.formBuilder.group({
+            meaning: "",
+            description: ""
+        });
+
+        this.onChanges();
+    }
+
+    onChanges() {
+        this.acronymForm.valueChanges.subscribe(values => {
+            console.log(values);
+        });
     }
 
 }
