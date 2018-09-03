@@ -10,10 +10,12 @@ import {Observable} from "rxjs";
 })
 export class SearchService {
   result: Observable<Acronym[]>;
+  searched = false;
 
   constructor(private db: AngularFirestore) {}
 
   search(code: string) {
+        this.searched = true;
         this.result = this.db.collection(config.collectionEndpoint, ref => ref.where("code", "==", code).limit(1)).snapshotChanges()
           .pipe(map(changes => {
               if (changes.length > 0) {
