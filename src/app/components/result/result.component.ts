@@ -9,7 +9,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResultComponent implements OnInit {
-    @Input() result: Acronym;
+    @Input() result: Acronym[];
     @Output() updatedAcronym = new EventEmitter();
 
     acronymForm: FormGroup;
@@ -17,7 +17,6 @@ export class ResultComponent implements OnInit {
     constructor(private formBuilder: FormBuilder) { }
 
     ngOnInit() {
-        console.log(this.result)
         this.acronymForm = this.formBuilder.group({
             meaning: "",
             description: ""

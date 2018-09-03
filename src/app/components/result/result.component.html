@@ -1,19 +1,21 @@
-    <div *ngIf="result?.id; else notFound" class="result">
+<div *ngFor="let l of result">
+    <div *ngIf="l.id; else notFound" class="result">
         <form [formGroup]="acronymForm">
             stands for
             <mat-form-field>
-                <input matInput formControlName="meaning" [value]="result.meaning">
+                <input matInput formControlName="meaning" [value]="l.meaning">
             </mat-form-field>
             and it is
             <mat-form-field>
-                <textarea matInput formControlName="description" [value]="result.description"></textarea>
+                <textarea matInput formControlName="description" [value]="l.description"></textarea>
             </mat-form-field>
         </form>
     </div>
 
     <button mat-fab color="basic">
-        <mat-icon *ngIf="!l?.id; else editIcon" aria-label="Add Acronym">add</mat-icon>
+        <mat-icon *ngIf="!l.id; else editIcon" aria-label="Add Acronym">add</mat-icon>
     </button>
+</div>
 
 <ng-template #editIcon>
     <mat-icon aria-label="Save Acronym">save</mat-icon>
