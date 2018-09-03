@@ -6,4 +6,4 @@
 
 <app-search (searchString)="beginSearch($event)"></app-search>
 
-<app-result [result]="searchService.result" (updatedAcronym)="searchService.updateAcronym($event)"></app-result>
+<app-result *ngIf="searchService.searched" [result]="(searchService.result | async | slice:0:0)" (updatedAcronym)="searchService.updateAcronym($event)"></app-result>
