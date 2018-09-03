@@ -13,6 +13,7 @@ export class ResultComponent implements OnChanges {
     @Output() updatedAcronym = new EventEmitter();
 
     acronymForm: FormGroup;
+    formChanged = false;
 
     constructor(private formBuilder: FormBuilder) { }
 
@@ -28,7 +29,14 @@ export class ResultComponent implements OnChanges {
 
     onChanges() {
         this.acronymForm.valueChanges.subscribe(values => {
-            console.log(values);
+            if (this.result && this.result.length > 0) {
+                if (this.result[0].meaning !== values.meaning || this.result[0].description !== values.description) {
+                    this.formChanged = true;
+                } else {
+                    this.formChanged = false;
+                }
+
+            }
         });
     }
 
