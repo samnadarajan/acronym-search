@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
 import {Acronym} from "../../model/acronym.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 

@@ -14,13 +14,15 @@ const FirestoreStub = {
 };
 
 describe("SearchService", () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [SearchService, { provide: AngularFirestore, useValue: FirestoreStub }]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [SearchService, { provide: AngularFirestore, useValue: FirestoreStub }]
+        });
     });
-  });
 
-  it("should be created", inject([SearchService], (service: SearchService) => {
-    expect(service).toBeTruthy();
-  }));
+    it("should be created", inject([SearchService], (service: SearchService) => {
+        expect(service).toBeTruthy();
+        expect(service.searched).toEqual(false);
+    }));
+
 });
