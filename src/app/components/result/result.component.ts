@@ -10,7 +10,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 })
 export class ResultComponent implements OnChanges {
     @Input() result: Acronym[];
-    @Output() updatedAcronym = new EventEmitter();
+    @Output() saveAcronym = new EventEmitter();
 
     acronymForm: FormGroup;
     formChanged = false;
@@ -21,7 +21,9 @@ export class ResultComponent implements OnChanges {
         if (this.result && this.result.length > 0) {
             this.acronymForm = this.formBuilder.group({
                 meaning: this.result[0].meaning,
-                description: this.result[0].description
+                description: this.result[0].description,
+                id: this.result[0].id,
+                code: this.result[0].code
             });
             this.onChanges();
         }
@@ -38,6 +40,10 @@ export class ResultComponent implements OnChanges {
 
             }
         });
+    }
+
+    save() {
+        this.saveAcronym.emit(this.acronymForm.value);
     }
 
 }

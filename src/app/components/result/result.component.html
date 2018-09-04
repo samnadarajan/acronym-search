@@ -10,7 +10,7 @@
         </mat-form-field>
     </form>
 
-    <button mat-fab color="basic" [disabled]="!formChanged">
+    <button mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
         <mat-icon *ngIf="l.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
     </button>
 </div>
