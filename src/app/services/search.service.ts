@@ -24,7 +24,7 @@ export class SearchService {
                       return data;
                   });
               } else {
-                  return [{} as Acronym];
+                  return [{code: code} as Acronym];
               }
           }));
     }
@@ -38,11 +38,10 @@ export class SearchService {
     }
 
     add(acronym: Acronym) {
-
+        this.db.collection(config.collectionEndpoint).add(acronym);
     }
 
     update(acronym: Acronym) {
-        console.log(acronym);
         this.db.collection(config.collectionEndpoint).doc(acronym.id).update(acronym);
     }
 
