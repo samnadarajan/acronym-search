@@ -9,12 +9,11 @@ import {Observable} from "rxjs";
   providedIn: "root"
 })
 export class SearchService {
-  result: Observable<Acronym[]>;
-  searched = false;
+    result: Observable<Acronym[]>;
+    searched = false;
+    constructor(private db: AngularFirestore) {}
 
-  constructor(private db: AngularFirestore) {}
-
-  search(code: string) {
+    search(code: string) {
         this.searched = true;
         this.result = this.db.collection(config.collectionEndpoint, ref => ref.where("code", "==", code).limit(1)).snapshotChanges()
           .pipe(map(changes => {
@@ -28,9 +27,24 @@ export class SearchService {
                   return [{} as Acronym];
               }
           }));
-  }
+    }
 
-  updateAcronym(acronym: Acronym) {
-      console.log(acronym);
-  }
+    save(acronym: Acronym) {
+        if (acronym.id) {
+            this.update(acronym);
+        } else {
+            this.add(acronym);
+        }
+    }
+
+    add(acronym: Acronym) {
+
+    }
+
+    update(acronym: Acronym) {
+        console.log(acronym);
+        this.db.collection(config.collectionEndpoint).doc(acronym.id).update(acronym);
+    }
+
+
 }
