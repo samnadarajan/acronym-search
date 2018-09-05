@@ -45,6 +45,23 @@ describe("ResultComponent", () => {
     });
 
     it("should set the form", () => {
-        expect(component).toBeTruthy();
+        spyOn(component, "onChanges");
+        component.result = [{code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" }];
+
+        component.ngOnChanges();
+
+        expect(component.acronymForm.get("meaning").value).toEqual(component.result[0].meaning);
+        expect(component.acronymForm.get("description").value).toEqual(component.result[0].description);
+        expect(component.onChanges).toHaveBeenCalled();
+    });
+
+    it("should not set the form when there is no result", () => {
+        spyOn(component, "onChanges");
+        component.result = [];
+
+        component.ngOnChanges();
+
+        expect(component.acronymForm).toBeUndefined();
+        expect(component.onChanges).not.toHaveBeenCalled();
     });
 });
