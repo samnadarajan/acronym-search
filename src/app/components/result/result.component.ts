@@ -15,7 +15,7 @@ export class ResultComponent implements OnChanges {
     acronymForm: FormGroup;
     formChanged = false;
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(public formBuilder: FormBuilder) { }
 
     ngOnChanges() {
         if (this.result && this.result.length > 0) {
