@@ -9,6 +9,7 @@ import {AngularFirestoreModule} from "angularfire2/firestore";
 describe("ResultComponent", () => {
     let component: ResultComponent;
     let fixture: ComponentFixture<ResultComponent>;
+    let compiled;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -27,6 +28,7 @@ describe("ResultComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ResultComponent);
         component = fixture.componentInstance;
+        compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
     });
 
@@ -63,5 +65,17 @@ describe("ResultComponent", () => {
 
         expect(component.acronymForm).toBeUndefined();
         expect(component.onChanges).not.toHaveBeenCalled();
+    });
+
+    it("should disable the action button if there were no form changes", () => {
+        spyOn(component, "onChanges").and.callThrough();
+        const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
+        component.result = [acronymResult];
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        component.onChanges();
+
+        expect(component.formChanged).toEqual(false);
+        expect(compiled.querySelector("button").disabled).toEqual(true);
     });
 });
