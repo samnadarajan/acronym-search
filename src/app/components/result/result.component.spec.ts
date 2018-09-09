@@ -29,7 +29,6 @@ describe("ResultComponent", () => {
         fixture = TestBed.createComponent(ResultComponent);
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
-        fixture.detectChanges();
     });
 
     it("should create the component", () => {
@@ -73,9 +72,9 @@ describe("ResultComponent", () => {
         component.result = [acronymResult];
         component.acronymForm = component.formBuilder.group(acronymResult);
 
+        fixture.detectChanges();
         component.onChanges();
-
         expect(component.formChanged).toEqual(false);
-        expect(compiled.querySelector("button").disabled).toEqual(true);
+        expect(compiled.querySelector("button.mat-fab.mat-basic").disabled).toEqual(true);
     });
 });
