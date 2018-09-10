@@ -77,4 +77,54 @@ describe("ResultComponent", () => {
         expect(component.formChanged).toEqual(false);
         expect(compiled.querySelector("button.mat-fab.mat-basic").disabled).toEqual(true);
     });
+
+    it("should enable the action button if there were form changes", () => {
+        spyOn(component, "onChanges").and.callThrough();
+        const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
+        component.result = [acronymResult];
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        fixture.detectChanges();
+        component.onChanges();
+
+        component.acronymForm.controls["description"].setValue("Bob");
+        fixture.detectChanges();
+
+        expect(component.formChanged).toEqual(true);
+        expect(compiled.querySelector("button.mat-fab.mat-basic").disabled).toEqual(false);
+    });
+
+    it("should show a form with empty values if an acronym was not found", () => {
+        const acronymResult = {code: "ACG", meaning: "", description: ""};
+        component.result = [acronymResult];
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        fixture.detectChanges();
+        const input = compiled.querySelectorAll("input");
+        const textarea = compiled.querySelectorAll("textarea");
+        expect(input.length).toEqual(1);
+        expect(textarea.length).toEqual(1);
+        expect(input.value).toBeUndefined();
+        expect(textarea.value).toBeUndefined();
+    });
+
+    it("should show an add icon if the acronym is new", () => {
+        const acronymResult = {code: "SSN", meaning: "", description: ""};
+        component.result = [acronymResult];
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        fixture.detectChanges();
+
+        expect(compiled.querySelector("button mat-icon").innerHTML).toEqual("add");
+    });
+
+    it("should show an edit icon if the acronym is not new", () => {
+        const acronymResult = {id: "23434tergfder", code: "SSN", meaning: "", description: ""};
+        component.result = [acronymResult];
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        fixture.detectChanges();
+
+        expect(compiled.querySelector("button mat-icon").innerHTML).toEqual("save");
+    });
 });
