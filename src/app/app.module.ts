@@ -11,11 +11,13 @@ import {SearchComponent} from "./components/search/search.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "./material/material.module";
+import { ResultComponent } from "./components/result/result.component";
 
 @NgModule({
     declarations: [
         AppComponent,
-        SearchComponent
+        SearchComponent,
+        ResultComponent
     ],
     imports: [
         BrowserModule,

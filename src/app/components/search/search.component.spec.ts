@@ -75,26 +75,4 @@ describe("SearchComponent", () => {
     it("should have a place to enter an acronym", () => {
         expect(compiled.querySelector("mat-form-field input")).toBeTruthy();
     });
-
-    it("should show a result", () => {
-        c.list = of([{code: "TPL", description: "Name of dept", meaning: "Third Party Liability", id: "adsfw23fc234"}]);
-
-        c.list.subscribe(response => {
-            expect(response.length).toEqual(1);
-        });
-    });
-
-    // it("should show a not found message with no result", fakeAsync(() => {
-    //     c.list = of([]);
-    //
-    //     const notFound = compiled.querySelector("span.not-found");
-    //     expect(notFound).toBeTruthy();
-    // }));
-
-    // it("should show a not found message with no id", fakeAsync(() => {
-    //     c.list = of([{code: "TPL", description: "Name of dept", meaning: "Third Party Liability"}]);
-    //
-    //     const notFound = compiled.querySelector("span.not-found");
-    //     expect(notFound).toBeTruthy();
-    // }));
 });

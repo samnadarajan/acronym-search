@@ -4,4 +4,6 @@
         Welcome to {{ title }}!
     </h4>
 
-<app-search [list]="searchService.result" (searchString)="beginSearch($event)"></app-search>
+<app-search (searchString)="beginSearch($event)"></app-search>
+
+<app-result *ngIf="searchService.searched" [result]="(searchService.result | async)" (saveAcronym)="searchService.save($event)"></app-result>
