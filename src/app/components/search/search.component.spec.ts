@@ -5,7 +5,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialModule} from "../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BehaviorSubject, of} from "rxjs";
-import {SearchService} from "../../services/search.service";
+import {SearchService} from "../../services/search/search.service";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 
 const FirestoreStub = {

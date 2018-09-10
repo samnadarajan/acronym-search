@@ -1,8 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@angular/core";
 import {FormControl} from "@angular/forms";
-import {SearchService} from "../../services/search.service";
-import {Observable} from "rxjs";
-import {Acronym} from "../../model/acronym.model";
+import {SearchService} from "../../services/search/search.service";
 
 @Component({
     selector: "app-search",

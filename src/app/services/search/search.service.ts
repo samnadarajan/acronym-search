@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import {Acronym} from "../model/acronym.model";
-import {config} from "../app.config";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
+import {Acronym} from "../../model/acronym.model";
+import {config} from "../../app.config";
 
 @Injectable({
   providedIn: "root"
