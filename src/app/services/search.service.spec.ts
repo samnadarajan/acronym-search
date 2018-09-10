@@ -1,8 +1,8 @@
 import { TestBed, inject } from "@angular/core/testing";
 
 import { SearchService } from "./search.service";
-import {AngularFirestore} from "angularfire2/firestore";
 import {BehaviorSubject} from "rxjs";
+import {AngularFirestore} from "@angular/fire/firestore";
 
 const FirestoreStub = {
     collection: (name: string) => ({

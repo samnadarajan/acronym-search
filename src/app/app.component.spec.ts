@@ -3,10 +3,10 @@ import {AppComponent} from "./app.component";
 import {SearchComponent} from "./components/search/search.component";
 import {MaterialModule} from "./material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AngularFirestore, AngularFirestoreModule} from "angularfire2/firestore";
 import {BehaviorSubject} from "rxjs";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ResultComponent} from "./components/result/result.component";
+import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 
 const FirestoreStub = {
     collection: (name: string) => ({
