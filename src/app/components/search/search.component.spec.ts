@@ -2,11 +2,11 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/t
 
 import { SearchComponent } from "./search.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {AngularFirestore, AngularFirestoreModule} from "angularfire2/firestore";
 import {MaterialModule} from "../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BehaviorSubject, of} from "rxjs";
 import {SearchService} from "../../services/search.service";
+import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 
 const FirestoreStub = {
     collection: (name: string) => ({
