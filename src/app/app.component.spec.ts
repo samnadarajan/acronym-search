@@ -47,13 +47,4 @@ describe("AppComponent", () => {
     it("should create the app", async(() => {
         expect(app).toBeTruthy();
     }));
-
-    it("should have the correct title", async(() => {
-        fixture.detectChanges();
-        expect(compiled.querySelector("h4").textContent.trim()).toEqual("Welcome to " + app.title + "!");
-    }));
-
-    it("should have the search component", async(() => {
-        expect(compiled.querySelector("app-search")).toBeTruthy();
-    }));
 });
