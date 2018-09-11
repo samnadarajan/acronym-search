@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {SearchService} from "./services/search/search.service";
 
 @Component({
     selector: "app-root",
@@ -7,12 +6,4 @@ import {SearchService} from "./services/search/search.service";
     styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-    title = "Acronym Search";
-
-    constructor(public searchService: SearchService) {}
-
-    beginSearch(searchString: string) {
-        this.searchService.search(searchString);
-    }
-
 }
