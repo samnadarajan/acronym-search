@@ -5,6 +5,7 @@ import {switchMap} from "rxjs/operators";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {auth} from "firebase";
+import {User} from "../../../../model/user.model";
 
 @Injectable({
   providedIn: "root"
