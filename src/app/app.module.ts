@@ -11,24 +11,38 @@ import { ResultComponent } from "./components/result/result.component";
 import {AngularFireModule} from "@angular/fire";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireStorageModule} from "@angular/fire/storage";
-import {AngularFireAuthModule} from "@angular/fire/auth";
+import {RouterModule, Routes} from "@angular/router";
+import { LoginComponent } from "./components/login/login.component";
+import { AcronymComponent } from "./components/acronym/acronym.component";
+import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
+import {AuthModule} from "./modules/auth/auth.module";
+import {FlexLayoutModule} from "@angular/flex-layout";
+
+const ROUTES: Routes = [
+    {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
+    {path: "", component: LoginComponent}
+];
 
 @NgModule({
     declarations: [
         AppComponent,
         SearchComponent,
-        ResultComponent
+        ResultComponent,
+        LoginComponent,
+        AcronymComponent
     ],
     imports: [
         BrowserModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
-        AngularFireAuthModule,
         AngularFireStorageModule,
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        RouterModule.forRoot(ROUTES),
+        MaterialModule,
+        AuthModule,
+        FlexLayoutModule
     ],
     providers: [],
     bootstrap: [AppComponent]
