@@ -6,6 +6,8 @@ import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestor
 import {AngularFireAuth} from "@angular/fire/auth";
 import {auth} from "firebase";
 import {User} from "../../../../model/user.model";
+import {SearchService} from "../../../../services/search/search.service";
+import {Acronym} from "../../../../model/acronym.model";
 
 @Injectable({
   providedIn: "root"
@@ -14,7 +16,11 @@ export class AuthService {
 
     user: Observable<User>;
 
-    constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+    constructor(
+        private afAuth: AngularFireAuth,
+        private searchService: SearchService,
+        private afs: AngularFirestore,
+        private router: Router) {
         //// Get auth data, then get firestore user document || null
         this.user = this.afAuth.authState.pipe(
             switchMap(user => {
@@ -58,6 +64,7 @@ export class AuthService {
 
     signOut() {
         this.afAuth.auth.signOut().then(() => {
+            this.searchService.result = of([{code: "", meaning: "", description: ""}] as Acronym[]);
             this.router.navigate(["/"]);
         });
     }

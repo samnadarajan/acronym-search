@@ -6,10 +6,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {AuthModule} from "../../modules/auth/auth.module";
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {BehaviorSubject, of} from "rxjs";
 import {AuthService} from "../../modules/auth/services/auth/auth.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
+import {SearchService} from "../../services/search/search.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -26,7 +27,7 @@ const FireAuthStub = {
         signOut: () => new Promise((resolve, _reject) => resolve())
     }),
     authState: of({email: "test@test.com", password: "password"})
-}
+};
 
 describe("LoginComponent", () => {
     let component: LoginComponent;
@@ -47,7 +48,8 @@ describe("LoginComponent", () => {
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
                 { provide: AngularFireAuth, useValue: FireAuthStub },
-                AuthService
+                AuthService,
+                SearchService
             ]
         })
             .compileComponents();

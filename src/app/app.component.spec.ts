@@ -3,10 +3,12 @@ import {AppComponent} from "./app.component";
 import {SearchComponent} from "./components/search/search.component";
 import {MaterialModule} from "./material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, of} from "rxjs";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ResultComponent} from "./components/result/result.component";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
+import {RouterTestingModule} from "@angular/router/testing";
+import {AngularFireAuth} from "@angular/fire/auth";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -15,6 +17,14 @@ const FirestoreStub = {
             set: (_d: any) => new Promise((resolve, _reject) => resolve()),
         }),
     }),
+};
+
+const FireAuthStub = {
+    auth: (name: string) => ({
+        signInWithPopup: (provider: any) => new Promise((resolve, _reject) => resolve()),
+        signOut: () => new Promise((resolve, _reject) => resolve())
+    }),
+    authState: of({email: "test@test.com", password: "password"})
 };
 
 describe("AppComponent", () => {
@@ -32,10 +42,12 @@ describe("AppComponent", () => {
                 FormsModule,
                 ReactiveFormsModule,
                 AngularFirestoreModule,
-                BrowserAnimationsModule
+                BrowserAnimationsModule,
+                RouterTestingModule
             ],
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
+                { provide: AngularFireAuth, useValue: FireAuthStub }
             ]
         }).compileComponents();
 
