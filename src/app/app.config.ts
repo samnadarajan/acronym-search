@@ -1,3 +1,4 @@
 export const config = {
-  collectionEndpoint: "acronyms"
+    acronyms: "acronyms",
+    projects: "projects"
 };
