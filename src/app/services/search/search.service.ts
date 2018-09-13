@@ -16,7 +16,12 @@ export class SearchService {
 
     search(code: string) {
         this.searched = true;
-        this.result = this.db.collection(config.acronyms, ref => ref.where("code", "==", code).where("project", "==", this.projectService.currentProject.name).limit(1)).snapshotChanges()
+        this.result = this.db.collection(
+            config.acronyms,
+                ref => ref.where("code", "==", code)
+                                    .where("project", "==", this.projectService.currentProject.name)
+                    .limit(1))
+            .snapshotChanges()
           .pipe(map(changes => {
               if (changes.length > 0) {
                   return changes.map(a => {
