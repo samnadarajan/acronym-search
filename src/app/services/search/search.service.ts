@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {Acronym} from "../../model/acronym.model";
 import {config} from "../../app.config";
+import {ProjectService} from "../project/project.service";
 
 @Injectable({
   providedIn: "root"
@@ -11,11 +12,16 @@ import {config} from "../../app.config";
 export class SearchService {
     result: Observable<Acronym[]>;
     searched = false;
-    constructor(private db: AngularFirestore) {}
+    constructor(private db: AngularFirestore, private projectService: ProjectService) {}
 
     search(code: string) {
         this.searched = true;
-        this.result = this.db.collection(config.collectionEndpoint, ref => ref.where("code", "==", code).limit(1)).snapshotChanges()
+        this.result = this.db.collection(
+            config.acronyms,
+                ref => ref.where("code", "==", code)
+                                    .where("project", "==", this.projectService.currentProject.name)
+                    .limit(1))
+            .snapshotChanges()
           .pipe(map(changes => {
               if (changes.length > 0) {
                   return changes.map(a => {
@@ -38,11 +44,11 @@ export class SearchService {
     }
 
     add(acronym: Acronym) {
-        this.db.collection(config.collectionEndpoint).add(acronym);
+        this.db.collection(config.acronyms).add(acronym);
     }
 
     update(acronym: Acronym) {
-        this.db.collection(config.collectionEndpoint).doc(acronym.id).update(acronym);
+        this.db.collection(config.acronyms).doc(acronym.id).update(acronym);
     }
 
 

@@ -17,6 +17,8 @@ import { AcronymComponent } from "./components/acronym/acronym.component";
 import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
 import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import { ProjectSelectComponent } from "./components/project-select/project-select.component";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
@@ -29,7 +31,8 @@ const ROUTES: Routes = [
         SearchComponent,
         ResultComponent,
         LoginComponent,
-        AcronymComponent
+        AcronymComponent,
+        ProjectSelectComponent
     ],
     imports: [
         BrowserModule,
@@ -42,7 +45,8 @@ const ROUTES: Routes = [
         RouterModule.forRoot(ROUTES),
         MaterialModule,
         AuthModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        NgSelectModule
     ],
     providers: [],
     bootstrap: [AppComponent]

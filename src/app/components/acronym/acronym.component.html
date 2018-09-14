@@ -1,8 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-    <h4>
-        Welcome to {{ title }}!
-    </h4>
+    <app-project-select [projects]="(projectService.projects | async)"></app-project-select>
 
     <app-search (searchString)="beginSearch($event)"></app-search>
 

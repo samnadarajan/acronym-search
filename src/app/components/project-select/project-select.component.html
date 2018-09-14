@@ -1,0 +1,8 @@
+<ng-select [items]="projects"
+           bindLabel="name"
+           bindValue="name"
+           labelForId="state"
+           [searchable]="false"
+           (change)="onChange($event)"
+           [formControl]="chosenProject">
+</ng-select>
