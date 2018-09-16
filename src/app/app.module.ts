@@ -19,6 +19,9 @@ import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ProjectSelectComponent } from "./components/project-select/project-select.component";
 import { NgSelectModule } from "@ng-select/ng-select";
+import {StoreModule} from "../../node_modules/@ngrx/store";
+import {acronymReducer} from "./reducers/acronym.reducer";
+import {projectReducer} from "./reducers/project.reducer";
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
@@ -46,7 +49,11 @@ const ROUTES: Routes = [
         MaterialModule,
         AuthModule,
         FlexLayoutModule,
-        NgSelectModule
+        NgSelectModule,
+        StoreModule.forRoot({
+            acronym: acronymReducer,
+            projects: projectReducer
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]

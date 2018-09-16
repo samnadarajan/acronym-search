@@ -1,7 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-    <app-project-select [projects]="(projectService.projects | async)"></app-project-select>
+    <app-project-select [projects]="(projects | async)['projects']" (selectedProject)="projectService.save($event)"></app-project-select>
 
     <app-search (searchString)="beginSearch($event)"></app-search>
 
-    <app-result *ngIf="searchService.searched" [result]="(searchService.result | async)" (saveAcronym)="searchService.save($event)"></app-result>
+    <app-result *ngIf="searchService.searched" [result]="(acronymResult | async)['acronym']" (saveAcronym)="searchService.save($event)"></app-result>
+
