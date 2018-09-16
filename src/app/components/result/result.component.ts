@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import {Acronym} from "../../model/acronym.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {AppState} from "../../app.state";
+import {Store} from "../../../../node_modules/@ngrx/store";
 
 @Component({
     selector: "app-result",
@@ -9,7 +11,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResultComponent implements OnChanges {
-    @Input() result: Acronym[];
+    @Input() result: Acronym;
     @Output() saveAcronym = new EventEmitter();
 
     acronymForm: FormGroup;
@@ -18,12 +20,12 @@ export class ResultComponent implements OnChanges {
     constructor(public formBuilder: FormBuilder) { }
 
     ngOnChanges() {
-        if (this.result && this.result.length > 0) {
+        if (this.result) {
             this.acronymForm = this.formBuilder.group({
-                meaning: this.result[0].meaning,
-                description: this.result[0].description,
-                id: this.result[0].id,
-                code: this.result[0].code
+                meaning: this.result.meaning,
+                description: this.result.description,
+                id: this.result.id,
+                code: this.result.code
             });
             this.onChanges();
         }
@@ -31,8 +33,8 @@ export class ResultComponent implements OnChanges {
 
     onChanges() {
         this.acronymForm.valueChanges.subscribe(values => {
-            if (this.result && this.result.length > 0) {
-                if (this.result[0].meaning !== values.meaning || this.result[0].description !== values.description) {
+            if (this.result) {
+                if (this.result.meaning !== values.meaning || this.result.description !== values.description) {
                     this.formChanged = true;
                 } else {
                     this.formChanged = false;

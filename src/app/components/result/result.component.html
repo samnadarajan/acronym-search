@@ -1,4 +1,4 @@
-<div *ngFor="let l of result">
+<!--<div *ngFor="let l of result">-->
     <form [formGroup]="acronymForm">
         stands for
         <mat-form-field>
@@ -11,10 +11,12 @@
     </form>
 
     <button mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
-        <mat-icon *ngIf="l.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
+        <mat-icon *ngIf="result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
     </button>
-</div>
+<!--</div>-->
 
 <ng-template #addIcon>
     <mat-icon aria-label="Add Acronym">add</mat-icon>
 </ng-template>
+
+{{result | json}}

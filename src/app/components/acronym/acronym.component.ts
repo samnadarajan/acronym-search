@@ -1,6 +1,11 @@
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import {SearchService} from "../../services/search/search.service";
 import {ProjectService} from "../../services/project/project.service";
+import {AppState} from "../../app.state";
+import {Store, select} from "../../../../node_modules/@ngrx/store";
+import {Acronym} from "../../model/acronym.model";
+import {Observable} from "rxjs";
+import {Project} from "../../model/project.model";
 
 @Component({
     selector: "app-acronym",
@@ -9,12 +14,18 @@ import {ProjectService} from "../../services/project/project.service";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AcronymComponent implements OnInit {
-    title = "Acronym Search";
+    acronymResult: Observable<Acronym>;
+    projects: Observable<Project[]>;
 
-    constructor(public searchService: SearchService, public projectService: ProjectService) {}
+    constructor(public searchService: SearchService, public projectService: ProjectService, public store: Store<AppState>) {
+        this.acronymResult = this.store.pipe(select(state => state.acronym));
+        this.projects = this.store.pipe(select(state => state.projects));
+
+    }
 
     ngOnInit() {
         this.projectService.getProjects();
+
     }
 
     beginSearch(searchString: string) {
