@@ -1,8 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-    <app-project-select [projects]="(projects | async)['projects']" (selectedProject)="projectService.setCurrentProject($event)"></app-project-select>
+    <app-project-select [projects]="(projects | async)['list']" (selectedProject)="projectService.setCurrentProject($event)"></app-project-select>
 
-    <ng-container *ngIf="(projects | async)['selectedProject'] as selectedProject">
+    <ng-container *ngIf="(projects | async)['selected'] as selectedProject">
         <app-search (searchString)="beginSearch($event, selectedProject)"></app-search>
 
         <app-result *ngIf="searchService.searched" [result]="(acronymResult | async)['acronym']" (saveAcronym)="searchService.save($event, selectedProject)"></app-result>

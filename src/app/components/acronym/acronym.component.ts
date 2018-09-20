@@ -6,6 +6,7 @@ import {Store, select} from "../../../../node_modules/@ngrx/store";
 import {Acronym} from "../../model/acronym.model";
 import {Observable} from "rxjs";
 import {Project} from "../../model/project.model";
+import {Projects} from "../../model/projects.model";
 
 @Component({
     selector: "app-acronym",
@@ -15,7 +16,7 @@ import {Project} from "../../model/project.model";
 })
 export class AcronymComponent implements OnInit {
     acronymResult: Observable<Acronym>;
-    projects: Observable<Project[]>;
+    projects: Observable<Projects>;
 
     constructor(public searchService: SearchService, public projectService: ProjectService, public store: Store<AppState>) {
         this.acronymResult = this.store.pipe(select(state => state.acronym));
