@@ -18,7 +18,7 @@ export class ProjectSelectComponent {
 
     constructor(private _projectService: ProjectService) {}
 
-    onChange(project) {
+    onChange(project: Project) {
         this.selectedProject.emit(project);
     }
 }
