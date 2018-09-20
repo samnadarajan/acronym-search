@@ -20,10 +20,10 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import { ProjectSelectComponent } from "./components/project-select/project-select.component";
 import { NgSelectModule } from "@ng-select/ng-select";
 import {ActionReducer, ActionReducerMap, StoreModule} from "../../node_modules/@ngrx/store";
-import {acronymReducer} from "./state/reducers/acronym.reducer";
-import {projectReducer} from "./state/reducers/project.reducer";
+import {acronymReducer} from "./store/reducers/acronym.reducer";
+import {projectReducer} from "./store/reducers/project.reducer";
 import {storeLogger} from "ngrx-store-logger";
-import {AppState} from "./state/app.state";
+import {AppState} from "./store/app.state";
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
