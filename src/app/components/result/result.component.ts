@@ -1,8 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
 import {Acronym} from "../../model/acronym.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {AppState} from "../../app.state";
-import {Store} from "../../../../node_modules/@ngrx/store";
 
 @Component({
     selector: "app-result",
