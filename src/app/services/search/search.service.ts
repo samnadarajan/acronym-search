@@ -5,9 +5,9 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {Acronym} from "../../model/acronym.model";
 import {config} from "../../app.config";
 import {ProjectService} from "../project/project.service";
-import {AppState} from "../../app.state";
+import {AppState} from "../../state/app.state";
 import {Store} from "../../../../node_modules/@ngrx/store";
-import * as AcronymActions from "../../actions/acronym.actions";
+import * as AcronymActions from "../../state/actions/acronym.actions";
 import {Project} from "../../model/project.model";
 
 @Injectable({

@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import {SearchService} from "../../services/search/search.service";
 import {ProjectService} from "../../services/project/project.service";
-import {AppState} from "../../app.state";
+import {AppState} from "../../state/app.state";
 import {Store, select} from "../../../../node_modules/@ngrx/store";
 import {Acronym} from "../../model/acronym.model";
 import {Observable} from "rxjs";

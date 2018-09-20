@@ -7,6 +7,7 @@ export const initialState = {
 
 export function acronymReducer(state = initialState, action: AcronymActions.Actions) {
     switch (action.type) {
+        case AcronymActions.UPDATE_ACRONYM:
         case AcronymActions.ADD_ACRONYM:
             // storeLogger({level: "info"});
             return {...state, acronym: action.payload};
