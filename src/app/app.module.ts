@@ -19,14 +19,31 @@ import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ProjectSelectComponent } from "./components/project-select/project-select.component";
 import { NgSelectModule } from "@ng-select/ng-select";
-import {StoreModule} from "../../node_modules/@ngrx/store";
+import {ActionReducer, ActionReducerMap, StoreModule} from "../../node_modules/@ngrx/store";
 import {acronymReducer} from "./reducers/acronym.reducer";
 import {projectReducer} from "./reducers/project.reducer";
+import {storeLogger} from "ngrx-store-logger";
+import {AppState} from "./app.state";
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
     {path: "", component: LoginComponent}
 ];
+
+// For logging the store
+export function logger(reducer: ActionReducer<AppState>): any {
+    // default, no options
+    return storeLogger()(reducer);
+}
+
+export const metaReducers = environment.production ? [] : [logger];
+
+// export const reducers: ActionReducerMap<AppState> = {
+//     acronym: acronymReducer,
+//     projects: projectReducer,
+//     selectedProject: projectReducer
+// }
+
 
 @NgModule({
     declarations: [
@@ -53,7 +70,12 @@ const ROUTES: Routes = [
         StoreModule.forRoot({
             acronym: acronymReducer,
             projects: projectReducer
-        })
+        }),
+        // StoreModule.forRoot(
+        //     reducers,
+        //     {metaReducers}
+        // )
+
     ],
     providers: [],
     bootstrap: [AppComponent]
