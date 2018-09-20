@@ -20,7 +20,6 @@ export class AcronymComponent implements OnInit {
     constructor(public searchService: SearchService, public projectService: ProjectService, public store: Store<AppState>) {
         this.acronymResult = this.store.pipe(select(state => state.acronym));
         this.projects = this.store.pipe(select(state => state.projects));
-
     }
 
     ngOnInit() {
@@ -28,7 +27,7 @@ export class AcronymComponent implements OnInit {
 
     }
 
-    beginSearch(searchString: string) {
-        this.searchService.search(searchString);
+    beginSearch(code: string, project: Project) {
+        this.searchService.search(code, project);
     }
 }
