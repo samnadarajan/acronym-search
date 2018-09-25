@@ -1,6 +1,12 @@
 import * as ProjectActions from "../actions/project.actions";
+import {Project} from "../../model/project.model";
 
-const initialState = {
+export interface ProjectState {
+    list: Project[];
+    selected: any;
+}
+
+const initialState: ProjectState = {
     list: [],
     selected: {}
 }
