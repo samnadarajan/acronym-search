@@ -18,27 +18,29 @@ export class SearchService {
     searched = false;
     constructor(private db: AngularFirestore, private projectService: ProjectService, private _store: Store<AppState>) {}
 
-    search(code: string, project: Project) {
-        this.searched = true;
-        this.db.collection(
+    search(payload: any) {
+        const code = payload.code;
+        const project = payload.project;
+        // this.searched = true;
+        return this.db.collection(
             config.acronyms,
                 ref => ref.where("code", "==", code)
                                     .where("project", "==", project.name)
-                    .limit(1))
-            .snapshotChanges()
-          .pipe(map(changes => {
-              if (changes.length > 0) {
-                  return changes.map(a => {
-                      const data = a.payload.doc.data() as Acronym;
-                      data.id = a.payload.doc.id;
-                      return data;
-                  });
-              } else {
-                  return [{code: code} as Acronym];
-              }
-          })).subscribe(response => {
-              this._store.dispatch(new AcronymActions.AddAcronym(response[0]));
-            });
+                    .limit(1));
+          //   .snapshotChanges()
+          // .pipe(map(changes => {
+          //     if (changes.length > 0) {
+          //         return changes.map(a => {
+          //             const data = a.payload.doc.data() as Acronym;
+          //             data.id = a.payload.doc.id;
+          //             return data;
+          //         });
+          //     } else {
+          //         return [{code: code} as Acronym];
+          //     }
+          // })).subscribe(response => {
+          //     this._store.dispatch(new AcronymActions.SearchAcronym(response[0]));
+          //   });
     }
 
     save(acronym: Acronym, project: Project) {
