@@ -26,7 +26,7 @@ export class SearchAcronymSuccess implements Action {
 export class SearchAcronymFail implements Action {
     readonly type = SEARCH_ACRONYM_FAIL;
 
-    constructor(public payload: Acronym) {}
+    constructor(public payload: any) {}
 }
 
 export class AddAcronym implements Action {
