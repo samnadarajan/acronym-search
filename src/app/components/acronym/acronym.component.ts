@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 import {Project} from "../../model/project.model";
 import {Projects} from "../../model/projects.model";
 import * as AcronymActions from "../../store/actions/acronym.actions";
+import * as ProjectActions from "../../store/actions/project.actions";
 
 
 @Component({
@@ -27,10 +28,18 @@ export class AcronymComponent implements OnInit {
 
     ngOnInit() {
         this.projectService.getProjects();
-
     }
 
     beginSearch(code: string, project: Project) {
         this.store.dispatch(new AcronymActions.SearchAcronym({code: code, project: project.name}));
+    }
+
+    setProject(event: Project) {
+        this.store.dispatch(new ProjectActions.SelectProject(event));
+    }
+
+    save(acronym: Acronym, project: Project) {
+        acronym.project = project.name;
+        this.store.dispatch(new AcronymActions.SaveAcronym(acronym));
     }
 }
