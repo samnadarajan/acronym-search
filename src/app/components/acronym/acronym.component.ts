@@ -7,7 +7,6 @@ import {Acronym} from "../../model/acronym.model";
 import {Observable} from "rxjs";
 import {Project} from "../../model/project.model";
 import {Projects} from "../../model/projects.model";
-// import {AcronymActions} from "../../store/actions/acronym.actions";
 import * as AcronymActions from "../../store/actions/acronym.actions";
 
 
@@ -33,6 +32,5 @@ export class AcronymComponent implements OnInit {
 
     beginSearch(code: string, project: Project) {
         this.store.dispatch(new AcronymActions.SearchAcronym({code: code, project: project.name}));
-        // this.searchService.search(code, project);
     }
 }
