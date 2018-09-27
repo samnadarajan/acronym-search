@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import * as acronymActions from "../actions/acronym.actions";
 import {Actions, Effect, ofType} from "@ngrx/effects";
-import {catchError, first, map, mergeMap, switchMap} from "rxjs/operators";
+import {catchError, map, mergeMap, switchMap} from "rxjs/operators";
 import {SearchService} from "../../services/search/search.service";
 import {Acronym} from "../../model/acronym.model";
 import {of} from "rxjs/observable/of";
@@ -11,7 +11,7 @@ export class AcronymEffect {
     constructor(private actions$: Actions, private _searchService: SearchService) {}
 
     @Effect()
-    addAcronym$ = this.actions$.pipe(
+    searchAcronym$ = this.actions$.pipe(
         ofType(acronymActions.SEARCH_ACRONYM),
         map((action: acronymActions.SearchAcronym) => action.payload),
         switchMap((payload) => {
