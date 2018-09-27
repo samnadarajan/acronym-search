@@ -27,7 +27,7 @@ export class AcronymComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.projectService.getProjects();
+        this.store.dispatch(new ProjectActions.LoadProjects([]));
     }
 
     beginSearch(code: string, project: Project) {
