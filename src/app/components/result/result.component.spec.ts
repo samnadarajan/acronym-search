@@ -47,18 +47,17 @@ describe("ResultComponent", () => {
 
     it("should set the form", () => {
         spyOn(component, "onChanges");
-        component.result = [{code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" }];
+        component.result = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
 
         component.ngOnChanges();
 
-        expect(component.acronymForm.get("meaning").value).toEqual(component.result[0].meaning);
-        expect(component.acronymForm.get("description").value).toEqual(component.result[0].description);
+        expect(component.acronymForm.get("meaning").value).toEqual(component.result.meaning);
+        expect(component.acronymForm.get("description").value).toEqual(component.result.description);
         expect(component.onChanges).toHaveBeenCalled();
     });
 
     it("should not set the form when there is no result", () => {
         spyOn(component, "onChanges");
-        component.result = [];
 
         component.ngOnChanges();
 
@@ -69,7 +68,7 @@ describe("ResultComponent", () => {
     it("should disable the action button if there were no form changes", () => {
         spyOn(component, "onChanges").and.callThrough();
         const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
-        component.result = [acronymResult];
+        component.result = acronymResult;
         component.acronymForm = component.formBuilder.group(acronymResult);
 
         fixture.detectChanges();
@@ -81,7 +80,7 @@ describe("ResultComponent", () => {
     it("should enable the action button if there were form changes", () => {
         spyOn(component, "onChanges").and.callThrough();
         const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
-        component.result = [acronymResult];
+        component.result = acronymResult;
         component.acronymForm = component.formBuilder.group(acronymResult);
 
         fixture.detectChanges();
@@ -96,7 +95,7 @@ describe("ResultComponent", () => {
 
     it("should show a form with empty values if an acronym was not found", () => {
         const acronymResult = {code: "ACG", meaning: "", description: ""};
-        component.result = [acronymResult];
+        component.result = acronymResult;
         component.acronymForm = component.formBuilder.group(acronymResult);
 
         fixture.detectChanges();
@@ -110,7 +109,7 @@ describe("ResultComponent", () => {
 
     it("should show an add icon if the acronym is new", () => {
         const acronymResult = {code: "SSN", meaning: "", description: ""};
-        component.result = [acronymResult];
+        component.result = acronymResult;
         component.acronymForm = component.formBuilder.group(acronymResult);
 
         fixture.detectChanges();
@@ -120,7 +119,7 @@ describe("ResultComponent", () => {
 
     it("should show an edit icon if the acronym is not new", () => {
         const acronymResult = {id: "23434tergfder", code: "SSN", meaning: "", description: ""};
-        component.result = [acronymResult];
+        component.result = acronymResult;
         component.acronymForm = component.formBuilder.group(acronymResult);
 
         fixture.detectChanges();
