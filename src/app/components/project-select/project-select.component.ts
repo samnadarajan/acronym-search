@@ -16,7 +16,7 @@ export class ProjectSelectComponent {
 
     chosenProject = new FormControl("");
 
-    constructor(private _projectService: ProjectService) {}
+    constructor() {}
 
     onChange(project: Project) {
         this.selectedProject.emit(project);

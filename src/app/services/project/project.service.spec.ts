@@ -2,8 +2,8 @@ import { TestBed } from "@angular/core/testing";
 
 import {ProjectService} from "./project.service";
 import {BehaviorSubject} from "rxjs";
-import {SearchService} from "../search/search.service";
 import {AngularFirestore} from "../../../../node_modules/@angular/fire/firestore";
+import {Store, StoreModule} from "@ngrx/store";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -16,7 +16,8 @@ const FirestoreStub = {
 
 describe("ProjectService", () => {
     beforeEach(() => TestBed.configureTestingModule({
-        providers: [SearchService, { provide: AngularFirestore, useValue: FirestoreStub }]
+        imports: [StoreModule.forRoot({})],
+        providers: [{ provide: AngularFirestore, useValue: FirestoreStub }, Store]
     }));
 
     it("should be created", () => {
