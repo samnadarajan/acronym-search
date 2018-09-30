@@ -16,14 +16,15 @@ export class ProjectEffect {
         map((action: projectActions.LoadProjects) => action.payload),
         switchMap(() => {
             return this._projectService.getProjects().pipe(
-                map((projects: Project[]) => {
-                    console.log(projects);
+                map((changes) => {
+                    if (changes.length > 0) {
+                        return changes.map(data => data.payload.doc.data());
+                    }
                 }),
                 catchError((error) => of(new projectActions.LoadProjectsFail(error)))
             );
         }),
-        map(data => {
-            console.log(data)
+        map((data: Project[]) => {
             return new projectActions.LoadProjectsSuccess(data);
         })
     );
