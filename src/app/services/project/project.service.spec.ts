@@ -1,27 +1,31 @@
 import { TestBed } from "@angular/core/testing";
 
 import {ProjectService} from "./project.service";
-import {BehaviorSubject} from "rxjs";
 import {AngularFirestore} from "../../../../node_modules/@angular/fire/firestore";
 import {Store, StoreModule} from "@ngrx/store";
+import {config} from "../../app.config";
 
-const FirestoreStub = {
-    collection: (name: string) => ({
-        doc: (_id: string) => ({
-            valueChanges: () => new BehaviorSubject({foo: "bar"}),
-            set: (_d: any) => new Promise((resolve, _reject) => resolve()),
-        }),
-    }),
-};
+const collectionStub = {
+    snapshotChanges: jasmine.createSpy("snapshotChanges").and.returnValue({code: "SAM"})
+}
+const firestoreStub = {
+    collection: jasmine.createSpy("collection").and.returnValue(collectionStub)
+}
 
 describe("ProjectService", () => {
     beforeEach(() => TestBed.configureTestingModule({
         imports: [StoreModule.forRoot({})],
-        providers: [{ provide: AngularFirestore, useValue: FirestoreStub }, Store]
+        providers: [{ provide: AngularFirestore, useValue: firestoreStub }, Store]
     }));
 
     it("should be created", () => {
         const service: ProjectService = TestBed.get(ProjectService);
         expect(service).toBeTruthy();
     });
-});
+
+    it("should make the call to return a collection of projects", () => {
+        const service: ProjectService = TestBed.get(ProjectService);
+        service.getProjects();
+        expect(service.db.collection).toHaveBeenCalledWith(config.projects);
+    });
+})
