@@ -6,11 +6,12 @@ import {ResultComponent} from "../result/result.component";
 import {MaterialModule} from "../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {BehaviorSubject, of} from "rxjs";
 import {ProjectSelectComponent} from "../project-select/project-select.component";
 import {NgSelectModule} from "../../../../node_modules/@ng-select/ng-select";
 import {Store, StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -55,16 +56,17 @@ describe("AcronymComponent", () => {
         fixture = TestBed.createComponent(AcronymComponent);
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
-        const state = {
-            projects: {list: [{id: "2345t2erfdr", name: "Mine"}], selected: {name: "TED", id: "234524dfer32"}},
-            acronym: {code: "SAM", id: "234tr23rewf"}
-        };
-        component.projects = of(state.projects);
-        component.acronymResult = of(state.acronym);
         spyOn(component.store, "pipe").and.callThrough();
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
     });
+
+    it("should have the search component", async(() => {
+        component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
+        component.acronymResult = of({code: "", id: "2345efdr3"});
+        fixture.detectChanges();
+        expect(compiled.querySelector("app-search")).toBeTruthy();
+    }));
 });
