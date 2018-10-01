@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import {Acronym} from "../../model/acronym.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
@@ -8,7 +8,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
     styleUrls: ["./result.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResultComponent implements OnChanges {
+export class ResultComponent implements OnInit, OnChanges {
     @Input() result: Acronym;
     @Output() saveAcronym = new EventEmitter();
 
@@ -16,6 +16,15 @@ export class ResultComponent implements OnChanges {
     formChanged = false;
 
     constructor(public formBuilder: FormBuilder) { }
+
+    ngOnInit() {
+        this.acronymForm = this.formBuilder.group({
+            meaning: "",
+            description: "",
+            id: "",
+            code: ""
+        });
+    }
 
     ngOnChanges() {
         if (this.result) {

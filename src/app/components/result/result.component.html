@@ -1,4 +1,4 @@
-<form [formGroup]="acronymForm">
+<form *ngIf="result" [formGroup]="acronymForm">
     stands for
     <mat-form-field>
         <input matInput formControlName="meaning">
@@ -10,7 +10,7 @@
 </form>
 
 <button mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
-    <mat-icon *ngIf="result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
+    <mat-icon *ngIf="result && result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
 </button>
 
 <ng-template #addIcon>
