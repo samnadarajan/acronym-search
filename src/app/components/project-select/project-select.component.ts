@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@
 import {Observable} from "rxjs";
 import {Project} from "../../model/project.model";
 import {FormControl} from "@angular/forms";
-import {ProjectService} from "../../services/project/project.service";
 
 @Component({
     selector: "app-project-select",
