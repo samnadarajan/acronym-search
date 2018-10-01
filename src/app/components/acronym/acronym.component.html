@@ -1,5 +1,5 @@
 <div style="text-align:center">
-    <app-project-select [projects]="(projects | async)['list']" (selectedProject)="setProject($event)"></app-project-select>
+    <app-project-select [projects]="(projects | async)['list']" (selectedProject)="selectProject($event)"></app-project-select>
 
     <ng-container *ngIf="(projects | async)['selected'] as selectedProject">
         <app-search (searchString)="beginSearch($event, selectedProject)"></app-search>

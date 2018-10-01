@@ -11,7 +11,8 @@ import {ProjectSelectComponent} from "../project-select/project-select.component
 import {NgSelectModule} from "../../../../node_modules/@ng-select/ng-select";
 import {Store, StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import * as ProjectActions from "../../store/actions/project.actions";
+import * as AcronymActions from "../../store/actions/acronym.actions";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -57,16 +58,50 @@ describe("AcronymComponent", () => {
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
         spyOn(component.store, "pipe").and.callThrough();
+        spyOn(component.store, "dispatch");
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should have the search component", async(() => {
+    it("should have a component for selecting projects", () => {
+        expect(compiled.querySelector("app-project-select")).toBeTruthy();
+    });
+
+    it("should have the search and result component", async(() => {
         component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
         component.acronymResult = of({code: "", id: "2345efdr3"});
         fixture.detectChanges();
         expect(compiled.querySelector("app-search")).toBeTruthy();
+        expect(compiled.querySelector("app-result")).toBeTruthy();
     }));
+
+    it("should fetch a list of projects initially", () => {
+        component.ngOnInit();
+        expect(component.store.dispatch).toHaveBeenCalledWith(new ProjectActions.LoadProjects([]));
+    });
+
+    it("should begin a search", () => {
+        const acronym = {code: "TEST"};
+        const proj = {name: "SAM", id: "234re23"};
+        component.beginSearch(acronym.code, proj);
+
+        expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym({code: acronym.code, project: proj.name}));
+    });
+
+    it("should select a project", () => {
+        const proj = {name: "SAM", id: "234re23"};
+        component.selectProject(proj);
+        expect(component.store.dispatch).toHaveBeenCalledWith(new ProjectActions.SelectProject(proj));
+
+    });
+
+    it("should save an acronym", () => {
+        const acronym = {code: "TEST"};
+        const proj = {name: "SAM", id: "234re23"};
+        component.save(acronym, proj);
+
+        expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SaveAcronym(acronym));
+    });
 });

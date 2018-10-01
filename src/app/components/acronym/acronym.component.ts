@@ -32,7 +32,7 @@ export class AcronymComponent implements OnInit {
         this.store.dispatch(new AcronymActions.SearchAcronym({code: code, project: project.name}));
     }
 
-    setProject(event: Project) {
+    selectProject(event: Project) {
         this.store.dispatch(new ProjectActions.SelectProject(event));
     }
 
