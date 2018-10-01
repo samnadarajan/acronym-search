@@ -1,10 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
-import {SearchService} from "../../services/search/search.service";
-import {ProjectService} from "../../services/project/project.service";
 import {AppState} from "../../store/app.state";
 import {Store, select} from "../../../../node_modules/@ngrx/store";
 import {Acronym} from "../../model/acronym.model";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Project} from "../../model/project.model";
 import {Projects} from "../../model/projects.model";
 import * as AcronymActions from "../../store/actions/acronym.actions";
@@ -21,7 +19,7 @@ export class AcronymComponent implements OnInit {
     acronymResult: Observable<Acronym>;
     projects: Observable<Projects>;
 
-    constructor(public searchService: SearchService, public projectService: ProjectService, public store: Store<AppState>) {
+    constructor(public store: Store<AppState>) {
         this.acronymResult = this.store.pipe(select(state => state.acronym));
         this.projects = this.store.pipe(select(state => state.projects));
     }
