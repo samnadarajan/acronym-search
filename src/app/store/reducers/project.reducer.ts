@@ -8,7 +8,7 @@ export interface ProjectState {
     loaded: boolean;
 }
 
-const initialState: ProjectState = {
+export const initialState: ProjectState = {
     list: [],
     selected: {},
     loaded: true
