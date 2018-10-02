@@ -9,8 +9,7 @@ import {config} from "../../app.config";
 })
 export class SearchService {
     result: Observable<Acronym[]>;
-    searched = false;
-    constructor(private db: AngularFirestore) {}
+    constructor(public db: AngularFirestore) {}
 
     search(code: string, projectName: string): Observable<any> {
         return this.db.collection(
