@@ -5,13 +5,15 @@ import {catchError, map, mergeMap, switchMap} from "rxjs/operators";
 import {SearchService} from "../../services/search/search.service";
 import {Acronym} from "../../model/acronym.model";
 import {of} from "rxjs/observable/of";
+import {Observable} from "rxjs";
+import {Action} from "@ngrx/store";
 
 @Injectable()
 export class AcronymEffect {
     constructor(private actions$: Actions, private _searchService: SearchService) {}
 
     @Effect()
-    searchAcronym$ = this.actions$.pipe(
+    searchAcronym$: Observable<Action> = this.actions$.pipe(
         ofType(acronymActions.SEARCH_ACRONYM),
         map((action: acronymActions.SearchAcronym) => action.payload),
         switchMap((payload) => {
@@ -26,7 +28,7 @@ export class AcronymEffect {
                             return data;
                         })[0];
                     } else {
-                        return {code: code};
+                        return payload;
                     }
                 }),
                 catchError(error => of(new acronymActions.SearchAcronymFail((error))))
