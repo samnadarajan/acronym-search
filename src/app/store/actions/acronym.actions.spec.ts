@@ -20,12 +20,12 @@ describe("Acronym Actions", () => {
     });
 
     it("should create the SearchAcronymFail action", () => {
-        const acronym = {code: ""};
+        const error = new Error();
 
-        const action = new fromActions.SearchAcronymFail(acronym);
+        const action = new fromActions.SearchAcronymFail(error);
 
         expect(action.type).toEqual(fromActions.SEARCH_ACRONYM_FAIL);
-        expect(action.payload).toEqual(acronym);
+        expect(action.payload).toEqual(error);
     });
 
     it("should create the SaveAcronym action", () => {
@@ -47,11 +47,11 @@ describe("Acronym Actions", () => {
     });
 
     it("should create the SaveAcronymFail action", () => {
-        const acronym = {code: ""};
+        const error = new Error();
 
-        const action = new fromActions.SaveAcronymFail(acronym);
+        const action = new fromActions.SaveAcronymFail(error);
 
         expect(action.type).toEqual(fromActions.SAVE_ACRONYM_FAIL);
-        expect(action.payload).toEqual(acronym);
+        expect(action.payload).toEqual(error);
     });
 });

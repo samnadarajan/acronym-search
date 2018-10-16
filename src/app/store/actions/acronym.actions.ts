@@ -23,13 +23,13 @@ export class SearchAcronymSuccess implements Action {
 export class SearchAcronymFail implements Action {
     readonly type = SEARCH_ACRONYM_FAIL;
 
-    constructor(public payload: any) {}
+    constructor(public payload: Error) {}
 }
 
 export class SaveAcronym implements Action {
     readonly type = SAVE_ACRONYM;
 
-    constructor(public payload: any) {}
+    constructor(public payload: Acronym) {}
 }
 
 export class SaveAcronymSuccess implements Action {
@@ -41,7 +41,7 @@ export class SaveAcronymSuccess implements Action {
 export class SaveAcronymFail implements Action {
     readonly type = SAVE_ACRONYM_FAIL;
 
-    constructor(public payload: Acronym) {}
+    constructor(public payload: Error) {}
 }
 
 
