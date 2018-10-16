@@ -1,6 +1,5 @@
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {AcronymEffect} from "./acronym.effect";
-import {SearchService} from "../../services/search/search.service";
 import {TestBed} from "@angular/core/testing";
 import {provideMockActions} from "@ngrx/effects/testing";
 import * as fromActions from "../actions/acronym.actions";
@@ -8,7 +7,7 @@ import {cold, hot} from "jasmine-marbles";
 import {Store} from "@ngrx/store";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {Actions} from "@ngrx/effects";
+import {SearchService} from "@app/services/search/search.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -31,10 +30,8 @@ describe("Acronym Effects", () => {
                 Store,
                 provideMockActions(() => actions),
                 { provide: AngularFirestore, useValue: FirestoreStub },
-                // SearchService
                 {
-                    provide: SearchService,
-                    useValue: ["search", "save", "add", "update"]
+                    provide: SearchService, useValue: ["search", "save", "add", "update"]
                 }
             ],
             schemas: [NO_ERRORS_SCHEMA]
@@ -54,12 +51,59 @@ describe("Acronym Effects", () => {
             const action = new fromActions.SearchAcronym(payload);
             const result = new fromActions.SearchAcronymSuccess(payload);
 
-            actions = cold("--a-", {a: action});
+            actions = hot("--a-", {a: action});
+            const response = cold("c|", { c: payload });
             const expected = cold("--b", {b: result});
 
-            searchService.search = () => cold("c|", { c: payload });
+            searchService.search = jest.fn(() => response);
 
             expect(effects.searchAcronym$).toBeObservable(expected);
         });
+
+        it("should return a SearchAcronymFail action, with an error, on fail", () => {
+            const payload = {code: "SAM", project: "SWAN"};
+            const action = new fromActions.SearchAcronym(payload);
+            const error = new Error();
+            const result = new fromActions.SearchAcronymFail(error);
+
+            actions = hot("-a", {a: action});
+            const response = cold("-#|", {}, error);
+            const expected = cold("--(b|)", {b: result});
+
+            searchService.search = jest.fn(() => response);
+
+            expect(effects.searchAcronym$).toBeObservable(expected);
+        });
+    });
+
+    describe("Save Acronym", () => {
+        it("should return a SaveAcronymSuccess action, with the acronym, on success", () => {
+            const payload = {code: "SAM", project: "SWAN"};
+            const action = new fromActions.SaveAcronym(payload);
+            const result = new fromActions.SaveAcronymSuccess(payload);
+
+            actions = hot("-a", {a: action});
+            const response = cold("-c|", { c: payload });
+            const expected = cold("-b", {b: result});
+
+            searchService.save = jest.fn(() => response);
+
+            expect(effects.saveAcronym$).toBeObservable(expected);
+        });
+
+        // it("should return a SaveAcronymFail action, with an error, on fail", () => {
+        //     const payload = {code: "SAM", project: "SWAN"};
+        //     const action = new fromActions.SaveAcronym(payload);
+        //     const error = new Error();
+        //     const result = new fromActions.SaveAcronymFail(error);
+        //
+        //     actions = hot("-a", {a: action});
+        //     const response = cold("-#|", {}, error);
+        //     const expected = cold("--(b|)", {b: result});
+        //
+        //     searchService.save = jest.fn(() => response);
+        //
+        //     expect(effects.saveAcronym$).toBeObservable(expected);
+        // });
     });
 });
