@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from "@angular/core";
 import {FormControl} from "@angular/forms";
 import {SearchService} from "../../services/search/search.service";
 

@@ -1,6 +1,13 @@
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
-import {SearchService} from "../../services/search/search.service";
-import {ProjectService} from "../../services/project/project.service";
+import {AppState} from "../../store/app.state";
+import {Store, select} from "../../../../node_modules/@ngrx/store";
+import {Acronym} from "../../model/acronym.model";
+import {Observable, of} from "rxjs";
+import {Project} from "../../model/project.model";
+import {Projects} from "../../model/projects.model";
+import * as AcronymActions from "../../store/actions/acronym.actions";
+import * as ProjectActions from "../../store/actions/project.actions";
+
 
 @Component({
     selector: "app-acronym",
@@ -9,15 +16,28 @@ import {ProjectService} from "../../services/project/project.service";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AcronymComponent implements OnInit {
-    title = "Acronym Search";
+    acronymResult: Observable<Acronym>;
+    projects: Observable<Projects>;
 
-    constructor(public searchService: SearchService, public projectService: ProjectService) {}
-
-    ngOnInit() {
-        this.projectService.getProjects();
+    constructor(public store: Store<AppState>) {
+        this.acronymResult = this.store.pipe(select(state => state.acronym));
+        this.projects = this.store.pipe(select(state => state.projects));
     }
 
-    beginSearch(searchString: string) {
-        this.searchService.search(searchString);
+    ngOnInit() {
+        this.store.dispatch(new ProjectActions.LoadProjects([]));
+    }
+
+    beginSearch(code: string, project: Project) {
+        this.store.dispatch(new AcronymActions.SearchAcronym({code: code, project: project.name}));
+    }
+
+    selectProject(event: Project) {
+        this.store.dispatch(new ProjectActions.SelectProject(event));
+    }
+
+    save(acronym: Acronym, project: Project) {
+        acronym.project = project.name;
+        this.store.dispatch(new AcronymActions.SaveAcronym(acronym));
     }
 }

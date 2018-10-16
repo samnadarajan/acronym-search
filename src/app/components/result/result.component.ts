@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import {Acronym} from "../../model/acronym.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
@@ -8,8 +8,8 @@ import {FormBuilder, FormGroup} from "@angular/forms";
     styleUrls: ["./result.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResultComponent implements OnChanges {
-    @Input() result: Acronym[];
+export class ResultComponent implements OnInit, OnChanges {
+    @Input() result: Acronym;
     @Output() saveAcronym = new EventEmitter();
 
     acronymForm: FormGroup;
@@ -17,13 +17,22 @@ export class ResultComponent implements OnChanges {
 
     constructor(public formBuilder: FormBuilder) { }
 
+    ngOnInit() {
+        this.acronymForm = this.formBuilder.group({
+            meaning: "",
+            description: "",
+            id: "",
+            code: ""
+        });
+    }
+
     ngOnChanges() {
-        if (this.result && this.result.length > 0) {
+        if (this.result) {
             this.acronymForm = this.formBuilder.group({
-                meaning: this.result[0].meaning,
-                description: this.result[0].description,
-                id: this.result[0].id,
-                code: this.result[0].code
+                meaning: this.result.meaning,
+                description: this.result.description,
+                id: this.result.id,
+                code: this.result.code
             });
             this.onChanges();
         }
@@ -31,8 +40,8 @@ export class ResultComponent implements OnChanges {
 
     onChanges() {
         this.acronymForm.valueChanges.subscribe(values => {
-            if (this.result && this.result.length > 0) {
-                if (this.result[0].meaning !== values.meaning || this.result[0].description !== values.description) {
+            if (this.result) {
+                if (this.result.meaning !== values.meaning || this.result.description !== values.description) {
                     this.formChanged = true;
                 } else {
                     this.formChanged = false;
