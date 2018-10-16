@@ -1,5 +1,5 @@
-import {AcronymEffect} from "./acronym.effect";
-import {ProjectEffect} from "./project.effect";
+import {AcronymEffect, ProjectEffect} from "@app/store";
+
 
 export const effects: any[] = [AcronymEffect, ProjectEffect];
 

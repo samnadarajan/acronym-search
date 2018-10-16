@@ -21,7 +21,7 @@ describe("ProjectReducer", () => {
     });
 
     it("should return right state with LoadProjectsSuccess action", () => {
-        const projects = [{name: "SAM", id: "234rtefr"}, {name: "ZOOM", id: "234refwdcvfgtr3"}]
+        const projects = [{name: "SAM", id: "234rtefr"}, {name: "ZOOM", id: "234refwdcvfgtr3"}];
         const {initialState} = projectReducer;
         const action = new fromActions.LoadProjectsSuccess(projects);
         const state = projectReducer.projectReducer(initialState, action);
@@ -42,7 +42,7 @@ describe("ProjectReducer", () => {
     });
 
     it("should return right state with SelectProject action", () => {
-        const project = {name: "SAM", id: "234rtefr"}
+        const project = {name: "SAM", id: "234rtefr"};
         const {initialState} = projectReducer;
         const action = new fromActions.SelectProject(project);
         const state = projectReducer.projectReducer(initialState, action);

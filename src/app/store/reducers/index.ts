@@ -11,4 +11,4 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
     acronym: fromAcronyms.acronymReducer,
     projects: fromProjects.projectReducer
-}
+};

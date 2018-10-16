@@ -12,7 +12,7 @@ export const initialState: ProjectState = {
     list: [],
     selected: {},
     loaded: true
-}
+};
 
 export function projectReducer(state = initialState, action: ProjectActions.Actions) {
     switch (action.type) {

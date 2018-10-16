@@ -21,7 +21,7 @@ describe("AcronymReducer", () => {
     });
 
     it("should return correct state with SearchAcronymSuccess action", () => {
-        const acronym = {code: "SAM", id: "234trewr3", meaning: "Means the world", description: "La de dah"}
+        const acronym = {code: "SAM", id: "234trewr3", meaning: "Means the world", description: "La de dah"};
         const {initialState} = acronymReducer;
         const action = new fromAction.SearchAcronymSuccess(acronym);
         const state = acronymReducer.acronymReducer(initialState, action);
@@ -52,7 +52,7 @@ describe("AcronymReducer", () => {
     });
 
     it("should return correct state with SaveAcronymSuccess action", () => {
-        const acronym = {code: "SAM", id: "234trewr3", meaning: "Strength Abs Master", description: "La de dah"}
+        const acronym = {code: "SAM", id: "234trewr3", meaning: "Strength Abs Master", description: "La de dah"};
         const {initialState} = acronymReducer;
         const action = new fromAction.SaveAcronymSuccess(acronym);
         const state = acronymReducer.acronymReducer(initialState, action);

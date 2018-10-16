@@ -7,10 +7,11 @@ import {config} from "../../app.config";
 
 const collectionStub = {
     valueChanges: jasmine.createSpy("snapshotChanges").and.returnValue({code: "SAM"})
-}
+};
+
 const firestoreStub = {
     collection: jasmine.createSpy("collection").and.returnValue(collectionStub)
-}
+};
 
 describe("ProjectService", () => {
     beforeEach(() => TestBed.configureTestingModule({
@@ -28,4 +29,4 @@ describe("ProjectService", () => {
         service.getProjects();
         expect(service.db.collection).toHaveBeenCalledWith(config.projects);
     });
-})
+});

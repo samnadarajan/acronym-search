@@ -2,14 +2,15 @@ import { TestBed, inject } from "@angular/core/testing";
 
 import {AngularFirestore} from "@angular/fire/firestore";
 import {SearchService} from "./search.service";
-import {config} from "../../app.config";
+import {config} from "@app/app.config";
 
 const collectionStub = {
     valueChanges: jasmine.createSpy("valueChanges").and.returnValue({code: "SAM"})
-}
+};
+
 const firestoreStub = {
     collection: jasmine.createSpy("collection").and.returnValue(collectionStub)
-}
+};
 
 describe("SearchService", () => {
     beforeEach(() => {
