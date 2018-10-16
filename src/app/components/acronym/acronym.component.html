@@ -4,6 +4,7 @@
     <ng-container *ngIf="(projects | async)['selected'] as selectedProject">
         <app-search (searchString)="beginSearch($event, selectedProject)"></app-search>
 
+        <mat-spinner *ngIf="(acronymResult | async)['loading']"></mat-spinner>
         <app-result [result]="(acronymResult | async)['acronym']" (saveAcronym)="save($event, selectedProject)"></app-result>
     </ng-container>
 
