@@ -6,7 +6,7 @@ import {Store, StoreModule} from "@ngrx/store";
 import {config} from "../../app.config";
 
 const collectionStub = {
-    snapshotChanges: jasmine.createSpy("snapshotChanges").and.returnValue({code: "SAM"})
+    valueChanges: jasmine.createSpy("snapshotChanges").and.returnValue({code: "SAM"})
 }
 const firestoreStub = {
     collection: jasmine.createSpy("collection").and.returnValue(collectionStub)
