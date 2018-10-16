@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import {Observable} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {Acronym} from "../../model/acronym.model";
-import {config} from "../../app.config";
+import {Acronym} from "@app/model/acronym.model";
+import {config} from "@app/app.config";
+
 
 @Injectable({
   providedIn: "root"
@@ -17,7 +18,7 @@ export class SearchService {
                 ref => ref.where("code", "==", code)
                     .where("project", "==", projectName)
                     .limit(1))
-            .snapshotChanges();
+            .valueChanges();
     }
 
     save(acronym: Acronym) {
@@ -29,11 +30,11 @@ export class SearchService {
     }
 
     add(acronym: Acronym) {
-        return this.db.collection(config.acronyms).add(acronym);
+        return this.db.collection(config.acronyms).add(acronym).then(() => this.search(acronym.code, acronym.project));
     }
 
     update(acronym: Acronym) {
-        return this.db.collection(config.acronyms).doc(acronym.id).update(acronym);
+        return this.db.collection(config.acronyms).doc(acronym.id).update(acronym).then(() => this.search(acronym.code, acronym.project));
     }
 
 
