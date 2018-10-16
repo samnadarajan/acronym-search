@@ -7,7 +7,7 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {ProjectService} from "@app/services/project/project.service";
 import {cold, hot} from "jasmine-marbles";
 import * as fromActions from "@app/store/actions/project.actions";
-import {ProjectEffect} from "@app/store";
+import {ProjectEffect} from "@app/store/effects/project.effect";
 
 const FirestoreStub = {
     collection: (name: string) => ({
