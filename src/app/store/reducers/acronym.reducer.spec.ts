@@ -15,7 +15,7 @@ describe("AcronymReducer", () => {
         const action = new fromAction.SearchAcronym({code: ""});
         const state = acronymReducer.acronymReducer(initialState, action);
 
-        expect(state.acronym).toEqual({code: ""});
+        expect(state.acronym).toBeNull();
         expect(state.loaded).toBe(false);
         expect(state.loading).toBe(true);
     });
@@ -32,12 +32,11 @@ describe("AcronymReducer", () => {
     });
 
     it("should return correct state with SearchAcronymFail action", () => {
-        const acronym = {code: ""}
         const {initialState} = acronymReducer;
-        const action = new fromAction.SearchAcronymFail(acronym);
+        const action = new fromAction.SearchAcronymFail(new Error());
         const state = acronymReducer.acronymReducer(initialState, action);
 
-        expect(state.acronym).toEqual(acronym);
+        expect(state.acronym).toBeNull();
         expect(state.loaded).toBe(true);
         expect(state.loading).toBe(false);
     });
@@ -47,7 +46,7 @@ describe("AcronymReducer", () => {
         const action = new fromAction.SaveAcronym({code: ""});
         const state = acronymReducer.acronymReducer(initialState, action);
 
-        expect(state.acronym).toEqual({code: ""});
+        expect(state.acronym).toBeNull();
         expect(state.loaded).toBe(false);
         expect(state.loading).toBe(true);
     });
@@ -64,12 +63,11 @@ describe("AcronymReducer", () => {
     });
 
     it("should return correct state with SaveAcronymFail action", () => {
-        const acronym = {code: ""}
         const {initialState} = acronymReducer;
-        const action = new fromAction.SaveAcronymFail(acronym);
+        const action = new fromAction.SaveAcronymFail(new Error());
         const state = acronymReducer.acronymReducer(initialState, action);
 
-        expect(state.acronym).toEqual(acronym);
+        expect(state.acronym).toBeNull();
         expect(state.loaded).toBe(true);
         expect(state.loading).toBe(false);
     });

@@ -7,7 +7,7 @@ export interface AcronymState {
     loaded: boolean;
 }
 export const initialState: AcronymState = {
-    acronym: {code: ""},
+    acronym: null,
     loading: false,
     loaded: true
 };
