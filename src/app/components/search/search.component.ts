@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Output} from "@angular/core";
 import {FormControl} from "@angular/forms";
 import {SearchService} from "../../services/search/search.service";
+import {UpperCasePipe} from "@angular/common";
 
 @Component({
     selector: "app-search",
@@ -16,7 +17,7 @@ export class SearchComponent {
 
     beginSearch(codeString: string) {
         if (codeString.length >= 2) {
-            this.searchString.emit(codeString);
+            this.searchString.emit(new UpperCasePipe().transform(codeString));
         }
     }
 

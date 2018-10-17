@@ -24,26 +24,12 @@ import {storeLogger} from "ngrx-store-logger";
 import {AppState} from "./store/app.state";
 import {EffectsModule} from "@ngrx/effects";
 import {reducers, effects} from "./store";
+import {UppercaseDirective} from "@app/directives/uppercase.directive";
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
     {path: "", component: LoginComponent}
 ];
-
-// For logging the store
-export function logger(reducer: ActionReducer<AppState>): any {
-    // default, no options
-    return storeLogger()(reducer);
-}
-
-export const metaReducers = environment.production ? [] : [logger];
-
-// export const reducers: ActionReducerMap<AppState> = {
-//     acronym: acronymReducer,
-//     projects: projectReducer,
-//     selectedProject: projectReducer
-// }
-
 
 @NgModule({
     declarations: [
@@ -52,7 +38,8 @@ export const metaReducers = environment.production ? [] : [logger];
         ResultComponent,
         LoginComponent,
         AcronymComponent,
-        ProjectSelectComponent
+        ProjectSelectComponent,
+        UppercaseDirective
     ],
     imports: [
         BrowserModule,
