@@ -4,6 +4,8 @@ import { ProjectSelectComponent } from "./project-select.component";
 import {MaterialModule} from "../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "../../../../node_modules/@ng-select/ng-select";
+import {MatSelect, MatSelectChange} from "@angular/material";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe("ProjectSelectComponent", () => {
     let component: ProjectSelectComponent;
@@ -19,7 +21,7 @@ describe("ProjectSelectComponent", () => {
                 MaterialModule,
                 FormsModule,
                 ReactiveFormsModule,
-                NgSelectModule
+                BrowserAnimationsModule
             ]
         })
         .compileComponents();
@@ -37,13 +39,9 @@ describe("ProjectSelectComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should have a select", () => {
-        expect(compiled.querySelector("ng-select")).toBeTruthy();
-    });
-
     it("should emit a selected project", () => {
-        const proj = {name: "SAM", id: "234re23"};
-        component.onChange(proj);
-        expect(component.selectedProject.emit).toHaveBeenCalledWith(proj);
+        const event = {source: {} as MatSelect, value: {name: "SAM", id: "234re23"}}
+        component.onChange(event);
+        expect(component.selectedProject.emit).toHaveBeenCalledWith(event.value);
     });
 });

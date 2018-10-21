@@ -1,8 +1,9 @@
-<ng-select [items]="projects"
-           bindLabel="name"
-           bindValue="name"
-           labelForId="state"
-           [searchable]="false"
-           (change)="onChange($event)"
-           [formControl]="chosenProject">
-</ng-select>
+<div class="acronym-form">
+    <mat-form-field>
+        <mat-select (selectionChange)="onChange($event)" [formControl]="chosenProject" placeholder="Choose a Project">
+            <mat-option *ngFor="let project of projects" [value]="project">
+                {{project.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

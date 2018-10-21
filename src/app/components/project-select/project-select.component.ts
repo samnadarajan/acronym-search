@@ -1,7 +1,11 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import {Observable} from "rxjs";
-import {Project} from "../../model/project.model";
+import {Project} from "@app/model/project.model";
 import {FormControl} from "@angular/forms";
+import {MatSelectChange} from "@angular/material";
+import {Store} from "@ngrx/store";
+import {AppState} from "@app/store/app.state";
+import * as ProjectActions from "@app/store/actions/project.actions";
 
 @Component({
     selector: "app-project-select",
@@ -11,13 +15,12 @@ import {FormControl} from "@angular/forms";
 })
 export class ProjectSelectComponent {
     @Input() projects: Observable<Project[]>;
-    @Output() selectedProject = new EventEmitter();
 
     chosenProject = new FormControl("");
 
-    constructor() {}
+    constructor(public store: Store<AppState>) {}
 
-    onChange(project: Project) {
-        this.selectedProject.emit(project);
+    onChange(event: MatSelectChange) {
+        this.store.dispatch(new ProjectActions.SelectProject(event.value));
     }
 }

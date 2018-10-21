@@ -1,11 +1,11 @@
-<div style="text-align:center">
-    <app-project-select [projects]="(projects | async)['list']" (selectedProject)="selectProject($event)"></app-project-select>
+<div style="text-align:center" class="page">
+        <app-project-select [projects]="(projects | async)['list']"></app-project-select>
 
-    <ng-container *ngIf="(projects | async)['selected'] as selectedProject">
-        <app-search (searchString)="beginSearch($event, selectedProject)"></app-search>
+        <ng-container *ngIf="(projects | async)['selected'] as selectedProject">
+            <app-search (searchString)="beginSearch($event, selectedProject)"></app-search>
 
-        <mat-spinner *ngIf="(acronymResult | async)['loading']"></mat-spinner>
-        <app-result [result]="(acronymResult | async)['acronym']" (saveAcronym)="save($event, selectedProject)"></app-result>
-    </ng-container>
+            <mat-spinner *ngIf="(acronymResult | async)['loading']"></mat-spinner>
+            <app-result [result]="(acronymResult | async)['acronym']" (saveAcronym)="save($event, selectedProject)"></app-result>
+        </ng-container>
 
 </div>
