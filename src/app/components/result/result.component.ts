@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
-import {Acronym} from "../../model/acronym.model";
+import {Acronym} from "@app/model/acronym.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -14,6 +14,7 @@ export class ResultComponent implements OnInit, OnChanges {
 
     acronymForm: FormGroup;
     formChanged = false;
+    editMode = false;
 
     constructor(public formBuilder: FormBuilder) { }
 
@@ -53,6 +54,8 @@ export class ResultComponent implements OnInit, OnChanges {
 
     save() {
         this.saveAcronym.emit(this.acronymForm.value);
+        this.editMode = false;
+        this.formChanged = false;
     }
 
 }

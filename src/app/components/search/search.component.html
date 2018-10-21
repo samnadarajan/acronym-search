@@ -1,4 +1,7 @@
-<mat-form-field>
-    <input matInput (keyup)="beginSearch(code.value)" placeholder="Search for an acronym" [formControl]="code" appUpperCase>
-</mat-form-field>
+<div class="acronym-form">
+    <mat-form-field appearance="outline">
+        <mat-label>Acronym</mat-label>
+        <input matInput type="text" (keyup)="beginSearch(code.value)" [formControl]="code" appUpperCase>
+    </mat-form-field>
+</div>
 

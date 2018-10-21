@@ -1,18 +1,33 @@
-<form *ngIf="result" [formGroup]="acronymForm">
-    stands for
-    <mat-form-field>
-        <input matInput formControlName="meaning">
-    </mat-form-field>
-    and it is
-    <mat-form-field>
-        <textarea matInput formControlName="description"></textarea>
-    </mat-form-field>
+<form *ngIf="result && result.code.length > 2" [formGroup]="acronymForm">
+    <div *ngIf="!editMode && result.meaning && result.description; else form" (click)="editMode = !editMode">
+        stands for <span class="xeditable">{{result.meaning}}</span>
+        and it is <span class="xeditable">{{result.description}}</span>
+    </div>
+
+    <ng-template #form>
+        <div class="acronym-form">
+            <mat-form-field>
+                <mat-label>stands for</mat-label>
+                <input matInput placeholder="stands for" formControlName="meaning">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>and it means</mat-label>
+                <textarea placeholder="and it means" matInput formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+    </ng-template>
+
+    <div>
+        <button mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
+            <mat-icon *ngIf="result && result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
+        </button>
+    </div>
 </form>
 
-<button *ngIf="result" mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
-    <mat-icon *ngIf="result && result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
-</button>
+
 
 <ng-template #addIcon>
     <mat-icon aria-label="Add Acronym">add</mat-icon>
 </ng-template>
+
