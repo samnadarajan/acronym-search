@@ -83,14 +83,14 @@ describe("ResultComponent", () => {
         component.result = acronymResult;
         component.acronymForm = component.formBuilder.group(acronymResult);
 
-        fixture.detectChanges();
         component.onChanges();
 
         component.acronymForm.controls["description"].setValue("Bob");
         fixture.detectChanges();
 
         expect(component.formChanged).toEqual(true);
-        expect(compiled.querySelector("button.mat-fab.mat-basic").disabled).toEqual(false);
+        console.log(compiled.querySelector("button"))
+        expect(compiled.querySelector("button").disabled).toEqual(false);
     });
 
     it("should show a form with empty values if an acronym was not found", () => {
