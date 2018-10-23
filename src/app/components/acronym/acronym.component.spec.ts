@@ -114,5 +114,5 @@ describe("AcronymComponent", () => {
     it("should destroy the component observable OnDestroy", () => {
         component.ngOnDestroy();
         expect(component._acronym$.unsubscribe).toHaveBeenCalled();
-    })
+    });
 });
