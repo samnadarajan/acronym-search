@@ -3,7 +3,10 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ProjectSelectComponent } from "./project-select.component";
 import {MaterialModule} from "../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgSelectModule} from "../../../../node_modules/@ng-select/ng-select";
+import {MatSelect} from "@angular/material";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import * as ProjectActions from "@app/store/actions/project.actions";
+import {StoreModule} from "@ngrx/store";
 
 describe("ProjectSelectComponent", () => {
     let component: ProjectSelectComponent;
@@ -19,7 +22,8 @@ describe("ProjectSelectComponent", () => {
                 MaterialModule,
                 FormsModule,
                 ReactiveFormsModule,
-                NgSelectModule
+                BrowserAnimationsModule,
+                StoreModule.forRoot({})
             ]
         })
         .compileComponents();
@@ -30,20 +34,17 @@ describe("ProjectSelectComponent", () => {
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
-        spyOn(component.selectedProject, "emit");
+        spyOn(component.store, "dispatch");
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should have a select", () => {
-        expect(compiled.querySelector("ng-select")).toBeTruthy();
-    });
-
-    it("should emit a selected project", () => {
-        const proj = {name: "SAM", id: "234re23"};
-        component.onChange(proj);
-        expect(component.selectedProject.emit).toHaveBeenCalledWith(proj);
+    it("should dispatch a select project action when selecting a project", () => {
+        const event = {source: {} as MatSelect, value: {name: "SAM", id: "234re23"}};
+        component.onChange(event);
+        const action = new ProjectActions.SelectProject(event.value);
+        expect(component.store.dispatch).toHaveBeenCalledWith(action);
     });
 });

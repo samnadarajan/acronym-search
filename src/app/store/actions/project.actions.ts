@@ -1,5 +1,5 @@
 import {Action} from "@ngrx/store";
-import {Project} from "../../model/project.model";
+import {Project} from "@app/model/project.model";
 
 export const LOAD_PROJECTS   =   "[PROJECTS] Load";
 export const LOAD_PROJECTS_SUCCESS  =   "[PROJECTS] Load Success";

@@ -8,7 +8,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {BehaviorSubject, of} from "rxjs";
 import {ProjectSelectComponent} from "../project-select/project-select.component";
-import {NgSelectModule} from "../../../../node_modules/@ng-select/ng-select";
 import {Store, StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import * as ProjectActions from "../../store/actions/project.actions";
@@ -42,7 +41,6 @@ describe("AcronymComponent", () => {
                 ReactiveFormsModule,
                 AngularFirestoreModule,
                 BrowserAnimationsModule,
-                NgSelectModule,
                 StoreModule.forRoot({})
             ],
             providers: [
@@ -88,13 +86,6 @@ describe("AcronymComponent", () => {
         component.beginSearch(acronym.code, proj);
 
         expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym({code: acronym.code, project: proj.name}));
-    });
-
-    it("should select a project", () => {
-        const proj = {name: "SAM", id: "234re23"};
-        component.selectProject(proj);
-        expect(component.store.dispatch).toHaveBeenCalledWith(new ProjectActions.SelectProject(proj));
-
     });
 
     it("should save an acronym", () => {

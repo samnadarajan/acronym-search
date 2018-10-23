@@ -18,13 +18,10 @@ import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
 import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ProjectSelectComponent } from "./components/project-select/project-select.component";
-import { NgSelectModule } from "@ng-select/ng-select";
-import {ActionReducer, StoreModule} from "../../node_modules/@ngrx/store";
-import {storeLogger} from "ngrx-store-logger";
-import {AppState} from "./store/app.state";
 import {EffectsModule} from "@ngrx/effects";
 import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
+import {StoreModule} from "@ngrx/store";
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
@@ -39,7 +36,9 @@ const ROUTES: Routes = [
         LoginComponent,
         AcronymComponent,
         ProjectSelectComponent,
-        UppercaseDirective
+        UppercaseDirective,
+        ResultComponent
+
     ],
     imports: [
         BrowserModule,
@@ -53,7 +52,6 @@ const ROUTES: Routes = [
         MaterialModule,
         AuthModule,
         FlexLayoutModule,
-        NgSelectModule,
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects)
 
