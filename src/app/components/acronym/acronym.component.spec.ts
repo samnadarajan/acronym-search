@@ -57,10 +57,16 @@ describe("AcronymComponent", () => {
         compiled = fixture.debugElement.nativeElement;
         spyOn(component.store, "pipe").and.callThrough();
         spyOn(component.store, "dispatch");
+        spyOn(component._acronym$, "unsubscribe");
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
+    });
+
+    it("should have an initial acronymResultState in case the observable returns nothing", () => {
+        const initialState = {code: "", project: ""};
+        expect(component.acronymResultState).toEqual(initialState);
     });
 
     it("should have a component for selecting projects", () => {
@@ -88,6 +94,15 @@ describe("AcronymComponent", () => {
         expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym({code: acronym.code, project: proj.name}));
     });
 
+    it("should not do a search again on the same code", () => {
+        component.acronymResultState = {code: "TEST", project: "SAM"};
+        const acronym = {code: "TEST"};
+        const proj = {name: "SAM", id: "234re23"};
+        component.beginSearch(acronym.code, proj);
+
+        expect(component.store.dispatch).not.toHaveBeenCalledWith();
+    });
+
     it("should save an acronym", () => {
         const acronym = {code: "TEST"};
         const proj = {name: "SAM", id: "234re23"};
@@ -95,4 +110,9 @@ describe("AcronymComponent", () => {
 
         expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SaveAcronym(acronym));
     });
+
+    it("should destroy the component observable OnDestroy", () => {
+        component.ngOnDestroy();
+        expect(component._acronym$.unsubscribe).toHaveBeenCalled();
+    })
 });
