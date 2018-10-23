@@ -89,7 +89,6 @@ describe("ResultComponent", () => {
         fixture.detectChanges();
 
         expect(component.formChanged).toEqual(true);
-        console.log(compiled.querySelector("button"))
         expect(compiled.querySelector("button").disabled).toEqual(false);
     });
 

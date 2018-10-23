@@ -42,7 +42,7 @@ describe("ProjectSelectComponent", () => {
     });
 
     it("should dispatch a select project action when selecting a project", () => {
-        const event = {source: {} as MatSelect, value: {name: "SAM", id: "234re23"}}
+        const event = {source: {} as MatSelect, value: {name: "SAM", id: "234re23"}};
         component.onChange(event);
         const action = new ProjectActions.SelectProject(event.value);
         expect(component.store.dispatch).toHaveBeenCalledWith(action);
