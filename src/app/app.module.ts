@@ -18,7 +18,6 @@ import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
 import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ProjectSelectComponent } from "./components/project-select/project-select.component";
-import { NgSelectModule } from "@ng-select/ng-select";
 import {EffectsModule} from "@ngrx/effects";
 import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
@@ -53,7 +52,6 @@ const ROUTES: Routes = [
         MaterialModule,
         AuthModule,
         FlexLayoutModule,
-        NgSelectModule,
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects)
 
