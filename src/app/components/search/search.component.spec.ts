@@ -75,4 +75,9 @@ describe("SearchComponent", () => {
     it("should have a place to enter an acronym", () => {
         expect(compiled.querySelector("mat-form-field input")).toBeTruthy();
     });
+
+    it("should have a maxlength of 10", () => {
+        const input = compiled.querySelector("mat-form-field input");
+        expect(+input.getAttribute("maxlength")).toEqual(10);
+    });
 });

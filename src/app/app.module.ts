@@ -22,6 +22,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
 import {StoreModule} from "@ngrx/store";
+import {NgxMaskModule} from "ngx-mask";
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
@@ -52,6 +53,7 @@ const ROUTES: Routes = [
         MaterialModule,
         AuthModule,
         FlexLayoutModule,
+        NgxMaskModule.forRoot(),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects)
 

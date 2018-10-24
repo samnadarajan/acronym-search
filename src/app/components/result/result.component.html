@@ -8,12 +8,12 @@
         <div class="acronym-form">
             <mat-form-field>
                 <mat-label>stands for</mat-label>
-                <input matInput placeholder="stands for" formControlName="meaning">
+                <input matInput placeholder="stands for" formControlName="meaning" maxlength="50">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>and it means</mat-label>
-                <textarea placeholder="and it means" matInput formControlName="description"></textarea>
+                <textarea placeholder="and it means" matInput formControlName="description" maxlength="200"></textarea>
             </mat-form-field>
         </div>
     </ng-template>

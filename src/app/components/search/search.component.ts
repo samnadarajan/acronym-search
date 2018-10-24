@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Output} from "@angular/core";
 import {FormControl} from "@angular/forms";
-import {SearchService} from "../../services/search/search.service";
+import {SearchService} from "@app/services/search/search.service";
 import {UpperCasePipe} from "@angular/common";
 
 @Component({

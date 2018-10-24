@@ -125,4 +125,26 @@ describe("ResultComponent", () => {
 
         expect(compiled.querySelector("button mat-icon").innerHTML).toEqual("save");
     });
+
+    it("should have a maxlength on the meaning input", () => {
+        const acronymResult = {code: "ACG", meaning: "", description: ""};
+        component.result = acronymResult;
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        fixture.detectChanges();
+
+        const input = compiled.querySelector("input");
+        expect(+input.getAttribute("maxlength")).toEqual(50);
+    });
+
+    it("should have a maxlength on the description input", () => {
+        const acronymResult = {code: "ACG", meaning: "", description: ""};
+        component.result = acronymResult;
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        fixture.detectChanges();
+
+        const input = compiled.querySelector("textarea");
+        expect(+input.getAttribute("maxlength")).toEqual(200);
+    });
 });
