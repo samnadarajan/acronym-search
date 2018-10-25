@@ -18,6 +18,7 @@ export class ResultComponent implements OnInit, OnChanges {
     formChanged = false;
     editMode = false;
     dialogRef;
+    continueSave = true;
 
     constructor(public formBuilder: FormBuilder, public dialog: MatDialog) { }
 
@@ -55,15 +56,13 @@ export class ResultComponent implements OnInit, OnChanges {
         });
     }
 
-    save(form: Acronym) {
-
-        if (this.result.code !== "") {
-            console.log("dialogs don't match");
-        } else {
-            console.log("dialogs do match!");
-            // this.saveAcronym.emit(this.acronymForm.value);
+    save() {
+        if (this.continueSave) {
+            this.saveAcronym.emit(this.acronymForm.value);
             this.editMode = false;
             this.formChanged = false;
+        } else {
+            console.log("please fix your acronym");
         }
     }
 
@@ -74,6 +73,12 @@ export class ResultComponent implements OnInit, OnChanges {
             this.dialogRef = this.dialog.open(MismatchDialogComponent, {
                 data: {acronymFromMeaning: acronymFromMeaning, acronym: this.result.code}
             });
+
+            this.dialogRef.afterClosed().subscribe(() => {
+                this.continueSave = this.dialogRef.componentInstance.confirmedMismatch;
+            });
+        } else {
+            this.continueSave = true;
         }
     }
 

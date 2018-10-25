@@ -19,7 +19,7 @@
     </ng-template>
 
     <div>
-        <button mat-fab color="basic" [disabled]="!formChanged" (click)="save(acronymForm.value)">
+        <button mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
             <mat-icon *ngIf="result && result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
         </button>
     </div>
