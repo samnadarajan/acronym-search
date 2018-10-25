@@ -8,7 +8,7 @@
         <div class="acronym-form">
             <mat-form-field>
                 <mat-label>stands for</mat-label>
-                <input matInput placeholder="stands for" formControlName="meaning" maxlength="50">
+                <input matInput placeholder="stands for" formControlName="meaning" maxlength="50" (focusout)="acronymMismatchWarning(acronymForm.controls['meaning'].value)">
             </mat-form-field>
 
             <mat-form-field>
@@ -19,7 +19,7 @@
     </ng-template>
 
     <div>
-        <button mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
+        <button mat-fab color="basic" [disabled]="!formChanged" (click)="save(acronymForm.value)">
             <mat-icon *ngIf="result && result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
         </button>
     </div>

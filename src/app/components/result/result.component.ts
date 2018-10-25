@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import {Acronym} from "@app/model/acronym.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {MatDialog} from "@angular/material";
+import {MismatchDialogComponent} from "@app/components/mismatch-dialog/mismatch-dialog.component";
 
 @Component({
     selector: "app-result",
@@ -15,8 +17,9 @@ export class ResultComponent implements OnInit, OnChanges {
     acronymForm: FormGroup;
     formChanged = false;
     editMode = false;
+    dialogRef;
 
-    constructor(public formBuilder: FormBuilder) { }
+    constructor(public formBuilder: FormBuilder, public dialog: MatDialog) { }
 
     ngOnInit() {
         this.acronymForm = this.formBuilder.group({
@@ -52,10 +55,26 @@ export class ResultComponent implements OnInit, OnChanges {
         });
     }
 
-    save() {
-        this.saveAcronym.emit(this.acronymForm.value);
-        this.editMode = false;
-        this.formChanged = false;
+    save(form: Acronym) {
+
+        if (this.result.code !== "") {
+            console.log("dialogs don't match");
+        } else {
+            console.log("dialogs do match!");
+            // this.saveAcronym.emit(this.acronymForm.value);
+            this.editMode = false;
+            this.formChanged = false;
+        }
+    }
+
+    acronymMismatchWarning(meaning: string) {
+        const acronymFromMeaning = meaning.replace(/[^A-Z]/g, "");
+
+        if (this.result.code !== acronymFromMeaning) {
+            this.dialogRef = this.dialog.open(MismatchDialogComponent, {
+                data: {acronymFromMeaning: acronymFromMeaning, acronym: this.result.code}
+            });
+        }
     }
 
 }
