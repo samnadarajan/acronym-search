@@ -23,6 +23,7 @@ import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
 import {StoreModule} from "@ngrx/store";
 import {NgxMaskModule} from "ngx-mask";
+import { MismatchDialogComponent } from './components/mismatch-dialog/mismatch-dialog.component';
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
@@ -38,8 +39,8 @@ const ROUTES: Routes = [
         AcronymComponent,
         ProjectSelectComponent,
         UppercaseDirective,
-        ResultComponent
-
+        ResultComponent,
+        MismatchDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -59,6 +60,9 @@ const ROUTES: Routes = [
 
     ],
     providers: [],
+    entryComponents: [
+        MismatchDialogComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
