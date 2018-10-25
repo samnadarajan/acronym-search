@@ -9,6 +9,6 @@
     {{data.acronym}} does not match {{data.acronymFromMeaning}}
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button mat-dialog-close>No, let me edit</button>
-    <button mat-button [mat-dialog-close]="true">Yes, this is intended</button>
+    <button mat-button mat-dialog-close (click)="confirmedMismatch = false">No, let me edit</button>
+    <button mat-button [mat-dialog-close]="true" (click)="confirmedMismatch = true">Yes, this is intended</button>
 </mat-dialog-actions>

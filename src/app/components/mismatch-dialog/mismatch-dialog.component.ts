@@ -7,11 +7,9 @@ import {MAT_DIALOG_DATA} from "@angular/material";
     styleUrls: ["./mismatch-dialog.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MismatchDialogComponent implements OnInit {
+export class MismatchDialogComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+    confirmedMismatch = false;
 
-  ngOnInit() {
-  }
-
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 }
