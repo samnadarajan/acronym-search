@@ -117,7 +117,7 @@ describe("ResultComponent", () => {
     });
 
     it("should show an edit icon if the acronym is not new", () => {
-        const acronymResult = {id: "23434tergfder", code: "SSN", meaning: "", description: ""};
+        const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Note to self"};
         component.result = acronymResult;
         component.acronymForm = component.formBuilder.group(acronymResult);
 

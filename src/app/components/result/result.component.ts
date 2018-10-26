@@ -46,12 +46,7 @@ export class ResultComponent implements OnInit, OnChanges {
     onChanges() {
         this.acronymForm.valueChanges.subscribe(values => {
             if (this.result) {
-                if (this.result.meaning !== values.meaning || this.result.description !== values.description) {
-                    this.formChanged = true;
-                } else {
-                    this.formChanged = false;
-                }
-
+                this.formChanged = (this.result.meaning !== values.meaning || this.result.description !== values.description);
             }
         });
     }
@@ -61,24 +56,29 @@ export class ResultComponent implements OnInit, OnChanges {
             this.saveAcronym.emit(this.acronymForm.value);
             this.editMode = false;
             this.formChanged = false;
-        } else {
-            console.log("please fix your acronym");
         }
     }
 
     acronymMismatchWarning(meaning: string) {
-        const acronymFromMeaning = meaning.replace(/[^A-Z]/g, "");
+        if (meaning) {
+            const acronymFromMeaning = meaning.replace(/[^A-Z]/g, "");
 
-        if (this.result.code !== acronymFromMeaning) {
-            this.dialogRef = this.dialog.open(MismatchDialogComponent, {
-                data: {acronymFromMeaning: acronymFromMeaning, acronym: this.result.code}
-            });
+            if (this.result.code !== acronymFromMeaning) {
+                this.continueSave = false;
 
-            this.dialogRef.afterClosed().subscribe(() => {
-                this.continueSave = this.dialogRef.componentInstance.confirmedMismatch;
-            });
-        } else {
-            this.continueSave = true;
+                this.dialogRef = this.dialog.open(MismatchDialogComponent, {
+                    data: {acronymFromMeaning: acronymFromMeaning, acronym: this.result.code},
+                    disableClose: true,
+                    width: "50rem"
+                });
+                // TODO figure out how to change the disabled state of the button immediately instead of clicking on the form to change it.
+                this.dialogRef.componentInstance.continueSave.subscribe((response: boolean) => {
+                    this.continueSave = response;
+                });
+
+            } else {
+                this.continueSave = true;
+            }
         }
     }
 

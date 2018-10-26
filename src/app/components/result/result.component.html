@@ -12,20 +12,18 @@
             </mat-form-field>
 
             <mat-form-field>
-                <mat-label>and it means</mat-label>
+                <mat-label>and it is</mat-label>
                 <textarea placeholder="and it means" matInput formControlName="description" maxlength="200"></textarea>
             </mat-form-field>
         </div>
     </ng-template>
 
     <div>
-        <button mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
-            <mat-icon *ngIf="result && result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
+        <button mat-fab color="basic" [disabled]="!continueSave || (!formChanged && continueSave)" (click)="save()">
+            <mat-icon *ngIf="result && result.meaning && result.description; else addIcon" aria-label="Save Acronym">save</mat-icon>
         </button>
     </div>
 </form>
-
-
 
 <ng-template #addIcon>
     <mat-icon aria-label="Add Acronym">add</mat-icon>
