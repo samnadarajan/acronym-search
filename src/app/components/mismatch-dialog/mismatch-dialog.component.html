@@ -1,14 +1,12 @@
 <h2 mat-dialog-title>Potential Mismatch: {{data.acronym}} & {{data.acronymFromMeaning}}</h2>
 <mat-dialog-content>
-    Uh oh. It looks like the definition of the acronym you're trying to save does not match the acronym itself.
+    <p>Uh oh. It looks like the definition of the acronym you're trying to save does not match the acronym itself.
     If you're sure about this, please confirm.
-    If not, please go back and capitalize the letters that will make the acronym make sense.
+    If not, please go back and capitalize the letters that will make the acronym make sense.</p>
 
-    Mismatch:
-
-    {{data.acronym}} does not match {{data.acronymFromMeaning}}
+    <p>Mismatch: {{data.acronym}} does not match {{data.acronymFromMeaning}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button mat-dialog-close (click)="confirmedMismatch = false">No, let me edit</button>
-    <button mat-button [mat-dialog-close]="true" (click)="confirmedMismatch = true">Yes, this is intended</button>
+    <button mat-button [mat-dialog-close]="true">No, let me edit</button>
+    <button mat-button [mat-dialog-close]="true" (click)="continueSave.emit(true)">Yes, this is intended</button>
 </mat-dialog-actions>

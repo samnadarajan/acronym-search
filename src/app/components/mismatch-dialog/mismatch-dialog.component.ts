@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit} from "@angular/core";
 import {MAT_DIALOG_DATA} from "@angular/material";
 
 @Component({
@@ -8,8 +8,7 @@ import {MAT_DIALOG_DATA} from "@angular/material";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MismatchDialogComponent {
-
-    confirmedMismatch = false;
+    continueSave = new EventEmitter<boolean>();
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 }
