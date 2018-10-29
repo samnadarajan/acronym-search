@@ -1,5 +1,5 @@
-import {Action, UPDATE} from "@ngrx/store";
-import {Acronym} from "../../model/acronym.model";
+import {Action} from "@ngrx/store";
+import {Acronym} from "@app/model/acronym.model";
 
 export const SEARCH_ACRONYM         = "[ACRONYM] Search";
 export const SEARCH_ACRONYM_SUCCESS     = "[ACRONYM] Search Success";
