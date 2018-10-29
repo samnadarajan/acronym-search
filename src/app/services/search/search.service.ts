@@ -30,11 +30,11 @@ export class SearchService {
     }
 
     add(acronym: Acronym) {
-        return this.db.collection(config.acronyms).add(acronym).then(() => this.search(acronym.code, acronym.project));
+        return this.db.collection(config.acronyms).add(acronym);
     }
 
     update(acronym: Acronym) {
-        return this.db.collection(config.acronyms).doc(acronym.id).update(acronym).then(() => this.search(acronym.code, acronym.project));
+        return this.db.collection(config.acronyms).doc(acronym.id).update(acronym);
     }
 
 

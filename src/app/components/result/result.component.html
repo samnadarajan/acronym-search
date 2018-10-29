@@ -8,24 +8,39 @@
         <div class="acronym-form">
             <mat-form-field>
                 <mat-label>stands for</mat-label>
-                <input matInput placeholder="stands for" formControlName="meaning" maxlength="50">
+                <input matInput
+                       placeholder="stands for"
+                       formControlName="meaning"
+                       maxlength="50"
+                       (focusout)="acronymMismatchWarning(acronymForm.controls['meaning'].value)"
+                >
+                <mat-hint *ngIf="showHint" class="hint danger-text">
+                    Please correct your acronym meaning by capitalizing the letters appearing in the acronym.
+                </mat-hint>
             </mat-form-field>
 
+            <mat-card *ngIf="showWarning" tabindex="0">
+                <mat-card-title>Potential Mismatch: {{result.code}} does not match {{acronymFromMeaning != "" ? acronymFromMeaning : "_____"}}</mat-card-title>
+                <p>Uh oh. It looks like the definition of the acronym you're trying to save does not match the acronym itself.
+                    If you're sure about this, please confirm.
+                    If not, please go back and capitalize the letters that will make the acronym make sense.</p>
+                <button mat-raised-button (click)="acknowledgeWarning(false)" class="fix-mismatch mr-1 danger-text">No, let me fix this</button>
+                <button mat-stroked-button (click)="acknowledgeWarning(true)" class="ignore-mismatch">Yes, this is intended</button>
+            </mat-card>
+
             <mat-form-field>
-                <mat-label>and it means</mat-label>
-                <textarea placeholder="and it means" matInput formControlName="description" maxlength="200"></textarea>
+                <mat-label>and it is</mat-label>
+                <textarea placeholder="and it is" matInput formControlName="description" maxlength="200"></textarea>
             </mat-form-field>
         </div>
     </ng-template>
 
     <div>
-        <button mat-fab color="basic" [disabled]="!formChanged" (click)="save()">
-            <mat-icon *ngIf="result && result.id; else addIcon" aria-label="Save Acronym">save</mat-icon>
+        <button mat-fab color="basic" [disabled]="!continueSave || (!formChanged && continueSave)" (click)="save()">
+            <mat-icon *ngIf="result && result.meaning && result.description; else addIcon" aria-label="Save Acronym">save</mat-icon>
         </button>
     </div>
 </form>
-
-
 
 <ng-template #addIcon>
     <mat-icon aria-label="Add Acronym">add</mat-icon>

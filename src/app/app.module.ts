@@ -38,8 +38,7 @@ const ROUTES: Routes = [
         AcronymComponent,
         ProjectSelectComponent,
         UppercaseDirective,
-        ResultComponent
-
+        ResultComponent,
     ],
     imports: [
         BrowserModule,
