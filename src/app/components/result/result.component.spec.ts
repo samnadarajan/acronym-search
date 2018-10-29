@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {ResultComponent} from "./result.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MaterialModule} from "../../material/material.module";
+import {MaterialModule} from "@app/material/material.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 
@@ -35,16 +35,6 @@ describe("ResultComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should save the acronym", () => {
-        spyOn(component.saveAcronym, "emit");
-        const defaults = {meaning: "test", description: "hello", id: 132424, code: "HEL"};
-        component.acronymForm = component.formBuilder.group(defaults);
-
-        component.save();
-
-        expect(component.saveAcronym.emit).toHaveBeenCalledWith(defaults);
-    });
-
     it("should set the form", () => {
         spyOn(component, "onChanges");
         component.result = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
@@ -63,33 +53,6 @@ describe("ResultComponent", () => {
 
         expect(component.acronymForm).toBeUndefined();
         expect(component.onChanges).not.toHaveBeenCalled();
-    });
-
-    it("should disable the action button if there were no form changes", () => {
-        spyOn(component, "onChanges").and.callThrough();
-        const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
-        component.result = acronymResult;
-        component.acronymForm = component.formBuilder.group(acronymResult);
-
-        fixture.detectChanges();
-        component.onChanges();
-        expect(component.formChanged).toEqual(false);
-        expect(compiled.querySelector("button.mat-fab.mat-basic").disabled).toEqual(true);
-    });
-
-    it("should enable the action button if there were form changes", () => {
-        spyOn(component, "onChanges").and.callThrough();
-        const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
-        component.result = acronymResult;
-        component.acronymForm = component.formBuilder.group(acronymResult);
-
-        component.onChanges();
-
-        component.acronymForm.controls["description"].setValue("Bob");
-        fixture.detectChanges();
-
-        expect(component.formChanged).toEqual(true);
-        expect(compiled.querySelector("button").disabled).toEqual(false);
     });
 
     it("should show a form with empty values if an acronym was not found", () => {
@@ -146,5 +109,96 @@ describe("ResultComponent", () => {
 
         const input = compiled.querySelector("textarea");
         expect(+input.getAttribute("maxlength")).toEqual(200);
+    });
+
+    it("should show a warning if the acronyms do not match", () => {
+        const acronym = {code: "SSN", meaning: "Social Security number", description: "Unique ID for social security benefits" };
+        component.acronymForm = component.formBuilder.group(acronym);
+        component.result = acronym;
+
+        component.acronymMismatchWarning(acronym.meaning);
+        fixture.detectChanges();
+
+        expect(component.showWarning).toEqual(true);
+        expect(compiled.querySelector(".hint")).toBeFalsy();
+    });
+
+    it("should show the hint if user wants to go back and edit the meaning of the acronym", () => {
+        const acronym = {code: "SSN", meaning: "Social Security number", description: "Unique ID for social security benefits" };
+        component.acronymForm = component.formBuilder.group(acronym);
+        component.result = acronym;
+        component.editMode = true;
+
+        component.acronymMismatchWarning(acronym.meaning);
+        fixture.detectChanges();
+
+        const fixMismatchButton = compiled.querySelector(".fix-mismatch");
+        fixMismatchButton.click();
+
+        fixture.detectChanges();
+
+        expect(component.showHint).toEqual(true);
+        expect(component.continueSave).toEqual(false);
+        expect(compiled.querySelector(".hint")).toBeTruthy();
+    });
+
+    it("should hide the warning and enable the save button if user ignores the mismatch", () => {
+        const acronym = {code: "SSN", meaning: "Social Security number", description: "Unique ID for social security benefits" };
+        component.acronymForm = component.formBuilder.group(acronym);
+        component.result = acronym;
+        component.editMode = true;
+
+        component.acronymMismatchWarning(acronym.meaning);
+        fixture.detectChanges();
+
+        const ignoreMismatchButton = compiled.querySelector(".ignore-mismatch");
+        ignoreMismatchButton.click();
+
+        fixture.detectChanges();
+
+        expect(component.showHint).toEqual(false);
+        expect(component.continueSave).toEqual(true);
+        expect(compiled.querySelector(".hint")).toBeFalsy();
+    });
+
+    it("should switch to edit mode when clicking on an editable field", () => {
+
+    });
+
+    it("should disable the action button if there were no form changes", () => {
+        spyOn(component, "onChanges").and.callThrough();
+        const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
+        component.result = acronymResult;
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        fixture.detectChanges();
+        component.onChanges();
+        expect(component.formChanged).toEqual(false);
+        expect(compiled.querySelector("button.mat-fab.mat-basic").disabled).toEqual(true);
+    });
+
+    it("should enable the action button if there were form changes", () => {
+        spyOn(component, "onChanges").and.callThrough();
+        const acronymResult = {code: "SSN", meaning: "Social Security Number", description: "Unique ID for social security benefits" };
+        component.result = acronymResult;
+        component.acronymForm = component.formBuilder.group(acronymResult);
+
+        component.onChanges();
+
+        component.acronymForm.controls["description"].setValue("Bob");
+        fixture.detectChanges();
+
+        expect(component.formChanged).toEqual(true);
+        expect(compiled.querySelector("button").disabled).toEqual(false);
+    });
+
+    it("should save the acronym", () => {
+        spyOn(component.saveAcronym, "emit");
+        const defaults = {meaning: "test", description: "hello", id: 132424, code: "HEL"};
+        component.acronymForm = component.formBuilder.group(defaults);
+
+        component.save();
+
+        expect(component.saveAcronym.emit).toHaveBeenCalledWith(defaults);
     });
 });
