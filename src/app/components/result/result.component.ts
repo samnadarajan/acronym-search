@@ -58,7 +58,7 @@ export class ResultComponent implements OnInit, OnChanges {
      */
     acronymMismatchWarning(meaning: string) {
         if (meaning) {
-            this.acronymFromMeaning = meaning.replace(/[^A-Z]/g, "");
+            this.acronymFromMeaning = this.parseAcronymMeaning(meaning);
 
             if (this.result.code !== this.acronymFromMeaning) {
                 this.continueSave = false;
@@ -69,6 +69,10 @@ export class ResultComponent implements OnInit, OnChanges {
                 this.showHint = false;
             }
         }
+    }
+
+    parseAcronymMeaning(meaning: string): string {
+        return meaning.replace(/[^A-Z]/g, "");
     }
 
     /**
