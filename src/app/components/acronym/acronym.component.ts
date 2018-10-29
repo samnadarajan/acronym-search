@@ -1,14 +1,13 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
-import {AppState} from "../../store/app.state";
-import {Store, select} from "../../../../node_modules/@ngrx/store";
-import {Acronym} from "../../model/acronym.model";
-import {Observable, of} from "rxjs";
-import {Project} from "../../model/project.model";
-import {Projects} from "../../model/projects.model";
+import {Acronym} from "@app/model/acronym.model";
+import {AppState} from "@app/store/app.state";
+import {Observable, SubscriptionLike} from "rxjs";
+import {select, Store} from "@ngrx/store";
+import {Project} from "@app/model/project.model";
+import {Projects} from "@app/model/projects.model";
 import * as AcronymActions from "../../store/actions/acronym.actions";
 import * as ProjectActions from "../../store/actions/project.actions";
 import {ISubscribe} from "@app/interfaces/subscribe.interface";
-import {ISubscription} from "rxjs-compat/Subscription";
 
 
 @Component({
@@ -21,7 +20,7 @@ export class AcronymComponent implements ISubscribe, OnInit, OnDestroy {
     acronymResult: Observable<Acronym>;
     projects: Observable<Projects>;
 
-    _acronym$: ISubscription;
+    _acronym$: SubscriptionLike;
     acronymResultState: Acronym;
 
     constructor(public store: Store<AppState>) {
