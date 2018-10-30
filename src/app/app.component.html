@@ -1,8 +1,27 @@
-<div *ngIf="authService.user | async as user" fxLayout="row" fxLayoutAlign="end end">
-    <button mat-mini-fab [ngStyle]="{'background-image': 'url(' + user.photoURL + ')', 'background-position': 'center center', 'background-size': '40px 40px'}"></button>
+<mat-drawer-container [hasBackdrop]="false" [style.height]="'100%'">
+    <mat-drawer #drawer [style.width]="'15%'"> <!--TODO FIX THIS width to flex layout-->
+        <button mat-icon-button (click)="drawer.close()">
+            <mat-icon>clear</mat-icon>
+        </button>
 
-    <button mat-mini-fab (click)="authService.signOut()"><i class="material-icons">
-        exit_to_app
-    </i></button>
-</div>
-<router-outlet></router-outlet>
+        <div>
+            Hello
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div fxLayout="row" fxLayoutAlign="start">
+            <i class="material-icons" (click)="drawer.toggle()">menu</i>
+        </div>
+
+        <div *ngIf="authService.user | async as user" fxLayout="row" fxLayoutAlign="end end">
+            <button mat-mini-fab [ngStyle]="{'background-image': 'url(' + user.photoURL + ')', 'background-position': 'center center', 'background-size': '40px 40px'}"></button>
+
+            <button mat-mini-fab (click)="authService.signOut()"><i class="material-icons">
+                exit_to_app
+            </i></button>
+        </div>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+
