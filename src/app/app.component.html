@@ -1,27 +1,33 @@
-<mat-drawer-container [hasBackdrop]="false" [style.height]="'100%'">
-    <mat-drawer #drawer [style.width]="'15%'"> <!--TODO FIX THIS width to flex layout-->
-        <button mat-icon-button (click)="drawer.close()">
-            <mat-icon>clear</mat-icon>
-        </button>
-
-        <div>
-            Hello
+<mat-sidenav-container [style.height]="'100%'" (backdropClick)="sidenav.close()">
+    <mat-sidenav #sidenav [style.width]="'15%'"> <!--TODO FIX THIS width to flex layout-->
+        <div *ngIf="authService.user | async as user" fxLayout="row">
+            <mat-list [style.width]="'100%'">
+                <mat-list-item>
+                    <img class="user-img mr-1" [src]="user.photoURL"> {{user.displayName}}
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button="">Projects</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button="">Report Issue</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button (click)="authService.signOut()">Logout</button>
+                </mat-list-item>
+            </mat-list>
         </div>
-    </mat-drawer>
-    <mat-drawer-content>
+    </mat-sidenav>
+    <mat-sidenav-content>
         <div fxLayout="row" fxLayoutAlign="start">
-            <i class="material-icons" (click)="drawer.toggle()">menu</i>
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
         </div>
 
-        <div *ngIf="authService.user | async as user" fxLayout="row" fxLayoutAlign="end end">
-            <button mat-mini-fab [ngStyle]="{'background-image': 'url(' + user.photoURL + ')', 'background-position': 'center center', 'background-size': '40px 40px'}"></button>
-
-            <button mat-mini-fab (click)="authService.signOut()"><i class="material-icons">
-                exit_to_app
-            </i></button>
-        </div>
         <router-outlet></router-outlet>
-    </mat-drawer-content>
-</mat-drawer-container>
-
+    </mat-sidenav-content>
+</mat-sidenav-container>
 
