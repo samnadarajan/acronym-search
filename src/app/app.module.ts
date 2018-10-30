@@ -26,6 +26,7 @@ import {NgxMaskModule} from "ngx-mask";
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
+    {path: "login", component: LoginComponent},
     {path: "", component: LoginComponent}
 ];
 
