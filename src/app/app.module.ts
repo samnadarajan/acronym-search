@@ -23,6 +23,17 @@ import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
 import {StoreModule} from "@ngrx/store";
 import {NgxMaskModule} from "ngx-mask";
+import {FirebaseUIModule} from "firebaseui-angular";
+import * as firebase from "firebase/app";
+import * as firebaseui from "firebaseui";
+
+const firebaseUiAuthConfig: firebaseui.auth.Config = {
+    signInFlow: "popup",
+    signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    ],
+    credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
+};
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
@@ -55,8 +66,8 @@ const ROUTES: Routes = [
         FlexLayoutModule,
         NgxMaskModule.forRoot(),
         StoreModule.forRoot(reducers),
-        EffectsModule.forRoot(effects)
-
+        EffectsModule.forRoot(effects),
+        FirebaseUIModule.forRoot(firebaseUiAuthConfig)
     ],
     providers: [],
     bootstrap: [AppComponent]
