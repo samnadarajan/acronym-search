@@ -3,7 +3,7 @@ import {FormControl} from "@angular/forms";
 import {UpperCasePipe} from "@angular/common";
 
 @Component({
-    selector: "app-code-search",
+    selector: "app-code-search-input",
     templateUrl: "./code-search-input.component.html",
     styleUrls: ["./code-search-input.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush

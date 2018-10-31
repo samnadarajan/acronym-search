@@ -2,7 +2,7 @@ import { TestBed, inject } from "@angular/core/testing";
 
 import { AuthService } from "./auth.service";
 import {BehaviorSubject, of} from "rxjs";
-import {AngularFirestore} from "../../../../../../node_modules/@angular/fire/firestore";
+import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
 

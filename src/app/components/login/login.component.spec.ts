@@ -1,16 +1,19 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {LoginComponent} from "./login.component";
-import {MaterialModule} from "../../material/material.module";
+import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
-import {AuthModule} from "../../modules/auth/auth.module";
+import {AuthModule} from "@app/modules/auth/auth.module";
 import {BehaviorSubject, of} from "rxjs";
-import {AuthService} from "../../modules/auth/services/auth/auth.service";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
-import {SearchService} from "../../services/search/search.service";
+import {SearchService} from "@app/services/search/search.service";
+import {FirebaseUIModule} from "firebaseui-angular";
+import * as firebase from "firebase/app";
+import * as firebaseui from "firebaseui";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -29,6 +32,14 @@ const FireAuthStub = {
     authState: of({email: "test@test.com", password: "password"})
 };
 
+const firebaseUiAuthConfig: firebaseui.auth.Config = {
+    signInFlow: "popup",
+    signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    ],
+    credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
+};
+
 describe("LoginComponent", () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
@@ -43,7 +54,8 @@ describe("LoginComponent", () => {
                 AngularFirestoreModule,
                 BrowserAnimationsModule,
                 AuthModule,
-                RouterTestingModule
+                RouterTestingModule,
+                FirebaseUIModule.forRoot(firebaseUiAuthConfig),
             ],
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },

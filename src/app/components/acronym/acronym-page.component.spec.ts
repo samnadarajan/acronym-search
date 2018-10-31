@@ -3,7 +3,7 @@ import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 import {AcronymPageComponent} from "./acronym-page.component";
 import {CodeSearchInputComponent} from "../search/code-search-input.component";
 import {ResultComponent} from "../result/result.component";
-import {MaterialModule} from "../../material/material.module";
+import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {BehaviorSubject, of} from "rxjs";
@@ -12,6 +12,9 @@ import {Store, StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import * as ProjectActions from "../../store/actions/project.actions";
 import * as AcronymActions from "../../store/actions/acronym.actions";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {RouterTestingModule} from "@angular/router/testing";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -20,6 +23,14 @@ const FirestoreStub = {
             set: (_d: any) => new Promise((resolve, _reject) => resolve()),
         }),
     }),
+};
+
+const FireAuthStub = {
+    auth: (name: string) => ({
+        signInWithPopup: (provider: any) => new Promise((resolve, _reject) => resolve()),
+        signOut: () => new Promise((resolve, _reject) => resolve())
+    }),
+    authState: of({email: "test@test.com", password: "password"})
 };
 
 describe("AcronymPageComponent", () => {
@@ -41,11 +52,14 @@ describe("AcronymPageComponent", () => {
                 ReactiveFormsModule,
                 AngularFirestoreModule,
                 BrowserAnimationsModule,
+                RouterTestingModule,
                 StoreModule.forRoot({})
             ],
             providers: [
-                {provide: AngularFirestore, useValue: FirestoreStub },
-                Store
+                { provide: AngularFirestore, useValue: FirestoreStub },
+                Store,
+                { provide: AngularFireAuth, useValue: FireAuthStub },
+                AuthService
             ]
         })
             .compileComponents();
@@ -77,7 +91,7 @@ describe("AcronymPageComponent", () => {
         component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
         component.acronymResult = of({code: "", id: "2345efdr3"});
         fixture.detectChanges();
-        expect(compiled.querySelector("app-search")).toBeTruthy();
+        expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
         expect(compiled.querySelector("app-result")).toBeTruthy();
     }));
 
