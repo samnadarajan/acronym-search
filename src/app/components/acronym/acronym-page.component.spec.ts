@@ -15,6 +15,8 @@ import * as AcronymActions from "../../store/actions/acronym.actions";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AuthService} from "@app/modules/auth/services/auth/auth.service";
+import {promise} from "selenium-webdriver";
+import Promise = promise.Promise;
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -23,6 +25,9 @@ const FirestoreStub = {
             set: (_d: any) => new Promise((resolve, _reject) => resolve()),
         }),
     }),
+    doc: () => ({
+        valueChanges: () => new BehaviorSubject({foo: "bar"})
+    })
 };
 
 const FireAuthStub = {
