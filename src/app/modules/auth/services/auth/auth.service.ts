@@ -8,6 +8,7 @@ import {auth} from "firebase";
 import {User} from "../../../../model/user.model";
 import {SearchService} from "../../../../services/search/search.service";
 import {Acronym} from "../../../../model/acronym.model";
+import {FirebaseUISignInFailure, FirebaseUISignInSuccessWithAuthResult} from "firebaseui-angular";
 
 @Injectable({
   providedIn: "root"
@@ -21,7 +22,6 @@ export class AuthService {
         private searchService: SearchService,
         private afs: AngularFirestore,
         private router: Router) {
-        //// Get auth data, then get firestore user document || null
         this.user = this.afAuth.authState.pipe(
             switchMap(user => {
                 if (user) {
@@ -33,38 +33,18 @@ export class AuthService {
         );
     }
 
-    googleLogin() {
-        const provider = new auth.GoogleAuthProvider();
-        return this._oAuthLogin(provider);
+    successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult) {
+        this.router.navigate(["/acronym"]);
     }
 
-    private _oAuthLogin(provider) {
-        return this.afAuth.auth.signInWithPopup(provider)
-            .then((credential) => {
-                this.updateUserData(credential.user);
-                this.router.navigate(["/acronym"]);
-            });
+    errorCallback(errorData: FirebaseUISignInFailure) {
+        // TODO fix error callback
+        console.log(errorData);
+        console.log("error");
     }
-
-    private updateUserData(user) {
-        // Sets user data to firestore on login
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-
-        const data: User = {
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-            photoURL: user.photoURL
-        };
-
-        return userRef.set(data, { merge: true });
-
-    }
-
 
     signOut() {
         this.afAuth.auth.signOut().then(() => {
-            this.searchService.result = of([{code: "", meaning: "", description: ""}] as Acronym[]);
             this.router.navigate(["/"]);
         });
     }
