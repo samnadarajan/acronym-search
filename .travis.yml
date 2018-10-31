@@ -23,7 +23,7 @@ before_script:
 script:
 - jest
 - ng lint
-- ng build --prod
+- ng build --prod --aot=false --build-optimizer=false
 
 deploy:
   provider: firebase
