@@ -4,12 +4,12 @@ import {SearchService} from "@app/services/search/search.service";
 import {UpperCasePipe} from "@angular/common";
 
 @Component({
-    selector: "app-search",
-    templateUrl: "./search.component.html",
-    styleUrls: ["./search.component.css"],
+    selector: "app-code-search",
+    templateUrl: "./code-search.component.html",
+    styleUrls: ["./code-search.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent {
+export class CodeSearchComponent {
     code = new FormControl("");
     @Output() searchString = new EventEmitter<string>();
 

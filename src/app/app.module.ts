@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 
 import {AppComponent} from "./app.component";
 import {environment} from "../environments/environment";
-import {SearchComponent} from "./components/search/search.component";
+import {CodeSearchComponent} from "./components/search/code-search.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "./material/material.module";
@@ -44,7 +44,7 @@ const ROUTES: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        SearchComponent,
+        CodeSearchComponent,
         ResultComponent,
         LoginComponent,
         AcronymComponent,
