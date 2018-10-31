@@ -11,9 +11,9 @@ import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
 import {SearchService} from "@app/services/search/search.service";
-import {FirebaseUIModule} from "firebaseui-angular";
-import * as firebase from "firebase/app";
-import * as firebaseui from "firebaseui";
+import {promise} from "selenium-webdriver";
+import Promise = promise.Promise;
+import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -22,6 +22,9 @@ const FirestoreStub = {
             set: (_d: any) => new Promise((resolve, _reject) => resolve()),
         }),
     }),
+    doc: () => ({
+        valueChanges: () => new BehaviorSubject({foo: "bar"})
+    })
 };
 
 const FireAuthStub = {
@@ -32,17 +35,10 @@ const FireAuthStub = {
     authState: of({email: "test@test.com", password: "password"})
 };
 
-const firebaseUiAuthConfig: firebaseui.auth.Config = {
-    signInFlow: "popup",
-    signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    ],
-    credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
-};
-
 describe("LoginComponent", () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
+    let compiled;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -55,13 +51,15 @@ describe("LoginComponent", () => {
                 BrowserAnimationsModule,
                 AuthModule,
                 RouterTestingModule,
-                FirebaseUIModule.forRoot(firebaseUiAuthConfig),
             ],
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
                 { provide: AngularFireAuth, useValue: FireAuthStub },
                 AuthService,
                 SearchService
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
             ]
         })
             .compileComponents();
@@ -70,10 +68,15 @@ describe("LoginComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
+        compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
+    });
+
+    it("should have a firebase ui component", () => {
+        expect(compiled.querySelector("firebase-ui")).toBeTruthy();
     });
 });
