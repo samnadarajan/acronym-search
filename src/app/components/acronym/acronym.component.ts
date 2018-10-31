@@ -8,6 +8,7 @@ import {Projects} from "@app/model/projects.model";
 import * as AcronymActions from "../../store/actions/acronym.actions";
 import * as ProjectActions from "../../store/actions/project.actions";
 import {ISubscribe} from "@app/interfaces/subscribe.interface";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
 
 @Component({
@@ -23,7 +24,7 @@ export class AcronymComponent implements ISubscribe, OnInit, OnDestroy {
     _acronym$: SubscriptionLike;
     acronymResultState: Acronym;
 
-    constructor(public store: Store<AppState>) {
+    constructor(public store: Store<AppState>, public authService: AuthService) {
         this.acronymResult = this.store.pipe(select(state => state.acronym));
         this.projects = this.store.pipe(select(state => state.projects));
         this.setupSubscriptions();

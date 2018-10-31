@@ -1,11 +1,43 @@
-<div style="text-align:center" class="page">
-        <app-project-select [projects]="(projects | async)['list']"></app-project-select>
+<mat-sidenav-container [style.height]="'100%'" (backdropClick)="sidenav.close()">
+    <mat-sidenav #sidenav [style.width]="'15%'"> <!--TODO FIX THIS width to flex layout-->
+        <div *ngIf="authService.user | async as user" fxLayout="row">
+            <mat-list [style.width]="'100%'">
+                <mat-list-item>
+                    <img class="user-img mr-1" [src]="user.photoURL"> {{user.displayName}}
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button="">Projects</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button="">Report Issue</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button (click)="authService.signOut()">Logout</button>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div fxLayout="row" fxLayoutAlign="start">
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
 
-        <ng-container *ngIf="(projects | async)['selected'] as selectedProject">
-            <app-code-search (searchString)="beginSearch($event, selectedProject)"></app-code-search>
+        <div style="text-align:center" class="page">
+            <app-project-select [projects]="(projects | async)['list']"></app-project-select>
 
-            <mat-spinner aria-label="loading acronym results" *ngIf="(acronymResult | async)['loading']"></mat-spinner>
-            <app-result [result]="(acronymResult | async)['acronym']" (saveAcronym)="save($event, selectedProject)"></app-result>
-        </ng-container>
+            <ng-container *ngIf="(projects | async)['selected'] as selectedProject">
+                <app-code-search (searchString)="beginSearch($event, selectedProject)"></app-code-search>
 
-</div>
+                <mat-spinner aria-label="loading acronym results" *ngIf="(acronymResult | async)['loading']"></mat-spinner>
+                <app-result [result]="(acronymResult | async)['acronym']" (saveAcronym)="save($event, selectedProject)"></app-result>
+            </ng-container>
+
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
