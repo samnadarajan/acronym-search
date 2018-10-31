@@ -1,6 +1,6 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 
-import { CodeSearchComponent } from "./code-search.component";
+import { CodeSearchInputComponent } from "./code-search-input.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialModule} from "../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -17,15 +17,15 @@ const FirestoreStub = {
     }),
 };
 
-describe("CodeSearchComponent", () => {
-    let c: CodeSearchComponent;
-    let f: ComponentFixture<CodeSearchComponent>;
+describe("CodeSearchInputComponent", () => {
+    let c: CodeSearchInputComponent;
+    let f: ComponentFixture<CodeSearchInputComponent>;
     let compiled;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                CodeSearchComponent
+                CodeSearchInputComponent
             ],
             imports: [
                 MaterialModule,
@@ -43,7 +43,7 @@ describe("CodeSearchComponent", () => {
         }));
 
     beforeEach(() => {
-        f = TestBed.createComponent(CodeSearchComponent);
+        f = TestBed.createComponent(CodeSearchInputComponent);
         c = f.componentInstance;
         compiled = f.debugElement.nativeElement;
         f.detectChanges();

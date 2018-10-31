@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {AcronymComponent} from "./acronym.component";
-import {CodeSearchComponent} from "../search/code-search.component";
+import {CodeSearchInputComponent} from "../search/code-search-input.component";
 import {ResultComponent} from "../result/result.component";
 import {MaterialModule} from "../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -31,7 +31,7 @@ describe("AcronymComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 AcronymComponent,
-                CodeSearchComponent,
+                CodeSearchInputComponent,
                 ResultComponent,
                 ProjectSelectComponent
             ],
