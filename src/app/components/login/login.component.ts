@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {AuthService} from "../../modules/auth/services/auth/auth.service";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
 @Component({
     selector: "app-login",

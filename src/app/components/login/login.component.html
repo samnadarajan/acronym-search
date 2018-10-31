@@ -1,6 +1,5 @@
-<div fxLayout="row" fxLayoutAlign="center center" >
-    <mat-card *ngIf="!(authService.user | async)">
-        <mat-card-title>Login</mat-card-title>
-        <button (click)="authService.googleLogin()">Login with google</button>
-    </mat-card>
-</div>
+<h2 fxLayout="row" fxLayoutAlign="center">
+    Login
+</h2>
+<firebase-ui (signInSuccessWithAuthResult)="authService.successCallback($event)"
+             (signInFailure)="authService.errorCallback($event)"></firebase-ui>
