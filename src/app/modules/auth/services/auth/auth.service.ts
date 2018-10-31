@@ -2,12 +2,10 @@ import { Injectable } from "@angular/core";
 import {Observable, of} from "rxjs";
 import {Router} from "@angular/router";
 import {switchMap} from "rxjs/operators";
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
+import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {auth} from "firebase";
-import {User} from "../../../../model/user.model";
-import {SearchService} from "../../../../services/search/search.service";
-import {Acronym} from "../../../../model/acronym.model";
+import {User} from "@app/model/user.model";
+import {SearchService} from "@app/services/search/search.service";
 import {FirebaseUISignInFailure, FirebaseUISignInSuccessWithAuthResult} from "firebaseui-angular";
 
 @Injectable({
