@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
-import {AcronymComponent} from "./acronym.component";
+import {AcronymPageComponent} from "./acronym-page.component";
 import {CodeSearchInputComponent} from "../search/code-search-input.component";
 import {ResultComponent} from "../result/result.component";
 import {MaterialModule} from "../../material/material.module";
@@ -22,15 +22,15 @@ const FirestoreStub = {
     }),
 };
 
-describe("AcronymComponent", () => {
-    let component: AcronymComponent;
-    let fixture: ComponentFixture<AcronymComponent>;
+describe("AcronymPageComponent", () => {
+    let component: AcronymPageComponent;
+    let fixture: ComponentFixture<AcronymPageComponent>;
     let compiled;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                AcronymComponent,
+                AcronymPageComponent,
                 CodeSearchInputComponent,
                 ResultComponent,
                 ProjectSelectComponent
@@ -52,7 +52,7 @@ describe("AcronymComponent", () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AcronymComponent);
+        fixture = TestBed.createComponent(AcronymPageComponent);
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
         spyOn(component.store, "pipe").and.callThrough();

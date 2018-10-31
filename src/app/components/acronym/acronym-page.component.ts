@@ -13,11 +13,11 @@ import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
 @Component({
     selector: "app-acronym",
-    templateUrl: "./acronym.component.html",
-    styleUrls: ["./acronym.component.css"],
+    templateUrl: "./acronym-page.component.html",
+    styleUrls: ["./acronym-page.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AcronymComponent implements ISubscribe, OnInit, OnDestroy {
+export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     acronymResult: Observable<Acronym>;
     projects: Observable<Projects>;
 
