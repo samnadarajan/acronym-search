@@ -1,6 +1,7 @@
 <mat-sidenav-container [style.height]="'100%'" (backdropClick)="sidenav.close()">
     <mat-sidenav #sidenav [style.width]="'15%'"> <!--TODO FIX THIS width to flex layout-->
-        <div *ngIf="authService.user | async as user" fxLayout="row">
+
+        <div *ngIf="(authUser | async)['user'] as user" fxLayout="row">
             <mat-list [style.width]="'100%'">
                 <mat-list-item>
                     <img class="user-img mr-1" [src]="user.photoURL"> {{user.displayName}}
@@ -22,7 +23,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <div fxLayout="row" fxLayoutAlign="start">
-            <button mat-icon-button (click)="sidenav.toggle()">
+            <button mat-icon-button (click)="sidenav.open()">
                 <mat-icon>menu</mat-icon>
             </button>
         </div>

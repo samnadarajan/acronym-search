@@ -32,6 +32,7 @@ const FirestoreStub = {
 
 const FireAuthStub = {
     auth: (name: string) => ({
+        onAuthStateChanged: () => new Promise((resolve, _reject) => resolve()),
         signInWithPopup: (provider: any) => new Promise((resolve, _reject) => resolve()),
         signOut: () => new Promise((resolve, _reject) => resolve())
     }),
@@ -63,8 +64,7 @@ describe("AcronymPageComponent", () => {
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
                 Store,
-                { provide: AngularFireAuth, useValue: FireAuthStub },
-                AuthService
+                { provide: AngularFireAuth, useValue: FireAuthStub }
             ]
         })
             .compileComponents();
@@ -95,6 +95,7 @@ describe("AcronymPageComponent", () => {
     it("should have the search and result component", async(() => {
         component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
         component.acronymResult = of({code: "", id: "2345efdr3"});
+        component.authUser = of({uid: "23423f", email: "test@test.com"});
         fixture.detectChanges();
         expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
         expect(compiled.querySelector("app-result")).toBeTruthy();
@@ -133,5 +134,17 @@ describe("AcronymPageComponent", () => {
     it("should destroy the component observable OnDestroy", () => {
         component.ngOnDestroy();
         expect(component._acronym$.unsubscribe).toHaveBeenCalled();
+    });
+
+    it("should have a side navigation", () => {
+
+    });
+
+    it("should have a link for projects, reporting issues, and logging out", () => {
+
+    });
+
+    it("should log the user out when logging out", () => {
+
     });
 });
