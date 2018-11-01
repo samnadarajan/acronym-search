@@ -1,5 +1,5 @@
 import * as AcronymActions from "../actions/acronym.actions";
-import {Acronym} from "../../model/acronym.model";
+import {Acronym} from "@app/model/acronym.model";
 
 export interface AcronymState {
     acronym: Acronym;
