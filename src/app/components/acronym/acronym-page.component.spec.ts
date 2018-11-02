@@ -31,11 +31,9 @@ const FirestoreStub = {
 };
 
 const FireAuthStub = {
-    auth: (name: string) => ({
-        onAuthStateChanged: () => new Promise((resolve, _reject) => resolve()),
-        signInWithPopup: (provider: any) => new Promise((resolve, _reject) => resolve()),
-        signOut: () => new Promise((resolve, _reject) => resolve())
-    }),
+    auth: {
+        onAuthStateChanged: () => {}
+    },
     authState: of({email: "test@test.com", password: "password"})
 };
 
