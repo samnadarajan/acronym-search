@@ -93,7 +93,7 @@ describe("AcronymPageComponent", () => {
     it("should have the search and result component", async(() => {
         component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
         component.acronymResult = of({code: "", id: "2345efdr3"});
-        component.authUser = of({uid: "23423f", email: "test@test.com"});
+        component.user$ = of({uid: "23423f", email: "test@test.com"});
         fixture.detectChanges();
         expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
         expect(compiled.querySelector("app-result")).toBeTruthy();
@@ -142,7 +142,19 @@ describe("AcronymPageComponent", () => {
 
     });
 
-    it("should log the user out when logging out", () => {
+    it("should log the user out when logging out", async(() => {
+    component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
+    component.acronymResult = of({code: "", id: "2345efdr3"});
+        spyOn(component.authService, "signOut");
+        component.user$ = of({uid: "23423f", email: "test@test.com"});
 
-    });
+        fixture.detectChanges();
+
+        const logoutButton = compiled.querySelector("button.logout");
+        logoutButton.click();
+
+        fixture.detectChanges();
+
+        expect(component.authService.signOut).toHaveBeenCalled();
+    }));
 });
