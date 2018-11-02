@@ -1,38 +1,41 @@
-import { Injectable } from "@angular/core";
-import {Observable, of} from "rxjs";
+import {Injectable, NgZone} from "@angular/core";
 import {Router} from "@angular/router";
-import {switchMap} from "rxjs/operators";
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {User} from "@app/model/user.model";
 import {SearchService} from "@app/services/search/search.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "@app/store/app.state";
+import * as AuthUserActions from "@app/store/actions/authUser.actions";
+import {User} from "@app/model/user.model";
+import {auth} from "firebase";
 import {FirebaseUISignInFailure, FirebaseUISignInSuccessWithAuthResult} from "firebaseui-angular";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-
-    user: Observable<User>;
-
     constructor(
+        public store: Store<AppState>,
         private afAuth: AngularFireAuth,
         private searchService: SearchService,
         private afs: AngularFirestore,
-        private router: Router) {
-        this.user = this.afAuth.authState.pipe(
-            switchMap(user => {
-                if (user) {
-                    return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-                } else {
-                    return of(null);
-                }
-            })
-        );
+        private router: Router,
+        private _zone: NgZone) {
+        this.afAuth.auth.onAuthStateChanged((user) => {
+            if (user) {
+                const {uid, email, photoURL, displayName} = user;
+                const newUser = {uid, email, photoURL, displayName}
+                this.store.dispatch(new AuthUserActions.Login(newUser));
+            } else {
+                this.store.dispatch(new AuthUserActions.Logout());
+            }
+        });
     }
 
     successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult) {
-        this.router.navigate(["/acronym"]);
+            this._zone.run(() => { // TODO address this properly
+                this.router.navigate(["/acronym"]);
+            });
     }
 
     errorCallback(errorData: FirebaseUISignInFailure) {
@@ -41,9 +44,9 @@ export class AuthService {
         console.log("error");
     }
 
-    signOut() {
+        signOut() {
         this.afAuth.auth.signOut().then(() => {
-            this.router.navigate(["/"]);
+            this.router.navigate(["/login"]);
         });
     }
 
