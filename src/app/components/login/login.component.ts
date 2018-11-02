@@ -8,5 +8,6 @@ import {AuthService} from "@app/modules/auth/services/auth/auth.service";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
+
     constructor(public authService: AuthService) {}
 }
