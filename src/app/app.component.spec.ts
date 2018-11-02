@@ -9,6 +9,8 @@ import {ResultComponent} from "./components/result/result.component";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AngularFireAuth} from "@angular/fire/auth";
+import {Store, StoreModule} from "@ngrx/store";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -20,10 +22,9 @@ const FirestoreStub = {
 };
 
 const FireAuthStub = {
-    auth: (name: string) => ({
-        signInWithPopup: (provider: any) => new Promise((resolve, _reject) => resolve()),
-        signOut: () => new Promise((resolve, _reject) => resolve())
-    }),
+    auth: {
+        onAuthStateChanged: () => {}
+    },
     authState: of({email: "test@test.com", password: "password"})
 };
 
@@ -43,11 +44,14 @@ describe("AppComponent", () => {
                 ReactiveFormsModule,
                 AngularFirestoreModule,
                 BrowserAnimationsModule,
-                RouterTestingModule
+                RouterTestingModule,
+                StoreModule.forRoot({})
             ],
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
-                { provide: AngularFireAuth, useValue: FireAuthStub }
+                { provide: AngularFireAuth, useValue: FireAuthStub },
+                AuthService,
+                Store
             ]
         }).compileComponents();
 
