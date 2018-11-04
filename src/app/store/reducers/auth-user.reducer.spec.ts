@@ -8,4 +8,4 @@ describe("AuthUserReducer", () => {
 
         expect(state).toBe(initialState);
     });
-})
+});

@@ -22,7 +22,7 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     acronymResult$: Observable<Acronym>;
     acronymLoading$: Observable<boolean>;
     projectList$: Observable<Project[]>;
-    selectedProject$: Observable<Project>
+    selectedProject$: Observable<Project>;
     user$: Observable<User>;
 
     _acronym$: SubscriptionLike;

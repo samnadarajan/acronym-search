@@ -24,7 +24,7 @@ export class AuthService {
         this.afAuth.auth.onAuthStateChanged((user) => {
             if (user) {
                 const {uid, email, photoURL, displayName} = user;
-                const newUser = {uid, email, photoURL, displayName}
+                const newUser = {uid, email, photoURL, displayName};
                 this.store.dispatch(new AuthUserActions.Login(newUser));
             } else {
                 this.store.dispatch(new AuthUserActions.Logout());
