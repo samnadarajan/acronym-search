@@ -75,4 +75,35 @@ describe("Project Effects", () => {
             expect(effects.loadProjects$).toBeObservable(expected);
         });
     });
+
+    describe("Add Project", () => {
+        it("should return an AddProjectSuccess action, with a project, on success", () => {
+            const payload = {name: "BOSS"};
+            const action = new fromActions.AddProject(payload);
+            const result = new fromActions.AddProjectSuccess();
+
+            actions = hot("-a", {a: action});
+            const response = cold("-c|", {c: payload});
+            const expected = cold("--b", {b: result});
+
+            projectService.addProject = jest.fn(() => response);
+
+            expect(effects.addProject$).toBeObservable(expected);
+        });
+
+        // it("should return an AddProjectFail action, on fail", () => {
+        //     const payload = {name: "BOSS"};
+        //     const action = new fromActions.AddProject(payload);
+        //     const error = new Error();
+        //     const result = new fromActions.AddProjectFail(error);
+        //
+        //     actions = hot("-a", {a: action});
+        //     const response = cold("-#|", {}, error);
+        //     const expected = cold("--(b|)", {b: result});
+        //
+        //     projectService.addProject = jest.fn(() => response);
+        //
+        //     expect(effects.addProject$).toBeObservable(expected);
+        // });
+    });
 });
