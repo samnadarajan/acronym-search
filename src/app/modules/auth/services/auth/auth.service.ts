@@ -1,71 +1,56 @@
-import { Injectable } from "@angular/core";
-import {Observable, of} from "rxjs";
+import {Injectable, NgZone} from "@angular/core";
 import {Router} from "@angular/router";
-import {switchMap} from "rxjs/operators";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
+import {SearchService} from "@app/services/search/search.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "@app/store/app.state";
+import * as AuthUserActions from "@app/store/actions/auth-user.actions";
+import {User} from "@app/model/user.model";
 import {auth} from "firebase";
-import {User} from "../../../../model/user.model";
-import {SearchService} from "../../../../services/search/search.service";
-import {Acronym} from "../../../../model/acronym.model";
+import {FirebaseUISignInFailure, FirebaseUISignInSuccessWithAuthResult} from "firebaseui-angular";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-
-    user: Observable<User>;
-
     constructor(
+        public store: Store<AppState>,
         private afAuth: AngularFireAuth,
         private searchService: SearchService,
         private afs: AngularFirestore,
-        private router: Router) {
-        //// Get auth data, then get firestore user document || null
-        this.user = this.afAuth.authState.pipe(
-            switchMap(user => {
-                if (user) {
-                    return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-                } else {
-                    return of(null);
-                }
-            })
-        );
+        private router: Router,
+        private _zone: NgZone) {
+        this.afAuth.auth.onAuthStateChanged((user) => {
+            if (user) {
+                const {uid, email, photoURL, displayName} = user;
+                const newUser = {uid, email, photoURL, displayName};
+                this.store.dispatch(new AuthUserActions.Login(newUser));
+                this.navigate("/acronym");
+            } else {
+                this.store.dispatch(new AuthUserActions.Logout());
+                this.navigate("/login");
+            }
+        });
     }
 
-    googleLogin() {
-        const provider = new auth.GoogleAuthProvider();
-        return this._oAuthLogin(provider);
+    successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult) {}
+
+    errorCallback(errorData: FirebaseUISignInFailure) {
+        // TODO fix error callback
+        console.log(errorData);
+        console.log("error");
     }
 
-    private _oAuthLogin(provider) {
-        return this.afAuth.auth.signInWithPopup(provider)
-            .then((credential) => {
-                this.updateUserData(credential.user);
-                this.router.navigate(["/acronym"]);
-            });
-    }
-
-    private updateUserData(user) {
-        // Sets user data to firestore on login
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-
-        const data: User = {
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-            photoURL: user.photoURL
-        };
-
-        return userRef.set(data, { merge: true });
-
-    }
-
-
-    signOut() {
+    logOut() {
         this.afAuth.auth.signOut().then(() => {
-            this.searchService.result = of([{code: "", meaning: "", description: ""}] as Acronym[]);
-            this.router.navigate(["/"]);
+            this.router.navigate(["/login"]);
+        });
+    }
+
+    navigate(route: string) {
+        this._zone.run(() => { // TODO address this properly
+            this.router.navigate([route]);
         });
     }
 

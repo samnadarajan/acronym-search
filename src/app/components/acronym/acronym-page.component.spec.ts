@@ -1,9 +1,9 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
-import {AcronymComponent} from "./acronym.component";
-import {SearchComponent} from "../search/search.component";
+import {AcronymPageComponent} from "./acronym-page.component";
+import {CodeSearchInputComponent} from "../search/code-search-input.component";
 import {ResultComponent} from "../result/result.component";
-import {MaterialModule} from "../../material/material.module";
+import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {BehaviorSubject, of} from "rxjs";
@@ -12,6 +12,10 @@ import {Store, StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import * as ProjectActions from "../../store/actions/project.actions";
 import * as AcronymActions from "../../store/actions/acronym.actions";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {RouterTestingModule} from "@angular/router/testing";
+import {promise} from "selenium-webdriver";
+import Promise = promise.Promise;
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -20,18 +24,28 @@ const FirestoreStub = {
             set: (_d: any) => new Promise((resolve, _reject) => resolve()),
         }),
     }),
+    doc: () => ({
+        valueChanges: () => new BehaviorSubject({foo: "bar"})
+    })
 };
 
-describe("AcronymComponent", () => {
-    let component: AcronymComponent;
-    let fixture: ComponentFixture<AcronymComponent>;
+const FireAuthStub = {
+    auth: {
+        onAuthStateChanged: () => {}
+    },
+    authState: of({email: "test@test.com", password: "password"})
+};
+
+describe("AcronymPageComponent", () => {
+    let component: AcronymPageComponent;
+    let fixture: ComponentFixture<AcronymPageComponent>;
     let compiled;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                AcronymComponent,
-                SearchComponent,
+                AcronymPageComponent,
+                CodeSearchInputComponent,
                 ResultComponent,
                 ProjectSelectComponent
             ],
@@ -41,22 +55,23 @@ describe("AcronymComponent", () => {
                 ReactiveFormsModule,
                 AngularFirestoreModule,
                 BrowserAnimationsModule,
+                RouterTestingModule,
                 StoreModule.forRoot({})
             ],
             providers: [
-                {provide: AngularFirestore, useValue: FirestoreStub },
-                Store
+                { provide: AngularFirestore, useValue: FirestoreStub },
+                { provide: AngularFireAuth, useValue: FireAuthStub },
             ]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AcronymComponent);
+        fixture = TestBed.createComponent(AcronymPageComponent);
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
-        spyOn(component.store, "pipe").and.callThrough();
-        spyOn(component.store, "dispatch");
+        // spyOn(component.store, "pipe");
+        spyOn(component.store, "dispatch").and.callThrough();
         spyOn(component._acronym$, "unsubscribe");
     });
 
@@ -74,10 +89,12 @@ describe("AcronymComponent", () => {
     });
 
     it("should have the search and result component", async(() => {
-        component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
-        component.acronymResult = of({code: "", id: "2345efdr3"});
+        component.projectList$ = of([]);
+        component.acronymResult$ = of({code: "", id: "2345efdr3"});
+        component.user$ = of({uid: "23423f", email: "test@test.com"});
+        component.selectedProject$ = of({name: "TEM"});
         fixture.detectChanges();
-        expect(compiled.querySelector("app-search")).toBeTruthy();
+        expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
         expect(compiled.querySelector("app-result")).toBeTruthy();
     }));
 
@@ -115,4 +132,50 @@ describe("AcronymComponent", () => {
         component.ngOnDestroy();
         expect(component._acronym$.unsubscribe).toHaveBeenCalled();
     });
+
+    it("should have a menu with links for a project", () => {
+        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
+        fixture.detectChanges();
+
+        const projectsButton = compiled.querySelectorAll("button.projects");
+        expect(projectsButton).toBeTruthy();
+    });
+
+    it("should have a menu with a link for reporting issues", () => {
+        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
+        fixture.detectChanges();
+
+        const reportIssuesButton = compiled.querySelector("button.report");
+        expect(reportIssuesButton).toBeTruthy();
+    });
+
+    it("should have a menu with a link for logging out", () => {
+        spyOn(component.authService, "logOut");
+        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
+        fixture.detectChanges();
+
+        const logoutButton = compiled.querySelector("button.logout");
+        expect(logoutButton).toBeTruthy();
+
+        logoutButton.click();
+        fixture.detectChanges();
+
+        expect(component.authService.logOut).toHaveBeenCalled();
+    });
+
+    it("should log the user out when logging out", async(() => {
+        component.projectList$ = of([]);
+        component.acronymResult$ = of({code: "", id: "2345efdr3"});
+        spyOn(component.authService, "logOut");
+        component.user$ = of({uid: "23423f", email: "test@test.com"});
+
+        fixture.detectChanges();
+
+        const logoutButton = compiled.querySelector("button.logout");
+        logoutButton.click();
+
+        fixture.detectChanges();
+
+        expect(component.authService.logOut).toHaveBeenCalled();
+    }));
 });

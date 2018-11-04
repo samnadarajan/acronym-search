@@ -1,16 +1,17 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {LoginComponent} from "./login.component";
-import {MaterialModule} from "../../material/material.module";
+import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
-import {AuthModule} from "../../modules/auth/auth.module";
+import {AuthModule} from "@app/modules/auth/auth.module";
 import {BehaviorSubject, of} from "rxjs";
-import {AuthService} from "../../modules/auth/services/auth/auth.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
-import {SearchService} from "../../services/search/search.service";
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {StoreModule} from "@ngrx/store";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -19,19 +20,22 @@ const FirestoreStub = {
             set: (_d: any) => new Promise((resolve, _reject) => resolve()),
         }),
     }),
+    doc: () => ({
+        valueChanges: () => new BehaviorSubject({foo: "bar"})
+    })
 };
 
 const FireAuthStub = {
-    auth: (name: string) => ({
-        signInWithPopup: (provider: any) => new Promise((resolve, _reject) => resolve()),
-        signOut: () => new Promise((resolve, _reject) => resolve())
-    }),
+    auth: {
+        onAuthStateChanged: () => {}
+    },
     authState: of({email: "test@test.com", password: "password"})
 };
 
 describe("LoginComponent", () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
+    let compiled;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -43,13 +47,16 @@ describe("LoginComponent", () => {
                 AngularFirestoreModule,
                 BrowserAnimationsModule,
                 AuthModule,
-                RouterTestingModule
+                RouterTestingModule,
+                StoreModule.forRoot({})
             ],
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
                 { provide: AngularFireAuth, useValue: FireAuthStub },
-                AuthService,
-                SearchService
+                AuthService
+            ],
+            schemas: [
+                NO_ERRORS_SCHEMA
             ]
         })
             .compileComponents();
@@ -58,10 +65,15 @@ describe("LoginComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
+        compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
+    });
+
+    it("should have a firebase ui component", () => {
+        expect(compiled.querySelector("firebase-ui")).toBeTruthy();
     });
 });

@@ -1,0 +1,44 @@
+<mat-sidenav-container [style.height]="'100%'" (backdropClick)="sidenav.close()">
+    <mat-sidenav #sidenav [style.width]="'15%'"> <!--TODO FIX THIS width to flex layout-->
+
+        <div *ngIf="(user$ | async) as user" fxLayout="row">
+            <mat-list [style.width]="'100%'">
+                <mat-list-item>
+                    <img class="user-img mr-1" [src]="user?.photoURL"> {{user?.displayName}}
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button class="projects">Projects</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button class="report">Report Issue</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button class="logout" (click)="authService.logOut()">Logout</button>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div fxLayout="row" fxLayoutAlign="start">
+            <button mat-icon-button (click)="sidenav.open()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+
+        <div style="text-align:center" class="page">
+            <app-project-select [projects]="(projectList$ | async)"></app-project-select>
+
+            <ng-container *ngIf="(selectedProject$ | async) as selectedProject">
+                <app-code-search-input (searchString)="beginSearch($event, selectedProject)"></app-code-search-input>
+
+                <mat-spinner aria-label="loading acronym results" *ngIf="(acronymLoading$ | async)"></mat-spinner>
+                <app-result [result]="(acronymResult$ | async)" (saveAcronym)="save($event, selectedProject)"></app-result>
+            </ng-container>
+
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

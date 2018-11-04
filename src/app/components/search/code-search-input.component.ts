@@ -1,19 +1,18 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Output} from "@angular/core";
 import {FormControl} from "@angular/forms";
-import {SearchService} from "@app/services/search/search.service";
 import {UpperCasePipe} from "@angular/common";
 
 @Component({
-    selector: "app-search",
-    templateUrl: "./search.component.html",
-    styleUrls: ["./search.component.css"],
+    selector: "app-code-search-input",
+    templateUrl: "./code-search-input.component.html",
+    styleUrls: ["./code-search-input.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent {
+export class CodeSearchInputComponent {
     code = new FormControl("");
     @Output() searchString = new EventEmitter<string>();
 
-    constructor(public searchService: SearchService) { }
+    constructor() { }
 
     beginSearch(codeString: string) {
         if (codeString.length >= 2) {

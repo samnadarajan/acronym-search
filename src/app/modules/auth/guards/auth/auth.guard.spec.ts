@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {BehaviorSubject, of} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AngularFirestore} from "@angular/fire/firestore";
+import {Store, StoreModule} from "@ngrx/store";
 
 const FireAuthStub = {
     auth: (name: string) => ({
@@ -28,13 +29,15 @@ describe("AuthGuard", () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule
+                RouterTestingModule,
+                StoreModule.forRoot({})
             ],
             providers: [
                 AuthGuard,
                 AuthService,
                 { provide: AngularFireAuth, useValue: FireAuthStub },
-                { provide: AngularFirestore, useValue: FirestoreStub }
+                { provide: AngularFirestore, useValue: FirestoreStub },
+                Store
             ]
         });
     });

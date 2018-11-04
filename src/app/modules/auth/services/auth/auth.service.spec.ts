@@ -2,9 +2,10 @@ import { TestBed, inject } from "@angular/core/testing";
 
 import { AuthService } from "./auth.service";
 import {BehaviorSubject, of} from "rxjs";
-import {AngularFirestore} from "../../../../../../node_modules/@angular/fire/firestore";
+import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
+import {Store, StoreModule} from "@ngrx/store";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -16,10 +17,9 @@ const FirestoreStub = {
 };
 
 const FireAuthStub = {
-    auth: (name: string) => ({
-        signInWithPopup: (provider: any) => new Promise((resolve, _reject) => resolve()),
-        signOut: () => new Promise((resolve, _reject) => resolve())
-    }),
+    auth: {
+        onAuthStateChanged: () => {}
+    },
     authState: of({email: "test@test.com", password: "password"})
 };
 
@@ -27,10 +27,12 @@ describe("AuthService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
         imports: [
-            RouterTestingModule
+            RouterTestingModule,
+            StoreModule.forRoot({})
         ],
         providers: [
             AuthService,
+            Store,
             { provide: AngularFirestore, useValue: FirestoreStub },
             { provide: AngularFireAuth, useValue: FireAuthStub },
         ]

@@ -4,29 +4,38 @@ import {AppState} from "@app/store/app.state";
 import {Observable, SubscriptionLike} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {Project} from "@app/model/project.model";
-import {Projects} from "@app/model/projects.model";
 import * as AcronymActions from "../../store/actions/acronym.actions";
 import * as ProjectActions from "../../store/actions/project.actions";
 import {ISubscribe} from "@app/interfaces/subscribe.interface";
+import {User} from "@app/model/user.model";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
+import {map} from "rxjs/operators";
 
 
 @Component({
     selector: "app-acronym",
-    templateUrl: "./acronym.component.html",
-    styleUrls: ["./acronym.component.css"],
+    templateUrl: "./acronym-page.component.html",
+    styleUrls: ["./acronym-page.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AcronymComponent implements ISubscribe, OnInit, OnDestroy {
-    acronymResult: Observable<Acronym>;
-    projects: Observable<Projects>;
+export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
+    acronymResult$: Observable<Acronym>;
+    acronymLoading$: Observable<boolean>;
+    projectList$: Observable<Project[]>;
+    selectedProject$: Observable<Project>;
+    user$: Observable<User>;
 
     _acronym$: SubscriptionLike;
     acronymResultState: Acronym;
 
-    constructor(public store: Store<AppState>) {
-        this.acronymResult = this.store.pipe(select(state => state.acronym));
-        this.projects = this.store.pipe(select(state => state.projects));
+    constructor(public store: Store<AppState>, public authService: AuthService) {
+        this.acronymResult$ = this.store.pipe(select(state => state.acronym), map(data => data ? data["acronym"] : null));
+        this.acronymLoading$ = this.store.pipe(select(state => state.acronym), map(data => data ? data["loading"] : null));
+        this.projectList$ = this.store.pipe(select(state => state.projects), map(data => data ? data["list"] : null));
+        this.selectedProject$ = this.store.pipe(select(state => state.projects), map(data => data ? data["selected"] : null));
+        this.user$ = this.store.pipe(select(state => state.authUser), map(data => data ? data["user"] : null));
         this.setupSubscriptions();
+
         this.acronymResultState = {code: "", project: ""};
     }
 
@@ -35,7 +44,7 @@ export class AcronymComponent implements ISubscribe, OnInit, OnDestroy {
     }
 
     setupSubscriptions() {
-        this._acronym$ = this.acronymResult.subscribe(data => {
+        this._acronym$ = this.acronymResult$.subscribe(data => {
             if (data && data["acronym"]) {
                 this.acronymResultState = data["acronym"];
             }
@@ -58,6 +67,8 @@ export class AcronymComponent implements ISubscribe, OnInit, OnDestroy {
     }
 
     destroySubscriptions() {
-        this._acronym$.unsubscribe();
+        if (this._acronym$) {
+            this._acronym$.unsubscribe();
+        }
     }
 }

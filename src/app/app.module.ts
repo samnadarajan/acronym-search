@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 
 import {AppComponent} from "./app.component";
 import {environment} from "../environments/environment";
-import {SearchComponent} from "./components/search/search.component";
+import {CodeSearchInputComponent} from "./components/search/code-search-input.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "./material/material.module";
@@ -13,7 +13,7 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from "./components/login/login.component";
-import { AcronymComponent } from "./components/acronym/acronym.component";
+import { AcronymPageComponent } from "./components/acronym/acronym-page.component";
 import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
 import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -23,19 +23,31 @@ import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
 import {StoreModule} from "@ngrx/store";
 import {NgxMaskModule} from "ngx-mask";
+import {FirebaseUIModule} from "firebaseui-angular";
+import * as firebase from "firebase/app";
+import * as firebaseui from "firebaseui";
+
+const firebaseUiAuthConfig: firebaseui.auth.Config = {
+    signInFlow: "popup",
+    signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    ],
+    credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
+};
 
 const ROUTES: Routes = [
-    {path: "acronym", component: AcronymComponent, canActivate: [AuthGuard]},
+    {path: "acronym", component: AcronymPageComponent, canActivate: [AuthGuard]},
+    {path: "login", component: LoginComponent},
     {path: "", component: LoginComponent}
 ];
 
 @NgModule({
     declarations: [
         AppComponent,
-        SearchComponent,
+        CodeSearchInputComponent,
         ResultComponent,
         LoginComponent,
-        AcronymComponent,
+        AcronymPageComponent,
         ProjectSelectComponent,
         UppercaseDirective,
         ResultComponent,
@@ -54,8 +66,8 @@ const ROUTES: Routes = [
         FlexLayoutModule,
         NgxMaskModule.forRoot(),
         StoreModule.forRoot(reducers),
-        EffectsModule.forRoot(effects)
-
+        EffectsModule.forRoot(effects),
+        FirebaseUIModule.forRoot(firebaseUiAuthConfig)
     ],
     providers: [],
     bootstrap: [AppComponent]
