@@ -10,6 +10,8 @@ import {ISubscribe} from "@app/interfaces/subscribe.interface";
 import {User} from "@app/model/user.model";
 import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 import {map} from "rxjs/operators";
+import {MatDialog} from "@angular/material";
+import {ProjectModalComponent} from "@app/components/project-modal/project-modal.component";
 
 
 @Component({
@@ -28,7 +30,7 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     _acronym$: SubscriptionLike;
     acronymResultState: Acronym;
 
-    constructor(public store: Store<AppState>, public authService: AuthService) {
+    constructor(public store: Store<AppState>, public authService: AuthService, public dialog: MatDialog) {
         this.acronymResult$ = this.store.pipe(select(state => state.acronym), map(data => data ? data["acronym"] : null));
         this.acronymLoading$ = this.store.pipe(select(state => state.acronym), map(data => data ? data["loading"] : null));
         this.projectList$ = this.store.pipe(select(state => state.projects), map(data => data ? data["list"] : null));
@@ -60,6 +62,15 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     save(acronym: Acronym, project: Project) {
         acronym.project = project.name;
         this.store.dispatch(new AcronymActions.SaveAcronym(acronym));
+    }
+
+    openProjectsDialog() {
+        const dialogRef = this.dialog.open(ProjectModalComponent, {
+            data: {
+                projectList: this.projectList$,
+            },
+            width: "500px"
+        });
     }
 
     ngOnDestroy() {
