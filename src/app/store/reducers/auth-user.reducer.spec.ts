@@ -1,5 +1,5 @@
 import * as authUserReducer from "./auth-user.reducer";
-import * as fromAction from "@app/store/actions/authUser.actions";
+import * as fromAction from "@app/store/actions/auth-user.actions";
 
 describe("AuthUserReducer", () => {
     it("should return the default state", () => {

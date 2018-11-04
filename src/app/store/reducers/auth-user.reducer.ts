@@ -1,4 +1,4 @@
-import * as AuthUserActions from "../actions/authUser.actions";
+import * as AuthUserActions from "../actions/auth-user.actions";
 import {User} from "@app/model/user.model";
 
 export interface AuthUserState {

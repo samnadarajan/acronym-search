@@ -5,7 +5,7 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import {SearchService} from "@app/services/search/search.service";
 import {Store} from "@ngrx/store";
 import {AppState} from "@app/store/app.state";
-import * as AuthUserActions from "@app/store/actions/authUser.actions";
+import * as AuthUserActions from "@app/store/actions/auth-user.actions";
 import {User} from "@app/model/user.model";
 import {auth} from "firebase";
 import {FirebaseUISignInFailure, FirebaseUISignInSuccessWithAuthResult} from "firebaseui-angular";

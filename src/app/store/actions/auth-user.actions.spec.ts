@@ -1,4 +1,4 @@
-import * as fromActions from "@app/store/actions/authUser.actions";
+import * as fromActions from "@app/store/actions/auth-user.actions";
 
 describe("Auth User Actions", () => {
     it("should create the Login action", () => {
