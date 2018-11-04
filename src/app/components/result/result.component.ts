@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import {Acronym} from "@app/model/acronym.model";
-import {AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm} from "@angular/forms";
-import {ErrorStateMatcher, MatDialog} from "@angular/material";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
     selector: "app-result",
@@ -21,7 +20,7 @@ export class ResultComponent implements OnInit, OnChanges {
     showHint = false;
     acronymFromMeaning: string;
 
-    constructor(public formBuilder: FormBuilder, public dialog: MatDialog) { }
+    constructor(public formBuilder: FormBuilder) { }
 
     ngOnInit() {
         this.acronymForm = this.formBuilder.group({
