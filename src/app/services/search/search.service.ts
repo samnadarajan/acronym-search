@@ -9,7 +9,6 @@ import {config} from "@app/app.config";
   providedIn: "root"
 })
 export class SearchService {
-    result: Observable<Acronym[]>;
     constructor(public db: AngularFirestore) {}
 
     search(code: string, projectName: string): Observable<any> {
