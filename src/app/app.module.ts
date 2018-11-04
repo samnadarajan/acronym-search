@@ -26,6 +26,7 @@ import {NgxMaskModule} from "ngx-mask";
 import {FirebaseUIModule} from "firebaseui-angular";
 import * as firebase from "firebase/app";
 import * as firebaseui from "firebaseui";
+import { ProjectModalComponent } from "./components/project-modal/project-modal.component";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
@@ -51,6 +52,7 @@ const ROUTES: Routes = [
         ProjectSelectComponent,
         UppercaseDirective,
         ResultComponent,
+        ProjectModalComponent,
     ],
     imports: [
         BrowserModule,
@@ -70,6 +72,9 @@ const ROUTES: Routes = [
         FirebaseUIModule.forRoot(firebaseUiAuthConfig)
     ],
     providers: [],
+    entryComponents: [
+        ProjectModalComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
