@@ -31,4 +31,12 @@ describe("Project Actions", () => {
         expect(action.type).toEqual(fromActions.SELECT_PROJECT);
         expect(action.payload).toEqual(project);
     });
+
+    it("should create the AddProject action", () => {
+        const project = {name: "TEP"};
+        const action = new fromActions.AddProject(project);
+
+        expect(action.type).toEqual(fromActions.ADD_PROJECT);
+        expect(action.payload).toEqual(project);
+    });
 });
