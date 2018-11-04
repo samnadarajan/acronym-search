@@ -26,17 +26,15 @@ export class AuthService {
                 const {uid, email, photoURL, displayName} = user;
                 const newUser = {uid, email, photoURL, displayName};
                 this.store.dispatch(new AuthUserActions.Login(newUser));
+                this.navigate("/acronym");
             } else {
                 this.store.dispatch(new AuthUserActions.Logout());
+                this.navigate("/login");
             }
         });
     }
 
-    successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult) {
-            this._zone.run(() => { // TODO address this properly
-                this.router.navigate(["/acronym"]);
-            });
-    }
+    successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult) {}
 
     errorCallback(errorData: FirebaseUISignInFailure) {
         // TODO fix error callback
@@ -47,6 +45,12 @@ export class AuthService {
     logOut() {
         this.afAuth.auth.signOut().then(() => {
             this.router.navigate(["/login"]);
+        });
+    }
+
+    navigate(route: string) {
+        this._zone.run(() => { // TODO address this properly
+            this.router.navigate([route]);
         });
     }
 

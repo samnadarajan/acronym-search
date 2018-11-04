@@ -25,7 +25,7 @@ describe("AuthUserReducer", () => {
         const action = new fromAction.Logout();
         const state = authUserReducer.authUserReducer(initialState, action);
 
-        expect(state.user).toEqual({});
+        expect(state.user).toBeNull();
         expect(state.isLoggedIn).toBe(false);
     });
 });
