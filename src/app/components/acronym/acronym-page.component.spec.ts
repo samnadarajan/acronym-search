@@ -14,7 +14,6 @@ import * as ProjectActions from "../../store/actions/project.actions";
 import * as AcronymActions from "../../store/actions/acronym.actions";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
-import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 import {promise} from "selenium-webdriver";
 import Promise = promise.Promise;
 
@@ -61,8 +60,7 @@ describe("AcronymPageComponent", () => {
             ],
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
-                Store,
-                { provide: AngularFireAuth, useValue: FireAuthStub }
+                { provide: AngularFireAuth, useValue: FireAuthStub },
             ]
         })
             .compileComponents();
@@ -72,8 +70,8 @@ describe("AcronymPageComponent", () => {
         fixture = TestBed.createComponent(AcronymPageComponent);
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
-        spyOn(component.store, "pipe").and.callThrough();
-        spyOn(component.store, "dispatch");
+        // spyOn(component.store, "pipe");
+        spyOn(component.store, "dispatch").and.callThrough();
         spyOn(component._acronym$, "unsubscribe");
     });
 
@@ -91,9 +89,10 @@ describe("AcronymPageComponent", () => {
     });
 
     it("should have the search and result component", async(() => {
-        component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
-        component.acronymResult = of({code: "", id: "2345efdr3"});
+        component.projectList$ = of([]);
+        component.acronymResult$ = of({code: "", id: "2345efdr3"});
         component.user$ = of({uid: "23423f", email: "test@test.com"});
+        component.selectedProject$ = of({name: "TEM"});
         fixture.detectChanges();
         expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
         expect(compiled.querySelector("app-result")).toBeTruthy();
@@ -143,8 +142,8 @@ describe("AcronymPageComponent", () => {
     });
 
     it("should log the user out when logging out", async(() => {
-    component.projects = of({list: [], selected: {name: "TED", id: "234524dfer32"}});
-    component.acronymResult = of({code: "", id: "2345efdr3"});
+        component.projectList$ = of([]);
+        component.acronymResult$ = of({code: "", id: "2345efdr3"});
         spyOn(component.authService, "signOut");
         component.user$ = of({uid: "23423f", email: "test@test.com"});
 
