@@ -21,9 +21,9 @@ export class AuthService {
         private afs: AngularFirestore,
         private router: Router,
         private _zone: NgZone) {
-        this.afAuth.auth.onAuthStateChanged((user) => {
-            if (user) {
-                const {uid, email, photoURL, displayName} = user;
+        this.afAuth.authState.subscribe(response => {
+            if (response) {
+                const {uid, email, photoURL, displayName} = response;
                 const newUser = {uid, email, photoURL, displayName};
                 this.store.dispatch(new AuthUserActions.Login(newUser));
                 this.navigate("/acronym");
@@ -32,14 +32,6 @@ export class AuthService {
                 this.navigate("/login");
             }
         });
-    }
-
-    successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult) {}
-
-    errorCallback(errorData: FirebaseUISignInFailure) {
-        // TODO fix error callback
-        console.log(errorData);
-        console.log("error");
     }
 
     logOut() {
