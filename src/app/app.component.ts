@@ -17,7 +17,7 @@ export class AppComponent {
     user$: Observable<User>;
     @ViewChild("sideNav") sideNav: MatSidenav;
 
-    constructor(public store: Store<AppState>, public authService: AuthService) {
+    constructor(public store: Store<AppState>, public authService: AuthService, private _router: Router) {
         this.user$ = this.store.pipe(select(state => state.authUser), map(data => data ? data["user"] : null));
     }
 
