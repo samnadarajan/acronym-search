@@ -1,0 +1,12 @@
+<!--<mat-card>-->
+<mat-form-field>
+    <mat-label>Project Name</mat-label>
+    <input matInput placeholder="Project Name" [formControl]="projectName">
+</mat-form-field>
+<mat-icon aria-label="Add Project" (click)="addProject(projectName.value)">add</mat-icon>
+<!--</mat-card>-->
+<div fxLayout="row wrap" fxLayoutGap="0.7rem" fxLayoutAlign="left" class="project-grid">
+    <!--<mat-card *ngFor="let project of (data.projectList$ | async)" fxFlex="25%">-->
+        <!--<mat-card-title>{{project.name}}</mat-card-title>-->
+    <!--</mat-card>-->
+</div>
