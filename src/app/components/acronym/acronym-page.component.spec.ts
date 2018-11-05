@@ -8,14 +8,16 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {BehaviorSubject, of} from "rxjs";
 import {ProjectSelectComponent} from "../project-select/project-select.component";
-import {Store, StoreModule} from "@ngrx/store";
+import {StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import * as ProjectActions from "../../store/actions/project.actions";
 import * as AcronymActions from "../../store/actions/acronym.actions";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {RouterTestingModule} from "@angular/router/testing";
 import {promise} from "selenium-webdriver";
 import Promise = promise.Promise;
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {RouterTestingModule} from "@angular/router/testing";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -34,6 +36,10 @@ const FireAuthStub = {
         onAuthStateChanged: () => {}
     },
     authState: of({email: "test@test.com", password: "password"})
+};
+
+const AuthServiceStub = {
+    logOut: jest.fn()
 };
 
 describe("AcronymPageComponent", () => {
@@ -61,6 +67,10 @@ describe("AcronymPageComponent", () => {
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
                 { provide: AngularFireAuth, useValue: FireAuthStub },
+                { provide: AuthService, useValue: AuthServiceStub },
+            ],
+            schemas: [
+                NO_ERRORS_SCHEMA
             ]
         })
             .compileComponents();
@@ -70,7 +80,6 @@ describe("AcronymPageComponent", () => {
         fixture = TestBed.createComponent(AcronymPageComponent);
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
-        // spyOn(component.store, "pipe");
         spyOn(component.store, "dispatch").and.callThrough();
         spyOn(component._acronym$, "unsubscribe");
     });
@@ -91,7 +100,6 @@ describe("AcronymPageComponent", () => {
     it("should have the search and result component", async(() => {
         component.projectList$ = of([]);
         component.acronymResult$ = of({code: "", id: "2345efdr3"});
-        component.user$ = of({uid: "23423f", email: "test@test.com"});
         component.selectedProject$ = of({name: "TEM"});
         fixture.detectChanges();
         expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
@@ -132,50 +140,4 @@ describe("AcronymPageComponent", () => {
         component.ngOnDestroy();
         expect(component._acronym$.unsubscribe).toHaveBeenCalled();
     });
-
-    it("should have a menu with links for a project", () => {
-        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
-        fixture.detectChanges();
-
-        const projectsButton = compiled.querySelectorAll("button.projects");
-        expect(projectsButton).toBeTruthy();
-    });
-
-    it("should have a menu with a link for reporting issues", () => {
-        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
-        fixture.detectChanges();
-
-        const reportIssuesButton = compiled.querySelector("button.report");
-        expect(reportIssuesButton).toBeTruthy();
-    });
-
-    it("should have a menu with a link for logging out", () => {
-        spyOn(component.authService, "logOut");
-        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
-        fixture.detectChanges();
-
-        const logoutButton = compiled.querySelector("button.logout");
-        expect(logoutButton).toBeTruthy();
-
-        logoutButton.click();
-        fixture.detectChanges();
-
-        expect(component.authService.logOut).toHaveBeenCalled();
-    });
-
-    it("should log the user out when logging out", async(() => {
-        component.projectList$ = of([]);
-        component.acronymResult$ = of({code: "", id: "2345efdr3"});
-        spyOn(component.authService, "logOut");
-        component.user$ = of({uid: "23423f", email: "test@test.com"});
-
-        fixture.detectChanges();
-
-        const logoutButton = compiled.querySelector("button.logout");
-        logoutButton.click();
-
-        fixture.detectChanges();
-
-        expect(component.authService.logOut).toHaveBeenCalled();
-    }));
 });

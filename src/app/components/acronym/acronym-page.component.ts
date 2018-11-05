@@ -7,11 +7,8 @@ import {Project} from "@app/model/project.model";
 import * as AcronymActions from "../../store/actions/acronym.actions";
 import * as ProjectActions from "../../store/actions/project.actions";
 import {ISubscribe} from "@app/interfaces/subscribe.interface";
-import {User} from "@app/model/user.model";
 import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 import {map} from "rxjs/operators";
-import {MatDialog} from "@angular/material";
-import {ProjectModalComponent} from "@app/components/project-modal/project-modal.component";
 
 
 @Component({
@@ -25,17 +22,15 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     acronymLoading$: Observable<boolean>;
     projectList$: Observable<Project[]>;
     selectedProject$: Observable<Project>;
-    user$: Observable<User>;
 
     _acronym$: SubscriptionLike;
     acronymResultState: Acronym;
 
-    constructor(public store: Store<AppState>, public authService: AuthService, public dialog: MatDialog) {
+    constructor(public store: Store<AppState>, public authService: AuthService) {
         this.acronymResult$ = this.store.pipe(select(state => state.acronym), map(data => data ? data["acronym"] : null));
         this.acronymLoading$ = this.store.pipe(select(state => state.acronym), map(data => data ? data["loading"] : null));
         this.projectList$ = this.store.pipe(select(state => state.projects), map(data => data ? data["list"] : null));
         this.selectedProject$ = this.store.pipe(select(state => state.projects), map(data => data ? data["selected"] : null));
-        this.user$ = this.store.pipe(select(state => state.authUser), map(data => data ? data["user"] : null));
         this.setupSubscriptions();
 
         this.acronymResultState = {code: "", project: ""};
@@ -62,15 +57,6 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     save(acronym: Acronym, project: Project) {
         acronym.project = project.name;
         this.store.dispatch(new AcronymActions.SaveAcronym(acronym));
-    }
-
-    openProjectsDialog() {
-        const dialogRef = this.dialog.open(ProjectModalComponent, {
-            data: {
-                projectList: this.projectList$,
-            },
-            width: "500px"
-        });
     }
 
     ngOnDestroy() {
