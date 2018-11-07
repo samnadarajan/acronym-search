@@ -2,14 +2,16 @@ import {Injectable} from "@angular/core";
 import {ProjectService} from "@app/services/project/project.service";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import * as projectActions from "../actions/project.actions";
-import {catchError, map, switchMap, take} from "rxjs/operators";
+import {catchError, filter, map, switchMap, withLatestFrom} from "rxjs/operators";
 import {Project} from "@app/model/project.model";
 import {of} from "rxjs";
 import {DefaultProject} from "@app/model/default-project.model";
+import {AppState} from "@app/store/app.state";
+import {Store} from "@ngrx/store";
 
 @Injectable()
 export class ProjectEffect {
-    constructor(private actions$: Actions, private _projectService: ProjectService) {}
+    constructor(private actions$: Actions, private store$: Store<AppState>, private _projectService: ProjectService) {}
 
     @Effect()
     loadProjects$ = this.actions$.pipe(
@@ -33,9 +35,18 @@ export class ProjectEffect {
     loadDefaultProject$ = this.actions$.pipe(
         ofType(projectActions.LOAD_DEFAULT_PROJECT),
         map((action: projectActions.LoadDefaultProject) => action.payload),
-        switchMap((data) => {
-            return this._projectService.getDefaultProject(data).pipe(
-                map(changes => changes.length > 0 ? changes[0] : data)
+        switchMap((payload) => {
+            return this._projectService.getDefaultProject(payload).pipe(
+                map(changes => {
+                    if (changes.length > 0) {
+                        return changes.map(action => {
+                            const data = action.payload.doc.data() as DefaultProject;
+                            const id = action.payload.doc.id;
+                            console.log({id, ...data});
+                            return {id, ...data};
+                        })[0];
+                    }
+                }),
             );
         }),
         map((data: DefaultProject) => new projectActions.LoadDefaultProjectSuccess(data)),
@@ -43,11 +54,14 @@ export class ProjectEffect {
     );
 
     @Effect()
-    setDefaultProejct$ = this.actions$.pipe(
+    setDefaultProject$ = this.actions$.pipe(
         ofType(projectActions.SET_DEFAULT_PROJECT),
         map((action: projectActions.SetDefaultProject) => action.payload),
-        switchMap((data: DefaultProject) => this._projectService.setProjectAsDefault(data)),
+        switchMap((data: DefaultProject) => {
+            this._projectService.changeDefault(data);
+            return of(data);
+        }),
         map(() => new projectActions.SetDefaultProjectSuccess()),
         catchError((error) => of(new projectActions.SetDefaultProjectFail(error)))
-    )
+    );
 }

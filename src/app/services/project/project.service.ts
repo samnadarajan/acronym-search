@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import {config} from "@app/app.config";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Project} from "@app/model/project.model";
 import {DefaultProject} from "@app/model/default-project.model";
+import {Acronym} from "@app/model/acronym.model";
 
 @Injectable({
   providedIn: "root"
@@ -24,15 +25,23 @@ export class ProjectService {
      * @returns {Observable<DefaultProject>}
      */
     getDefaultProject(uid: string): Observable<any> {
-        return this.db.collection(config.defaultProjects).valueChanges();
+        return this.db.collection(config.defaultProjects, ref => ref.where("uid", "==", uid).limit(1)).snapshotChanges();
     }
 
-    setProjectAsDefault(userProject: DefaultProject) {
-        this.db
-            .collection(config.defaultProjects, ref => ref.where("uid", "==", userProject.uid))
-            .valueChanges()
-            .subscribe(data => {
-                console.log("in search", data);
-            });
+    changeDefault(defaultProject: DefaultProject) {
+        console.log(defaultProject)
+        if (defaultProject.id) {
+            return this.update(defaultProject);
+        } else {
+            return this.add(defaultProject);
+        }
+    }
+
+    add(defaultProject: DefaultProject) {
+        return this.db.collection(config.defaultProjects).add(defaultProject);
+    }
+
+    update(defaultProject: DefaultProject) {
+        return this.db.collection(config.defaultProjects).doc(defaultProject.id).update(defaultProject);
     }
 }

@@ -10,7 +10,7 @@
         <mat-card *ngFor="let project of (projectList$ | async)" fxFlex="25%" class="card">
             <mat-card-title>{{project.name}}</mat-card-title>
             <mat-card-actions>
-                <button mat-button (click)="makeDefault(project.name, currentUser)">Make My Default</button>
+                <button mat-button (click)="makeDefault(project.name, currentUser.uid)">Make My Default</button>
             </mat-card-actions>
         </mat-card>
     </div>
