@@ -13,7 +13,7 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from "./components/login/login.component";
-import { AcronymPageComponent } from "./components/acronym/acronym-page.component";
+import { AcronymPageComponent } from "./components/acronym-page/acronym-page.component";
 import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
 import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
