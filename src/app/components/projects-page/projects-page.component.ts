@@ -7,7 +7,8 @@ import {Project} from "@app/model/project.model";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {User} from "@app/model/user.model";
-import {ProjectService} from "@app/services/project/project.service";
+import {DefaultProject} from "@app/model/default-project.model";
+import {getAllProjects, getDefaultProject} from "@app/store/selectors/project.selectors";
 
 @Component({
   selector: "app-projects-page",
@@ -17,10 +18,12 @@ import {ProjectService} from "@app/services/project/project.service";
 export class ProjectsPageComponent {
     projectName = new FormControl("");
     projectList$: Observable<Project[]>;
+    defaultProject$: Observable<DefaultProject>;
     currentUser$: Observable<User>;
 
-    constructor(public store: Store<AppState>, private projectService: ProjectService) {
-        this.projectList$ = this.store.pipe(select(state => state.projects), map(data => data ? data["list"] : null));
+    constructor(public store: Store<AppState>) {
+        this.projectList$ = this.store.pipe(select(getAllProjects));
+        this.defaultProject$ = this.store.pipe(select(getDefaultProject));
         this.currentUser$ = this.store.pipe(select(state => state.authUser), map(data => data ? data["user"] : null));
     }
 
@@ -28,9 +31,9 @@ export class ProjectsPageComponent {
         this.store.dispatch(new ProjectActions.AddProject({name: newProjectName}));
     }
 
-    makeDefault(projectName: string, currentUser: User) {
-        currentUser.defaultProject = projectName;
-        // this.projectService.setProjectAsDefault(currentUser);
+    makeDefault(projectName: string, currentDefaultProject: DefaultProject) {
+        console.log({currentDefaultProject});
+        this.store.dispatch(new ProjectActions.SetDefaultProject({uid: currentDefaultProject.uid, projectName: projectName}));
     }
 
 }
