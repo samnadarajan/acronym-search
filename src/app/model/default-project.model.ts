@@ -1,4 +1,4 @@
 export interface DefaultProject {
-    uid: number;
+    uid: string;
     projectName: string;
 }
