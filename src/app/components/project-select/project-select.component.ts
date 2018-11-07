@@ -33,7 +33,7 @@ export class ProjectSelectComponent implements ISubscribe, OnDestroy {
     setupSubscriptions() {
         this.default$ = this.defaultProject$.subscribe((data: DefaultProject) => {
             if (data && this.chosenProject.value === "") {
-                this.dispatchSelectedProject(data.projectName)
+                this.dispatchSelectedProject(data.projectName);
                 this.chosenProject.setValue(data.projectName);
             }
         });
