@@ -5,6 +5,20 @@ import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BehaviorSubject} from "rxjs";
+import {AngularFirestore} from "@angular/fire/firestore";
+
+const FirestoreStub = {
+    collection: (name: string) => ({
+        doc: (_id: string) => ({
+            valueChanges: () => new BehaviorSubject({ foo: "bar" }),
+            set: (_d: any) => new Promise((resolve, _reject) => resolve()),
+        }),
+    }),
+    doc: () => ({
+        valueChanges: () => new BehaviorSubject({foo: "bar"})
+    })
+};
 
 describe("ProjectsPageComponent", () => {
   let component: ProjectsPageComponent;
@@ -19,6 +33,9 @@ describe("ProjectsPageComponent", () => {
                 ReactiveFormsModule,
                 StoreModule.forRoot({}),
                 BrowserAnimationsModule
+            ],
+            providers: [
+                { provide: AngularFirestore, useValue: FirestoreStub },
             ]
         })
             .compileComponents();
