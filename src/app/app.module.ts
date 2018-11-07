@@ -26,7 +26,7 @@ import {NgxMaskModule} from "ngx-mask";
 import {FirebaseUIModule} from "firebaseui-angular";
 import * as firebase from "firebase/app";
 import * as firebaseui from "firebaseui";
-import { ProjectsPageComponent } from "./projects-page/projects-page.component";
+import { ProjectsPageComponent } from "./components/projects-page/projects-page.component";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
