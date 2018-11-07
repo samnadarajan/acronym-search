@@ -41,4 +41,13 @@ export class ProjectEffect {
         map((data: DefaultProject) => new projectActions.LoadDefaultProjectSuccess(data)),
         catchError((error) => of(new projectActions.LoadDefaultProjectFail(error)))
     );
+
+    @Effect()
+    setDefaultProejct$ = this.actions$.pipe(
+        ofType(projectActions.SET_DEFAULT_PROJECT),
+        map((action: projectActions.SetDefaultProject) => action.payload),
+        switchMap((data: DefaultProject) => this._projectService.setProjectAsDefault(data)),
+        map(() => new projectActions.SetDefaultProjectSuccess()),
+        catchError((error) => of(new projectActions.SetDefaultProjectFail(error)))
+    )
 }
