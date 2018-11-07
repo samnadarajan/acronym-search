@@ -5,7 +5,8 @@ import {SearchService} from "./search.service";
 import {config} from "@app/app.config";
 
 const collectionStub = {
-    valueChanges: jasmine.createSpy("valueChanges").and.returnValue({code: "SAM"})
+    valueChanges: jasmine.createSpy("valueChanges").and.returnValue({code: "SAM"}),
+    snapshotChanges: jasmine.createSpy("snapshotChanges").and.returnValue({code: "SAM"})
 };
 
 const firestoreStub = {

@@ -54,8 +54,8 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
         }
     }
 
-    save(acronym: Acronym, project: Project) {
-        acronym.project = project.name;
+    save(acronym: Acronym, project: string) {
+        acronym.project = project;
         this.store.dispatch(new AcronymActions.SaveAcronym(acronym));
     }
 

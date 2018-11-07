@@ -17,7 +17,7 @@ export class SearchService {
                 ref => ref.where("code", "==", code)
                     .where("project", "==", projectName)
                     .limit(1))
-            .valueChanges();
+            .snapshotChanges();
     }
 
     save(acronym: Acronym) {
