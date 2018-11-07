@@ -8,6 +8,10 @@ export const SELECT_PROJECT   =   "[PROJECT] Select";
 export const ADD_PROJECT =  "[PROJECT] Add Project";
 export const ADD_PROJECT_SUCCESS =  "[PROJECT] Add Project Success";
 export const ADD_PROJECT_FAIL =  "[PROJECT] Add Project Success";
+export const SET_DEFAULT_PROJECT = "[PROJECT] Set Default";
+export const LOAD_DEFAULT_PROJECT = "[PROJECT] Load Defaults";
+export const LOAD_DEFAULT_PROJECT_SUCCESS = "[PROJECT] Load Defaults Success";
+export const LOAD_DEFAULT_PROJECT_FAIL = "[PROJECT] Load Defaults Fail";
 
 export class LoadProjects implements Action {
     readonly type = LOAD_PROJECTS;
@@ -30,7 +34,7 @@ export class LoadProjectsFail implements Action {
 export class SelectProject implements Action {
     readonly type = SELECT_PROJECT;
 
-    constructor(public payload: Project) {}
+    constructor(public payload: string) {}
 }
 
 export class AddProject implements Action {
@@ -51,4 +55,36 @@ export class AddProjectFail implements Action {
     constructor(public payload: any) {}
 }
 
-export type Actions = LoadProjects | LoadProjectsSuccess | LoadProjectsFail | SelectProject | AddProject;
+export class SetDefaultProject implements Action {
+    readonly type = SET_DEFAULT_PROJECT;
+
+    constructor(public payload: any) {}
+}
+
+export class LoadDefaultProject implements Action {
+    readonly type = LOAD_DEFAULT_PROJECT;
+
+    constructor(public payload: string) {}
+}
+
+export class LoadDefaultProjectSuccess implements Action {
+    readonly type = LOAD_DEFAULT_PROJECT_SUCCESS;
+
+    constructor(public payload: any) {}
+}
+
+export class LoadDefaultProjectFail implements Action {
+    readonly type = LOAD_DEFAULT_PROJECT_FAIL;
+
+    constructor(public payload: any) {}
+}
+export type Actions =
+    LoadProjects |
+    LoadProjectsSuccess |
+    LoadProjectsFail |
+    SelectProject |
+    AddProject |
+    SetDefaultProject |
+    LoadDefaultProject |
+    LoadDefaultProjectSuccess |
+    LoadDefaultProjectFail;
