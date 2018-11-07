@@ -20,11 +20,15 @@ export class AcronymEffect {
             const projectName = payload["project"];
             return this._searchService.search(code, projectName).pipe(
                 map(actions => {
-                    return actions.map(action => {
-                        const data = action.payload.doc.data() as Acronym;
-                        const id = action.payload.doc.id;
-                        return { id, ...data };
-                    })[0];
+                    if (actions.length > 0) {
+                        return actions.map(action => {
+                            const data = action.payload.doc.data() as Acronym;
+                            const id = action.payload.doc.id;
+                            return {id, ...data};
+                        })[0];
+                    } else {
+                        return {code: code, project: projectName} as Acronym;
+                    }
                 })
             );
         }),
