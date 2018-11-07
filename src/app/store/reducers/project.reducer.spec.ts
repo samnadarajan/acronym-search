@@ -17,7 +17,7 @@ describe("ProjectReducer", () => {
 
         expect(state.list).toEqual([]);
         expect(state.loaded).toBe(false);
-        expect(state.selected).toEqual({});
+        expect(state.selected).toEqual("");
     });
 
     it("should return right state with LoadProjectsSuccess action", () => {
@@ -28,7 +28,7 @@ describe("ProjectReducer", () => {
 
         expect(state.list).toEqual(projects);
         expect(state.loaded).toBe(true);
-        expect(state.selected).toEqual({});
+        expect(state.selected).toEqual("");
     });
 
     it("should return right state with LoadProjectsFail action", () => {
@@ -38,11 +38,11 @@ describe("ProjectReducer", () => {
 
         expect(state.list).toEqual([]);
         expect(state.loaded).toBe(true);
-        expect(state.selected).toEqual({});
+        expect(state.selected).toEqual("");
     });
 
     it("should return right state with SelectProject action", () => {
-        const project = {name: "SAM", id: "234rtefr"};
+        const project = "SAM";
         const {initialState} = projectReducer;
         const action = new fromActions.SelectProject(project);
         const state = projectReducer.projectReducer(initialState, action);

@@ -100,7 +100,7 @@ describe("AcronymPageComponent", () => {
     it("should have the search and result component", async(() => {
         component.projectList$ = of([]);
         component.acronymResult$ = of({code: "", id: "2345efdr3"});
-        component.selectedProject$ = of({name: "TEM"});
+        component.selectedProject$ = of("TEM");
         fixture.detectChanges();
         expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
         expect(compiled.querySelector("app-result")).toBeTruthy();
@@ -113,17 +113,17 @@ describe("AcronymPageComponent", () => {
 
     it("should begin a search", () => {
         const acronym = {code: "TEST"};
-        const proj = {name: "SAM", id: "234re23"};
-        component.beginSearch(acronym.code, proj);
+        const project = "SAM";
+        component.beginSearch(acronym.code, project);
 
-        expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym({code: acronym.code, project: proj.name}));
+        expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym({code: acronym.code, project: project}));
     });
 
     it("should not do a search again on the same code", () => {
         component.acronymResultState = {code: "TEST", project: "SAM"};
         const acronym = {code: "TEST"};
-        const proj = {name: "SAM", id: "234re23"};
-        component.beginSearch(acronym.code, proj);
+        const project = "SAM";
+        component.beginSearch(acronym.code, project);
 
         expect(component.store.dispatch).not.toHaveBeenCalledWith();
     });

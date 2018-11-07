@@ -1,16 +1,19 @@
 import * as ProjectActions from "../actions/project.actions";
-import {Project} from "../../model/project.model";
+import {Project} from "@app/model/project.model";
 import {storeLogger} from "ngrx-store-logger";
+import {DefaultProject} from "@app/model/default-project.model";
 
 export interface ProjectState {
     list: Project[];
-    selected: any;
+    defaultList: DefaultProject[];
+    selected: string;
     loaded: boolean;
 }
 
 export const initialState: ProjectState = {
     list: [],
-    selected: {},
+    defaultList: [],
+    selected: "",
     loaded: true
 };
 
@@ -25,6 +28,8 @@ export function projectReducer(state = initialState, action: ProjectActions.Acti
             return {...state, loaded: true};
         case(ProjectActions.SELECT_PROJECT):
             return {...state, selected: action.payload};
+        case(ProjectActions.LOAD_DEFAULT_PROJECT_SUCCESS):
+            return {...state, default: action.payload};
         default:
             return state;
     }

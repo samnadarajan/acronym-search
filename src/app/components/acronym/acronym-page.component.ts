@@ -21,7 +21,7 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     acronymResult$: Observable<Acronym>;
     acronymLoading$: Observable<boolean>;
     projectList$: Observable<Project[]>;
-    selectedProject$: Observable<Project>;
+    selectedProject$: Observable<string>;
 
     _acronym$: SubscriptionLike;
     acronymResultState: Acronym;
@@ -48,9 +48,9 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
         });
     }
 
-    beginSearch(code: string, project: Project) {
+    beginSearch(code: string, project: string) {
         if (code !== this.acronymResultState.code) {
-            this.store.dispatch(new AcronymActions.SearchAcronym({code: code, project: project.name}));
+            this.store.dispatch(new AcronymActions.SearchAcronym({code: code, project: project}));
         }
     }
 
