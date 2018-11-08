@@ -29,7 +29,6 @@ export class ProjectService {
     }
 
     changeDefault(defaultProject: DefaultProject) {
-        console.log(defaultProject)
         if (defaultProject.id) {
             return this.update(defaultProject);
         } else {

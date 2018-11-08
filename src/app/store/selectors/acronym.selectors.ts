@@ -16,4 +16,4 @@ export const getAcronymLoading = createSelector(
 export const getAcronymLoaded = createSelector(
     getAcronymState,
     fromAcronyms.getAcronymLoaded
-)
+);
