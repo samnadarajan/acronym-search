@@ -44,8 +44,8 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
 
     setupSubscriptions() {
         this._acronym$ = this.acronymResult$.subscribe(data => {
-            if (data && data["acronym"]) {
-                this.acronymResultState = data["acronym"];
+            if (data) {
+                this.acronymResultState = data;
             }
         });
     }
