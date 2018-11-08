@@ -27,3 +27,7 @@ export function acronymReducer(state = initialState, action: AcronymActions.Acro
             return state;
     }
 }
+
+export const getAcronym = (state: AcronymState) => state ? state.acronym : null;
+export const getAcronymLoading = (state: AcronymState) => state ? state.loading : null;
+export const getAcronymLoaded = (state: AcronymState) => state ? state.loaded : null;

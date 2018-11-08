@@ -10,6 +10,7 @@ import {ISubscribe} from "@app/interfaces/subscribe.interface";
 import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 import {map} from "rxjs/operators";
 import {getAllProjects, getSelectedProject} from "@app/store/selectors/project.selectors";
+import {getAcronymLoading, getAcronymResult} from "@app/store/selectors/acronym.selectors";
 
 
 @Component({
@@ -28,8 +29,8 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     acronymResultState: Acronym;
 
     constructor(public store: Store<AppState>, public authService: AuthService) {
-        this.acronymResult$ = this.store.pipe(select(state => state.acronym), map(data => data ? data["acronym"] : null));
-        this.acronymLoading$ = this.store.pipe(select(state => state.acronym), map(data => data ? data["loading"] : null));
+        this.acronymResult$ = this.store.pipe(select(getAcronymResult));
+        this.acronymLoading$ = this.store.pipe(select(getAcronymLoading));
         this.projectList$ = this.store.pipe(select(getAllProjects));
         this.selectedProject$ = this.store.pipe(select(getSelectedProject));
         this.setupSubscriptions();
