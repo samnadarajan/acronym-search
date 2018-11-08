@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, OnDestroy} from "@angular/core";
 import {Observable, SubscriptionLike} from "rxjs";
 import {Project} from "@app/model/project.model";
 import {FormControl} from "@angular/forms";
@@ -7,8 +7,8 @@ import {select, Store} from "@ngrx/store";
 import {AppState} from "@app/store/app.state";
 import * as ProjectActions from "@app/store/actions/project.actions";
 import {DefaultProject} from "@app/model/default-project.model";
-import {map} from "rxjs/operators";
 import {ISubscribe} from "@app/interfaces/subscribe.interface";
+import {getDefaultProject} from "@app/store/selectors/project.selectors";
 
 @Component({
     selector: "app-project-select",
@@ -26,13 +26,13 @@ export class ProjectSelectComponent implements ISubscribe, OnDestroy {
     default$: SubscriptionLike;
 
     constructor(public store: Store<AppState>) {
-        this.defaultProject$ = this.store.pipe(select(state => state.projects), map(data => data ? data["default"] : null));
+        this.defaultProject$ = this.store.pipe(select(getDefaultProject));
         this.setupSubscriptions();
     }
 
     setupSubscriptions() {
         this.default$ = this.defaultProject$.subscribe((data: DefaultProject) => {
-            if (data && this.chosenProject.value === "") {
+            if (data && !this.chosenProject.value) {
                 this.dispatchSelectedProject(data.projectName);
                 this.chosenProject.setValue(data.projectName);
             }

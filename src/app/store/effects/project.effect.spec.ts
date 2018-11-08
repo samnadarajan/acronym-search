@@ -1,6 +1,6 @@
 import {BehaviorSubject, Observable} from "rxjs";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {Store} from "@ngrx/store";
+import {Store, StoreModule} from "@ngrx/store";
 import {TestBed} from "@angular/core/testing";
 import {provideMockActions} from "@ngrx/effects/testing";
 import {AngularFirestore} from "@angular/fire/firestore";
@@ -25,14 +25,15 @@ describe("Project Effects", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [
+                StoreModule.forRoot({})
+            ],
             providers: [
                 ProjectEffect,
                 Store,
                 provideMockActions(() => actions),
                 { provide: AngularFirestore, useValue: FirestoreStub },
-                {
-                    provide: ProjectService, useValue: ["getProjects"]
-                }
+                { provide: ProjectService, useValue: ["getProjects"]}
             ],
             schemas: [NO_ERRORS_SCHEMA]
         });

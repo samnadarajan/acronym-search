@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {ProjectService} from "@app/services/project/project.service";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import * as projectActions from "../actions/project.actions";
-import {catchError, filter, map, switchMap, withLatestFrom} from "rxjs/operators";
+import {catchError, map, switchMap} from "rxjs/operators";
 import {Project} from "@app/model/project.model";
 import {of} from "rxjs";
 import {DefaultProject} from "@app/model/default-project.model";
@@ -42,7 +42,6 @@ export class ProjectEffect {
                         return changes.map(action => {
                             const data = action.payload.doc.data() as DefaultProject;
                             const id = action.payload.doc.id;
-                            console.log({id, ...data});
                             return {id, ...data};
                         })[0];
                     }

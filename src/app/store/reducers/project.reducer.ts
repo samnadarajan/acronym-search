@@ -36,7 +36,7 @@ export function projectReducer(state = initialState, action: ProjectActions.Acti
     }
 }
 
-export const getProjectList = (state: ProjectState) => state.list;
-export const getProjectDefault = (state: ProjectState) => state.default;
-export const getProjectSelected = (state: ProjectState) => state.selected;
-export const getProjectLoaded = (state: ProjectState) => state.loaded;
+export const getProjectList = (state: ProjectState) => state ? state.list : null;
+export const getProjectDefault = (state: ProjectState) => state ? state.default : null;
+export const getProjectSelected = (state: ProjectState) => state ? state.selected : null;
+export const getProjectLoaded = (state: ProjectState) => state ? state.loaded : null;
