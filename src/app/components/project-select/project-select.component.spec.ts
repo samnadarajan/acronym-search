@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ProjectSelectComponent } from "./project-select.component";
-import {MaterialModule} from "../../material/material.module";
+import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSelect} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -42,7 +42,7 @@ describe("ProjectSelectComponent", () => {
     });
 
     it("should dispatch a select project action when selecting a project", () => {
-        const event = {source: {} as MatSelect, value: {name: "SAM", id: "234re23"}};
+        const event = {source: {} as MatSelect, value: "SAM"};
         component.onChange(event);
         const action = new ProjectActions.SelectProject(event.value);
         expect(component.store.dispatch).toHaveBeenCalledWith(action);
