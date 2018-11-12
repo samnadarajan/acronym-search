@@ -17,3 +17,23 @@ body {
 .mr-1 {
     margin-right: 1rem;
 }
+
+.selected-card {
+    background-color: #0c71c3;
+    color: #ffffff;
+}
+
+.container {
+    min-width: 10%;
+    max-width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.danger-text {
+    color: #B00020;
+}
+
+mat-form-field {
+    width: 100%;
+}
