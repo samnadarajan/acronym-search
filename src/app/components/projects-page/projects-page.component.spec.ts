@@ -5,7 +5,7 @@ import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, of} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
 
 const FirestoreStub = {
@@ -21,8 +21,11 @@ const FirestoreStub = {
 };
 
 describe("ProjectsPageComponent", () => {
-  let component: ProjectsPageComponent;
+    let component: ProjectsPageComponent;
     let fixture: ComponentFixture<ProjectsPageComponent>;
+    let compiled;
+
+    const projectList = [{name: "Frodo"}, {name: "Gandalf"}, {name: "Gimli"}, {name: "Samwise"}];
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -44,10 +47,30 @@ describe("ProjectsPageComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ProjectsPageComponent);
         component = fixture.componentInstance;
+        compiled = fixture.debugElement.nativeElement;
+
+        component.projectList$ = of(projectList);
+        component.currentDefaultProject = {id: "2tfr3wfrt", uid: "4ewr3ew234", projectName: "Frodo"};
         fixture.detectChanges();
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
     });
+
+    it("should show a list of projects", async(() => {
+        expect(compiled.querySelectorAll("mat-card").length).toEqual(projectList.length);
+    }));
+
+    it("should highlight the default project", async(() => {
+        expect(compiled.querySelectorAll("mat-card.selected-card").length).toEqual(1);
+    }));
+
+    it("should delete a project", async(() => {
+
+    }));
+
+    it("should make a project the default", async(() => {
+
+    }));
 });

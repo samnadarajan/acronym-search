@@ -6,11 +6,11 @@
                 (click)="makeDefault(project.name)"
                 fxFlex="24%"
                 class="card"
-                [ngClass]="{'selected-card': currentDefaultProject.projectName == project.name}"
+                [ngClass]="{'selected-card': currentDefaultProject?.projectName == project.name}"
             >
                 <mat-card-title>{{project.name}}</mat-card-title>
                 <mat-card-actions>
-                    <ng-container *ngIf="currentDefaultProject.projectName != project.name">
+                    <ng-container *ngIf="currentDefaultProject?.projectName != project.name">
                         <button mat-button><mat-icon>star</mat-icon>Make Default</button>
                     </ng-container>
                 </mat-card-actions>
