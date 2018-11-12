@@ -7,6 +7,7 @@ import {StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BehaviorSubject, of} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
+import * as ProjectActions from "../../store/actions/project.actions";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -66,11 +67,26 @@ describe("ProjectsPageComponent", () => {
         expect(compiled.querySelectorAll("mat-card.selected-card").length).toEqual(1);
     }));
 
-    it("should delete a project", async(() => {
+    it("should delete a project", () => {
 
-    }));
+    });
 
     it("should make a project the default", async(() => {
+        spyOn(component, "makeDefault").and.callThrough();
+        spyOn(component.store, "dispatch");
+        spyOn(component.snackBar, "open");
+        const cards = compiled.querySelectorAll("mat-card");
+        const projectToSelect = projectList[1];
 
+        if (cards.length > 0) {
+            cards[1].click();
+
+            fixture.detectChanges();
+
+            expect(component.makeDefault).toHaveBeenCalledWith(projectToSelect.name);
+            expect(component.currentDefaultProject.projectName).toEqual(projectToSelect.name);
+            expect(component.store.dispatch).toHaveBeenCalledWith(new ProjectActions.SetDefaultProject(component.currentDefaultProject));
+            expect(component.snackBar.open).toHaveBeenCalled();
+        }
     }));
 });
