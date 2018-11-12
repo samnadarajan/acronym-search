@@ -27,6 +27,7 @@ import {FirebaseUIModule} from "firebaseui-angular";
 import * as firebase from "firebase/app";
 import * as firebaseui from "firebaseui";
 import { ProjectsPageComponent } from "./components/projects-page/projects-page.component";
+import { AddProjectDialogComponent } from './components/add-project-dialog/add-project-dialog.component';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
@@ -54,6 +55,7 @@ const ROUTES: Routes = [
         UppercaseDirective,
         ResultComponent,
         ProjectsPageComponent,
+        AddProjectDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -71,6 +73,9 @@ const ROUTES: Routes = [
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects),
         FirebaseUIModule.forRoot(firebaseUiAuthConfig),
+    ],
+    entryComponents: [
+        AddProjectDialogComponent
     ],
     providers: [],
     bootstrap: [AppComponent]
