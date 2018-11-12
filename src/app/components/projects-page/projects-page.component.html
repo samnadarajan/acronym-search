@@ -1,17 +1,23 @@
-<div style="text-align:center" class="page" *ngIf="(currentUser$ | async) as currentUser">
-    <!--<mat-card>-->
-    <mat-form-field>
-        <mat-label>Project Name</mat-label>
-        <input matInput placeholder="Project Name" [formControl]="projectName">
-    </mat-form-field>
-    <mat-icon aria-label="Add Project" (click)="addProject(projectName.value)">add</mat-icon>
-    <!--</mat-card>-->
-    <div fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="left" class="project-grid">
-        <mat-card *ngFor="let project of (projectList$ | async)" fxFlex="25%" class="card">
-            <mat-card-title>{{project.name}}</mat-card-title>
-            <mat-card-actions>
-                <button mat-button (click)="makeDefault(project.name, currentUser.uid)">Make My Default</button>
-            </mat-card-actions>
-        </mat-card>
+<ng-container *ngIf="(projectList$ | async) as projects">
+    <div style="text-align:center" class="page">
+        <div fxLayout="row wrap" fxLayoutGap="1%" fxLayoutAlign="left" class="project-grid container">
+            <mat-card
+                *ngFor="let project of projects"
+                (click)="makeDefault(project.name)"
+                fxFlex="24%"
+                class="card"
+                [ngClass]="{'selected-card': currentDefaultProject.projectName == project.name}"
+            >
+                <mat-card-title>{{project.name}}</mat-card-title>
+                <mat-card-actions>
+                    <ng-container *ngIf="currentDefaultProject.projectName != project.name">
+                        <button mat-button><mat-icon>star</mat-icon>Make Default</button>
+                    </ng-container>
+                </mat-card-actions>
+            </mat-card>
+        </div>
     </div>
-</div>
+    <div class="bottom-right">
+        <button mat-fab (click)="openAddDialog(projects)"><mat-icon>add</mat-icon></button>
+    </div>
+</ng-container>
