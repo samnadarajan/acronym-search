@@ -16,7 +16,17 @@ export class ProjectEffect {
     @Effect()
     loadProjects$ = this.actions$.pipe(
         ofType(projectActions.LOAD_PROJECTS),
-        switchMap(() => this._projectService.getProjects()),
+        switchMap(() => {
+            return this._projectService.getProjects().pipe(
+                map(changes => {
+                    return changes.map(action => {
+                        const data = action.payload.doc.data() as Project[];
+                        const id = action.payload.doc.id;
+                        return {id, ...data};
+                    });
+                })
+            );
+        }),
         map((data: Project[]) => new projectActions.LoadProjectsSuccess(data)),
         catchError((error) => of(new projectActions.LoadProjectsFail(error)))
 

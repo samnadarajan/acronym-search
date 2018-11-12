@@ -4,7 +4,6 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {Observable, of} from "rxjs";
 import {Project} from "@app/model/project.model";
 import {DefaultProject} from "@app/model/default-project.model";
-import {Acronym} from "@app/model/acronym.model";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +12,7 @@ export class ProjectService {
     constructor(public db: AngularFirestore) {}
 
     getProjects(): Observable<any> {
-        return this.db.collection(config.projects).valueChanges();
+        return this.db.collection(config.projects).snapshotChanges();
     }
 
     addProject(project: Project) {
