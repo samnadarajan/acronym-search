@@ -8,7 +8,6 @@ import * as AcronymActions from "../../store/actions/acronym.actions";
 import * as ProjectActions from "../../store/actions/project.actions";
 import {ISubscribe} from "@app/interfaces/subscribe.interface";
 import {AuthService} from "@app/modules/auth/services/auth/auth.service";
-import {map} from "rxjs/operators";
 import {getAllProjects, getSelectedProject} from "@app/store/selectors/project.selectors";
 import {getAcronymLoading, getAcronymResult} from "@app/store/selectors/acronym.selectors";
 
