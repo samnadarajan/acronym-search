@@ -12,7 +12,7 @@
                     <ng-container *ngIf="currentDefaultProject?.projectName != project.name">
                         <button mat-button class="default" (click)="makeDefault(project.name)"><mat-icon>star</mat-icon>Make Default</button>
                     </ng-container>
-                    <button mat-button class="delete" (click)="deleteProject(project.id)">Delete Project</button>
+                    <button mat-button class="delete" (click)="openDeleteDialog(project)">Delete Project</button>
                 </mat-card-actions>
             </mat-card>
         </div>

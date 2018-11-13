@@ -11,6 +11,7 @@ import {getAllProjects, getDefaultProject} from "@app/store/selectors/project.se
 import {ISubscribe} from "@app/interfaces/subscribe.interface";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {AddProjectDialogComponent} from "@app/components/add-project-dialog/add-project-dialog.component";
+import {DeleteProjectDialogComponent} from "@app/components/delete-project-dialog/delete-project-dialog.component";
 
 @Component({
     selector: "app-projects-page",
@@ -41,7 +42,7 @@ export class ProjectsPageComponent implements ISubscribe, OnDestroy {
     }
 
     openAddDialog(projectList) {
-        const dialogRef = this.dialog.open(AddProjectDialogComponent, {
+        this.dialog.open(AddProjectDialogComponent, {
             data: projectList,
             width: "20%"
         });
@@ -53,8 +54,10 @@ export class ProjectsPageComponent implements ISubscribe, OnDestroy {
         this.snackBar.open(`${projectName} is now your default project`, "Dismiss", {duration: 3000});
     }
 
-    deleteProject(projectId: string) {
-        this.store.dispatch(new ProjectActions.DeleteProject(projectId));
+    openDeleteDialog(project: Project) {
+        this.dialog.open(DeleteProjectDialogComponent, {
+            data: project
+        });
     }
 
     ngOnDestroy() {

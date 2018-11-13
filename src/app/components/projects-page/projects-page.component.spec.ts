@@ -67,8 +67,8 @@ describe("ProjectsPageComponent", () => {
         expect(compiled.querySelectorAll("mat-card.selected-card").length).toEqual(1);
     }));
 
-    it("should delete a project", () => {
-        spyOn(component, "deleteProject").and.callThrough();
+    it("should launch dialog to delete a project", () => {
+        spyOn(component, "openDeleteDialog").and.callThrough();
         spyOn(component.store, "dispatch");
 
         const cards = compiled.querySelectorAll("mat-card");
@@ -78,8 +78,7 @@ describe("ProjectsPageComponent", () => {
 
         fixture.detectChanges();
 
-        expect(component.deleteProject).toHaveBeenCalledWith(projectList[0].id);
-        expect(component.store.dispatch).toHaveBeenCalledWith(new ProjectActions.DeleteProject(projectList[0].id));
+        expect(component.openDeleteDialog).toHaveBeenCalled();
     });
 
     it("should make a project the default", async(() => {
