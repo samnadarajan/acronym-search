@@ -53,6 +53,10 @@ export class ProjectsPageComponent implements ISubscribe, OnDestroy {
         this.snackBar.open(`${projectName} is now your default project`, "Dismiss", {duration: 3000});
     }
 
+    deleteProject(projectId: string) {
+        this.store.dispatch(new ProjectActions.DeleteProject(projectId));
+    }
+
     ngOnDestroy() {
         this.destroySubscriptions();
     }

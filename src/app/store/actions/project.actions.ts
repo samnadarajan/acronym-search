@@ -15,6 +15,7 @@ export const SET_DEFAULT_PROJECT_FAIL = "[PROJECT] Set Default Fail";
 export const LOAD_DEFAULT_PROJECT = "[PROJECT] Load Defaults";
 export const LOAD_DEFAULT_PROJECT_SUCCESS = "[PROJECT] Load Defaults Success";
 export const LOAD_DEFAULT_PROJECT_FAIL = "[PROJECT] Load Defaults Fail";
+export const DELETE_PROJECT = "[PROJECT] Delete";
 
 export class LoadProjects implements Action {
     readonly type = LOAD_PROJECTS;
@@ -93,6 +94,13 @@ export class LoadDefaultProjectFail implements Action {
 
     constructor(public payload: any) {}
 }
+
+export class DeleteProject implements Action {
+    readonly type = DELETE_PROJECT;
+
+    constructor(public payload: string) {}
+}
+
 export type Actions =
     LoadProjects |
     LoadProjectsSuccess |
@@ -104,4 +112,5 @@ export type Actions =
     SetDefaultProjectFail |
     LoadDefaultProject |
     LoadDefaultProjectSuccess |
-    LoadDefaultProjectFail;
+    LoadDefaultProjectFail |
+    DeleteProject;

@@ -19,6 +19,7 @@ export class ProjectEffect {
         switchMap(() => {
             return this._projectService.getProjects().pipe(
                 map(changes => {
+                    console.log(changes);
                     return changes.map(action => {
                         const data = action.payload.doc.data() as Project[];
                         const id = action.payload.doc.id;
@@ -55,7 +56,7 @@ export class ProjectEffect {
                             return {id, ...data};
                         })[0];
                     }
-                }),
+                })
             );
         }),
         map((data: DefaultProject) => new projectActions.LoadDefaultProjectSuccess(data)),
@@ -72,5 +73,15 @@ export class ProjectEffect {
         }),
         map(() => new projectActions.SetDefaultProjectSuccess()),
         catchError((error) => of(new projectActions.SetDefaultProjectFail(error)))
+    );
+
+    @Effect({dispatch: false})
+    deleteProject$ = this.actions$.pipe(
+        ofType(projectActions.DELETE_PROJECT),
+        map((action: projectActions.DeleteProject) => action.payload),
+        switchMap((id: string) => {
+            this._projectService.delete(id);
+            return of(null);
+        })
     );
 }

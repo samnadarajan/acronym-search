@@ -26,7 +26,7 @@ describe("ProjectsPageComponent", () => {
     let fixture: ComponentFixture<ProjectsPageComponent>;
     let compiled;
 
-    const projectList = [{name: "Frodo"}, {name: "Gandalf"}, {name: "Gimli"}, {name: "Samwise"}];
+    const projectList = [{name: "Frodo", id: "45etr"}, {name: "Gandalf", id: "324ef32"}, {name: "Gimli", id: "098efd"}, {name: "Samwise"}];
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -68,7 +68,18 @@ describe("ProjectsPageComponent", () => {
     }));
 
     it("should delete a project", () => {
+        spyOn(component, "deleteProject").and.callThrough();
+        spyOn(component.store, "dispatch");
 
+        const cards = compiled.querySelectorAll("mat-card");
+        const projectCard = cards[0];
+        const deleteButton = projectCard.querySelector("button.delete");
+        deleteButton.click();
+
+        fixture.detectChanges();
+
+        expect(component.deleteProject).toHaveBeenCalledWith(projectList[0].id);
+        expect(component.store.dispatch).toHaveBeenCalledWith(new ProjectActions.DeleteProject(projectList[0].id));
     });
 
     it("should make a project the default", async(() => {
@@ -79,7 +90,8 @@ describe("ProjectsPageComponent", () => {
         const projectToSelect = projectList[1];
 
         if (cards.length > 0) {
-            cards[1].click();
+            const defaultButton = cards[1].querySelector("button.default");
+            defaultButton.click();
 
             fixture.detectChanges();
 

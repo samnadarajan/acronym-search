@@ -42,4 +42,8 @@ export class ProjectService {
     update(defaultProject: DefaultProject) {
         return this.db.collection(config.defaultProjects).doc(defaultProject.id).update(defaultProject);
     }
+
+    delete(projectId: string) {
+        return this.db.collection(config.projects).doc(projectId).delete();
+    }
 }
