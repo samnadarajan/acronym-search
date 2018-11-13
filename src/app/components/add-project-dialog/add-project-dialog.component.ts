@@ -17,7 +17,12 @@ export class AddProjectDialogComponent {
     error: string;
     isValid: boolean;
 
-    constructor(public store: Store<AppState>, @Inject(MAT_DIALOG_DATA) public projectList: Project[], public dialogRef: MatDialogRef<AddProjectDialogComponent>) { }
+    constructor(
+        public store: Store<AppState>,
+        @Inject(MAT_DIALOG_DATA)
+        public projectList: Project[],
+        public dialogRef: MatDialogRef<AddProjectDialogComponent>
+    ) { }
 
     validate(newProject: string) {
         if (this.projectList.some((p) => p.name.toLowerCase() === newProject.toLowerCase())) {
