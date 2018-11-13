@@ -12,7 +12,7 @@ export class ProjectService {
     constructor(public db: AngularFirestore) {}
 
     getProjects(): Observable<any> {
-        return this.db.collection(config.projects).snapshotChanges();
+        return this.db.collection(config.projects, ref => ref.orderBy("name")).snapshotChanges();
     }
 
     addProject(project: Project) {
