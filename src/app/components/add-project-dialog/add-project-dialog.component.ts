@@ -2,7 +2,7 @@ import {Component, Inject} from "@angular/core";
 import * as ProjectActions from "@app/store/actions/project.actions";
 import {Store} from "@ngrx/store";
 import {AppState} from "@app/store/app.state";
-import {MAT_DIALOG_DATA} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {Project} from "@app/model/project.model";
 import {FormControl} from "@angular/forms";
 
@@ -17,7 +17,7 @@ export class AddProjectDialogComponent {
     error: string;
     isValid: boolean;
 
-    constructor(public store: Store<AppState>, @Inject(MAT_DIALOG_DATA) public projectList: Project[]) { }
+    constructor(public store: Store<AppState>, @Inject(MAT_DIALOG_DATA) public projectList: Project[], public dialogRef: MatDialogRef<AddProjectDialogComponent>) { }
 
     validate(newProject: string) {
         if (this.projectList.some((p) => p.name.toLowerCase() === newProject.toLowerCase())) {
@@ -32,5 +32,6 @@ export class AddProjectDialogComponent {
 
     addProject(newProjectName: string) {
         this.store.dispatch(new ProjectActions.AddProject({name: newProjectName}));
+        this.dialogRef.close();
     }
 }

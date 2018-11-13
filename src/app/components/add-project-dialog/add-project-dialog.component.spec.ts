@@ -4,7 +4,7 @@ import { AddProjectDialogComponent } from "./add-project-dialog.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "../../material/material.module";
 import {StoreModule} from "@ngrx/store";
-import {MAT_DIALOG_DATA} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import * as ProjectActions from "@app/store/actions/project.actions";
 
@@ -24,7 +24,8 @@ describe("AddProjectDialogComponent", () => {
                 StoreModule.forRoot({})
             ],
             providers: [
-                {provide: MAT_DIALOG_DATA, useValue: [{name: "FOX"}, {name: "Steve"}, {name: "Flax"}]}
+                {provide: MAT_DIALOG_DATA, useValue: [{name: "FOX"}, {name: "Steve"}, {name: "Flax"}]},
+                {provide: MatDialogRef, useValue: {close: jest.fn()}},
             ]
         })
         .compileComponents();
@@ -52,7 +53,7 @@ describe("AddProjectDialogComponent", () => {
     });
 
     it("should add a project because it doesn't exist in the project list", () => {
-        spyOn(component, "addProject");
+        spyOn(component, "addProject").and.callThrough();
         const newProject = "Bruce";
         component.validate(newProject);
         fixture.detectChanges();
@@ -60,6 +61,7 @@ describe("AddProjectDialogComponent", () => {
         expect(component.isValid).toEqual(true);
         expect(component.error).toBeNull();
         expect(component.addProject).toHaveBeenCalledWith(newProject);
+        expect(component.dialogRef.close).toHaveBeenCalled();
     });
 
     it("should dispatch an action to add the new project", () => {

@@ -19,7 +19,6 @@ export class ProjectEffect {
         switchMap(() => {
             return this._projectService.getProjects().pipe(
                 map(changes => {
-                    console.log(changes);
                     return changes.map(action => {
                         const data = action.payload.doc.data() as Project[];
                         const id = action.payload.doc.id;
