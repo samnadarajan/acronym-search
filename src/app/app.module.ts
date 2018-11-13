@@ -28,6 +28,7 @@ import * as firebase from "firebase/app";
 import * as firebaseui from "firebaseui";
 import { ProjectsPageComponent } from "./components/projects-page/projects-page.component";
 import { AddProjectDialogComponent } from "./components/add-project-dialog/add-project-dialog.component";
+import { DeleteProjectDialogComponent } from "./components/delete-project-dialog/delete-project-dialog.component";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
@@ -56,6 +57,7 @@ const ROUTES: Routes = [
         ResultComponent,
         ProjectsPageComponent,
         AddProjectDialogComponent,
+        DeleteProjectDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -75,7 +77,8 @@ const ROUTES: Routes = [
         FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     ],
     entryComponents: [
-        AddProjectDialogComponent
+        AddProjectDialogComponent,
+        DeleteProjectDialogComponent
     ],
     providers: [],
     bootstrap: [AppComponent]
