@@ -1,0 +1,21 @@
+<form [formGroup]="searchForm" class="acronym-form">
+    <mat-form-field>
+        <mat-select (selectionChange)="onChange($event)" formControlName="project" placeholder="Choose a Project">
+            <mat-option *ngFor="let project of projects" [value]="project.name">
+                {{project.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Acronym</mat-label>
+        <input
+            matInput type="text"
+            (keyup)="beginSearch(searchForm.value)"
+            oninput="this.value = this.value.toUpperCase()"
+            formControlName="code"
+            maxlength="10"
+            mask="SSSSSSSSSS"
+        >
+    </mat-form-field>
+</form>

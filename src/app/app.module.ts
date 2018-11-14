@@ -17,7 +17,6 @@ import { AcronymPageComponent } from "./components/acronym-page/acronym-page.com
 import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
 import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import { ProjectSelectComponent } from "./components/project-select/project-select.component";
 import {EffectsModule} from "@ngrx/effects";
 import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
@@ -29,6 +28,7 @@ import * as firebaseui from "firebaseui";
 import { ProjectsPageComponent } from "./components/projects-page/projects-page.component";
 import { AddProjectDialogComponent } from "./components/add-project-dialog/add-project-dialog.component";
 import { DeleteProjectDialogComponent } from "./components/delete-project-dialog/delete-project-dialog.component";
+import { SearchComponent } from "./components/search/search.component";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
@@ -52,12 +52,12 @@ const ROUTES: Routes = [
         ResultComponent,
         LoginComponent,
         AcronymPageComponent,
-        ProjectSelectComponent,
         UppercaseDirective,
         ResultComponent,
         ProjectsPageComponent,
         AddProjectDialogComponent,
         DeleteProjectDialogComponent,
+        SearchComponent,
     ],
     imports: [
         BrowserModule,

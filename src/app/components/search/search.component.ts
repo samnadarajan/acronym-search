@@ -1,27 +1,31 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy} from "@angular/core";
-import {Observable, SubscriptionLike} from "rxjs";
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from "@angular/core";
 import {Project} from "@app/model/project.model";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
+import {Observable, SubscriptionLike} from "rxjs";
+import {getDefaultProject} from "@app/store/selectors/project.selectors";
 import {MatSelectChange} from "@angular/material";
+import {DefaultProject} from "@app/model/default-project.model";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "@app/store/app.state";
 import * as ProjectActions from "@app/store/actions/project.actions";
-import {DefaultProject} from "@app/model/default-project.model";
 import {ISubscribe} from "@app/interfaces/subscribe.interface";
-import {getDefaultProject} from "@app/store/selectors/project.selectors";
+import {Acronym} from "@app/model/acronym.model";
 
 @Component({
-    selector: "app-project-select",
-    templateUrl: "./project-select.component.html",
-    styleUrls: ["./project-select.component.css"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    selector: "app-search",
+    templateUrl: "./search.component.html",
+    styleUrls: ["./search.component.css"]
 })
-export class ProjectSelectComponent implements ISubscribe, OnDestroy {
+export class SearchComponent implements ISubscribe, OnDestroy {
     @Input() projects: Project[];
+    @Output() searchString = new EventEmitter<string>();
 
     defaultProject$: Observable<DefaultProject>;
 
-    chosenProject = new FormControl("");
+    searchForm = new FormGroup({
+        project: new FormControl(""),
+        code: new FormControl("")
+    });
 
     default$: SubscriptionLike;
 
@@ -32,9 +36,9 @@ export class ProjectSelectComponent implements ISubscribe, OnDestroy {
 
     setupSubscriptions() {
         this.default$ = this.defaultProject$.subscribe((data: DefaultProject) => {
-            if (data && !this.chosenProject.value) {
+            if (data && !this.searchForm.controls["project"].value) {
                 this.dispatchSelectedProject(data.projectName);
-                this.chosenProject.setValue(data.projectName);
+                this.searchForm.controls["project"].setValue(data.projectName);
             }
         });
     }
@@ -49,6 +53,12 @@ export class ProjectSelectComponent implements ISubscribe, OnDestroy {
 
     dispatchSelectedProject(projectName: string) {
         this.store.dispatch(new ProjectActions.SelectProject(projectName));
+    }
+
+    beginSearch(formValues: Acronym) {
+        if (formValues.code.length >= 1) {
+            this.searchString.emit(this.searchForm.value);
+        }
     }
 
     destroySubscriptions() {

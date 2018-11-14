@@ -7,7 +7,6 @@ import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {BehaviorSubject, of} from "rxjs";
-import {ProjectSelectComponent} from "../project-select/project-select.component";
 import {StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import * as ProjectActions from "../../store/actions/project.actions";
@@ -52,8 +51,7 @@ describe("AcronymPageComponent", () => {
             declarations: [
                 AcronymPageComponent,
                 CodeSearchInputComponent,
-                ResultComponent,
-                ProjectSelectComponent
+                ResultComponent
             ],
             imports: [
                 MaterialModule,
@@ -93,8 +91,8 @@ describe("AcronymPageComponent", () => {
         expect(component.acronymResultState).toEqual(initialState);
     });
 
-    it("should have a component for selecting projects", () => {
-        expect(compiled.querySelector("app-project-select")).toBeTruthy();
+    it("should have a component for searching on projects", () => {
+        expect(compiled.querySelector("app-search")).toBeTruthy();
     });
 
     it("should have the search and result component", async(() => {
@@ -102,7 +100,6 @@ describe("AcronymPageComponent", () => {
         component.acronymResult$ = of({code: "", id: "2345efdr3"});
         component.selectedProject$ = of("TEM");
         fixture.detectChanges();
-        expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
         expect(compiled.querySelector("app-result")).toBeTruthy();
     }));
 
@@ -112,18 +109,16 @@ describe("AcronymPageComponent", () => {
     });
 
     it("should begin a search", () => {
-        const acronym = {code: "TEST"};
-        const project = "SAM";
-        component.beginSearch(acronym.code, project);
+        const acronym = {code: "TEST", project: "FLSS"};
+        component.search(acronym);
 
-        expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym({code: acronym.code, project: project}));
+        expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym(acronym));
     });
 
     it("should not do a search again on the same code", () => {
         component.acronymResultState = {code: "TEST", project: "SAM"};
-        const acronym = {code: "TEST"};
-        const project = "SAM";
-        component.beginSearch(acronym.code, project);
+        const acronym = {code: "TEST", project: "SAM"};
+        component.search(acronym);
 
         expect(component.store.dispatch).not.toHaveBeenCalledWith();
     });
@@ -131,7 +126,7 @@ describe("AcronymPageComponent", () => {
     it("should save an acronym", () => {
         const acronym = {code: "TEST"};
         const proj = {name: "SAM", id: "234re23"};
-        component.save(acronym, proj);
+        component.save(acronym, proj.name);
 
         expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SaveAcronym(acronym));
     });
