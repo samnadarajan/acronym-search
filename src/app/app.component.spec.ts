@@ -70,6 +70,14 @@ describe("AppComponent", () => {
         expect(component).toBeTruthy();
     }));
 
+    it("should have a menu with links for acronym search", () => {
+        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
+        fixture.detectChanges();
+
+        const projectsButton = compiled.querySelectorAll("button.acronym");
+        expect(projectsButton).toBeTruthy();
+    });
+
     it("should have a menu with links for a project", () => {
         component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
         fixture.detectChanges();

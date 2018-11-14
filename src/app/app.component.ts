@@ -21,9 +21,9 @@ export class AppComponent {
         this.user$ = this.store.pipe(select(state => state.authUser), map(data => data ? data["user"] : null));
     }
 
-    navigateToProjects() {
+    navigate(routeUrl: string) {
         this.closeSideNav();
-        this._router.navigate(["/projects"]);
+        this._router.navigate([routeUrl]);
     }
 
     closeSideNav() {
