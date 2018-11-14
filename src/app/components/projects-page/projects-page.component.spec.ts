@@ -8,6 +8,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BehaviorSubject, of} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
 import * as ProjectActions from "../../store/actions/project.actions";
+import {DeleteProjectDialogComponent} from "@app/components/delete-project-dialog/delete-project-dialog.component";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -30,7 +31,7 @@ describe("ProjectsPageComponent", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ ProjectsPageComponent ],
+            declarations: [ ProjectsPageComponent, DeleteProjectDialogComponent ],
             imports: [
                 MaterialModule,
                 FormsModule,
@@ -99,5 +100,15 @@ describe("ProjectsPageComponent", () => {
             expect(component.store.dispatch).toHaveBeenCalledWith(new ProjectActions.SetDefaultProject(component.currentDefaultProject));
             expect(component.snackBar.open).toHaveBeenCalled();
         }
+    }));
+
+    it("should launch dialog to add a project", async(() => {
+        spyOn(component, "openAddDialog");
+        const addProjectButton = compiled.querySelector("button.add-project-button");
+        addProjectButton.click();
+
+        fixture.detectChanges();
+
+        expect(component.openAddDialog).toHaveBeenCalled();
     }));
 });
