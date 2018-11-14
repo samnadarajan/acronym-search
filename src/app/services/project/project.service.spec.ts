@@ -28,6 +28,6 @@ describe("ProjectService", () => {
     it("should make the call to return a collection of projects", () => {
         const service: ProjectService = TestBed.get(ProjectService);
         service.getProjects();
-        expect(service.db.collection).toHaveBeenCalledWith(config.projects);
+        expect(service.db.collection).toHaveBeenCalled();
     });
 });

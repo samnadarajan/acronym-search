@@ -19,10 +19,6 @@ export class ProjectService {
         return this.db.collection(config.projects).add(project);
     }
 
-    /**
-     * Retrieve list of all default projects for registered users
-     * @returns {Observable<DefaultProject>}
-     */
     getDefaultProject(uid: string): Observable<any> {
         return this.db.collection(config.defaultProjects, ref => ref.where("uid", "==", uid).limit(1)).snapshotChanges();
     }
