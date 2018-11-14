@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 import {DeleteProjectDialogComponent} from "./delete-project-dialog.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {StoreModule} from "@ngrx/store";
-import {MaterialModule} from "../../material/material.module";
+import {MaterialModule} from "@app/material/material.module";
 import {MAT_DIALOG_DATA} from "@angular/material";
 import * as ProjectActions from "../../store/actions/project.actions";
 
