@@ -25,8 +25,10 @@ export class ProjectsPageComponent implements ISubscribe, OnDestroy {
     currentUser$: Observable<User>;
 
     currentDefaultProject: DefaultProject;
+    user: User;
 
     defaultSub$: SubscriptionLike;
+    userSub$: SubscriptionLike;
 
     constructor(public store: Store<AppState>, public snackBar: MatSnackBar, public dialog: MatDialog) {
         this.projectList$ = this.store.pipe(select(getAllProjects));
@@ -39,6 +41,10 @@ export class ProjectsPageComponent implements ISubscribe, OnDestroy {
         this.defaultSub$ = this.defaultProject$.subscribe(data => {
             this.currentDefaultProject = data;
         });
+
+        this.userSub$ = this.currentUser$.subscribe(user => {
+            this.user = user;
+        });
     }
 
     openAddDialog(projectList) {
@@ -49,7 +55,11 @@ export class ProjectsPageComponent implements ISubscribe, OnDestroy {
     }
 
     makeDefault(projectName: string) {
-        this.currentDefaultProject.projectName = projectName;
+        if (this.currentDefaultProject) {
+            this.currentDefaultProject.projectName = projectName;
+        } else {
+            this.currentDefaultProject = {uid: this.user.uid, projectName: projectName};
+        }
         this.store.dispatch(new ProjectActions.SetDefaultProject(this.currentDefaultProject));
         this.snackBar.open(`${projectName} is now your default project`, "Dismiss", {duration: 3000});
     }
@@ -67,6 +77,10 @@ export class ProjectsPageComponent implements ISubscribe, OnDestroy {
     destroySubscriptions() {
         if (this.defaultSub$) {
             this.defaultSub$.unsubscribe();
+        }
+
+        if (this.userSub$) {
+            this.userSub$.unsubscribe();
         }
     }
 
