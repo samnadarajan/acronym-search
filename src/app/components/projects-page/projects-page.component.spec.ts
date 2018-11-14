@@ -9,6 +9,8 @@ import {BehaviorSubject, of} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
 import * as ProjectActions from "../../store/actions/project.actions";
 import {DeleteProjectDialogComponent} from "@app/components/delete-project-dialog/delete-project-dialog.component";
+import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
+import {AddProjectDialogComponent} from "@app/components/add-project-dialog/add-project-dialog.component";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -31,7 +33,7 @@ describe("ProjectsPageComponent", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ ProjectsPageComponent, DeleteProjectDialogComponent ],
+            declarations: [ ProjectsPageComponent, AddProjectDialogComponent, DeleteProjectDialogComponent ],
             imports: [
                 MaterialModule,
                 FormsModule,
@@ -42,6 +44,10 @@ describe("ProjectsPageComponent", () => {
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
             ]
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [AddProjectDialogComponent, DeleteProjectDialogComponent]
+            }
         })
             .compileComponents();
     }));
@@ -68,8 +74,8 @@ describe("ProjectsPageComponent", () => {
         expect(compiled.querySelectorAll("mat-card.selected-card").length).toEqual(1);
     }));
 
-    it("should launch dialog to delete a project", () => {
-        spyOn(component, "openDeleteDialog").and.callThrough();
+    it("should launch dialog to delete a project", async(() => {
+        spyOn(component, "openDeleteDialog");
         spyOn(component.store, "dispatch");
 
         const cards = compiled.querySelectorAll("mat-card");
@@ -80,7 +86,7 @@ describe("ProjectsPageComponent", () => {
         fixture.detectChanges();
 
         expect(component.openDeleteDialog).toHaveBeenCalled();
-    });
+    }));
 
     it("should make a project the default", async(() => {
         spyOn(component, "makeDefault").and.callThrough();
