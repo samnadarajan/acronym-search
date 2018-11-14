@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {AcronymPageComponent} from "./acronym-page.component";
-import {CodeSearchInputComponent} from "../search/code-search-input.component";
 import {ResultComponent} from "../result/result.component";
 import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -50,7 +49,6 @@ describe("AcronymPageComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 AcronymPageComponent,
-                CodeSearchInputComponent,
                 ResultComponent
             ],
             imports: [

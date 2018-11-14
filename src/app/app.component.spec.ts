@@ -1,6 +1,5 @@
 import {TestBed, async} from "@angular/core/testing";
 import {AppComponent} from "./app.component";
-import {CodeSearchInputComponent} from "./components/search/code-search-input.component";
 import {MaterialModule} from "./material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BehaviorSubject, of} from "rxjs";
@@ -40,7 +39,6 @@ describe("AppComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 AppComponent,
-                CodeSearchInputComponent,
                 ResultComponent
             ],
             imports: [
