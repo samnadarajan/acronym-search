@@ -50,7 +50,7 @@ export class AcronymPageComponent implements ISubscribe, OnInit, OnDestroy {
     }
 
     search(acronym: Acronym) {
-        if (acronym.code !== this.acronymResultState.code) {
+        if (acronym.code !== this.acronymResultState.code || acronym.project !== this.acronymResultState.project) {
             this.store.dispatch(new AcronymActions.SearchAcronym({code: acronym.code, project: acronym.project}));
         }
     }

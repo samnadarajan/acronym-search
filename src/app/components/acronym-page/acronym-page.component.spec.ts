@@ -115,12 +115,28 @@ describe("AcronymPageComponent", () => {
         expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym(acronym));
     });
 
-    it("should not do a search again on the same code", () => {
+    it("should not do a search again on the same code and project", () => {
         component.acronymResultState = {code: "TEST", project: "SAM"};
         const acronym = {code: "TEST", project: "SAM"};
         component.search(acronym);
 
-        expect(component.store.dispatch).not.toHaveBeenCalledWith();
+        expect(component.store.dispatch).not.toHaveBeenCalled();
+    });
+
+    it("should do a search if the code is different", () => {
+        component.acronymResultState = {code: "TEST2", project: "SAM"};
+        const acronym = {code: "TEST", project: "SAM"};
+        component.search(acronym);
+
+        expect(component.store.dispatch).toHaveBeenCalled();
+    });
+
+    it("should do a search if the project is different", () => {
+        component.acronymResultState = {code: "TEST", project: "SAM"};
+        const acronym = {code: "TEST", project: "SAM2"};
+        component.search(acronym);
+
+        expect(component.store.dispatch).toHaveBeenCalled();
     });
 
     it("should save an acronym", () => {

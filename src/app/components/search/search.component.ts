@@ -49,6 +49,7 @@ export class SearchComponent implements ISubscribe, OnDestroy {
 
     onChange(event: MatSelectChange) {
         this.dispatchSelectedProject(event.value);
+        this.beginSearch(this.searchForm.value);
     }
 
     dispatchSelectedProject(projectName: string) {
