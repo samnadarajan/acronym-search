@@ -9,7 +9,7 @@ import {AuthModule} from "@app/modules/auth/auth.module";
 import {BehaviorSubject, of} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {StoreModule} from "@ngrx/store";
 import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
