@@ -11,7 +11,7 @@ cache:
   - node_modules
 
 node_js:
-- node
+- 10
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_ca75c2c8c2a6_key -iv $encrypted_ca75c2c8c2a6_iv -in src/config/firebase.config.prod.ts.enc -out src/config/firebase.config.prod.ts -d
