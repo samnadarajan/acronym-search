@@ -9,9 +9,9 @@
     flex-direction: column;
 }
 
-:host ::ng-deep mat-form-field > * {
-    width: 100%;
-}
+/*:host ::ng-deep mat-form-field > * {*/
+    /*width: 100%;*/
+/*}*/
 
 mat-spinner {
     margin:0 auto;

@@ -1,21 +1,21 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {AcronymPageComponent} from "./acronym-page.component";
-import {CodeSearchInputComponent} from "../search/code-search-input.component";
 import {ResultComponent} from "../result/result.component";
 import {MaterialModule} from "@app/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {BehaviorSubject, of} from "rxjs";
-import {ProjectSelectComponent} from "../project-select/project-select.component";
-import {Store, StoreModule} from "@ngrx/store";
+import {StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import * as ProjectActions from "../../store/actions/project.actions";
 import * as AcronymActions from "../../store/actions/acronym.actions";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {RouterTestingModule} from "@angular/router/testing";
 import {promise} from "selenium-webdriver";
 import Promise = promise.Promise;
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {RouterTestingModule} from "@angular/router/testing";
+import {AuthService} from "@app/modules/auth/services/auth/auth.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -36,6 +36,10 @@ const FireAuthStub = {
     authState: of({email: "test@test.com", password: "password"})
 };
 
+const AuthServiceStub = {
+    logOut: jest.fn()
+};
+
 describe("AcronymPageComponent", () => {
     let component: AcronymPageComponent;
     let fixture: ComponentFixture<AcronymPageComponent>;
@@ -45,9 +49,7 @@ describe("AcronymPageComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 AcronymPageComponent,
-                CodeSearchInputComponent,
-                ResultComponent,
-                ProjectSelectComponent
+                ResultComponent
             ],
             imports: [
                 MaterialModule,
@@ -61,6 +63,10 @@ describe("AcronymPageComponent", () => {
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
                 { provide: AngularFireAuth, useValue: FireAuthStub },
+                { provide: AuthService, useValue: AuthServiceStub },
+            ],
+            schemas: [
+                NO_ERRORS_SCHEMA
             ]
         })
             .compileComponents();
@@ -70,7 +76,6 @@ describe("AcronymPageComponent", () => {
         fixture = TestBed.createComponent(AcronymPageComponent);
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
-        // spyOn(component.store, "pipe");
         spyOn(component.store, "dispatch").and.callThrough();
         spyOn(component._acronym$, "unsubscribe");
     });
@@ -84,17 +89,15 @@ describe("AcronymPageComponent", () => {
         expect(component.acronymResultState).toEqual(initialState);
     });
 
-    it("should have a component for selecting projects", () => {
-        expect(compiled.querySelector("app-project-select")).toBeTruthy();
+    it("should have a component for searching on projects", () => {
+        expect(compiled.querySelector("app-search")).toBeTruthy();
     });
 
     it("should have the search and result component", async(() => {
         component.projectList$ = of([]);
         component.acronymResult$ = of({code: "", id: "2345efdr3"});
-        component.user$ = of({uid: "23423f", email: "test@test.com"});
-        component.selectedProject$ = of({name: "TEM"});
+        component.selectedProject$ = of("TEM");
         fixture.detectChanges();
-        expect(compiled.querySelector("app-code-search-input")).toBeTruthy();
         expect(compiled.querySelector("app-result")).toBeTruthy();
     }));
 
@@ -104,26 +107,40 @@ describe("AcronymPageComponent", () => {
     });
 
     it("should begin a search", () => {
-        const acronym = {code: "TEST"};
-        const proj = {name: "SAM", id: "234re23"};
-        component.beginSearch(acronym.code, proj);
+        const acronym = {code: "TEST", project: "FLSS"};
+        component.search(acronym);
 
-        expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym({code: acronym.code, project: proj.name}));
+        expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SearchAcronym(acronym));
     });
 
-    it("should not do a search again on the same code", () => {
+    it("should not do a search again on the same code and project", () => {
         component.acronymResultState = {code: "TEST", project: "SAM"};
-        const acronym = {code: "TEST"};
-        const proj = {name: "SAM", id: "234re23"};
-        component.beginSearch(acronym.code, proj);
+        const acronym = {code: "TEST", project: "SAM"};
+        component.search(acronym);
 
-        expect(component.store.dispatch).not.toHaveBeenCalledWith();
+        expect(component.store.dispatch).not.toHaveBeenCalled();
+    });
+
+    it("should do a search if the code is different", () => {
+        component.acronymResultState = {code: "TEST2", project: "SAM"};
+        const acronym = {code: "TEST", project: "SAM"};
+        component.search(acronym);
+
+        expect(component.store.dispatch).toHaveBeenCalled();
+    });
+
+    it("should do a search if the project is different", () => {
+        component.acronymResultState = {code: "TEST", project: "SAM"};
+        const acronym = {code: "TEST", project: "SAM2"};
+        component.search(acronym);
+
+        expect(component.store.dispatch).toHaveBeenCalled();
     });
 
     it("should save an acronym", () => {
         const acronym = {code: "TEST"};
         const proj = {name: "SAM", id: "234re23"};
-        component.save(acronym, proj);
+        component.save(acronym, proj.name);
 
         expect(component.store.dispatch).toHaveBeenCalledWith(new AcronymActions.SaveAcronym(acronym));
     });
@@ -132,50 +149,4 @@ describe("AcronymPageComponent", () => {
         component.ngOnDestroy();
         expect(component._acronym$.unsubscribe).toHaveBeenCalled();
     });
-
-    it("should have a menu with links for a project", () => {
-        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
-        fixture.detectChanges();
-
-        const projectsButton = compiled.querySelectorAll("button.projects");
-        expect(projectsButton).toBeTruthy();
-    });
-
-    it("should have a menu with a link for reporting issues", () => {
-        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
-        fixture.detectChanges();
-
-        const reportIssuesButton = compiled.querySelector("button.report");
-        expect(reportIssuesButton).toBeTruthy();
-    });
-
-    it("should have a menu with a link for logging out", () => {
-        spyOn(component.authService, "logOut");
-        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
-        fixture.detectChanges();
-
-        const logoutButton = compiled.querySelector("button.logout");
-        expect(logoutButton).toBeTruthy();
-
-        logoutButton.click();
-        fixture.detectChanges();
-
-        expect(component.authService.logOut).toHaveBeenCalled();
-    });
-
-    it("should log the user out when logging out", async(() => {
-        component.projectList$ = of([]);
-        component.acronymResult$ = of({code: "", id: "2345efdr3"});
-        spyOn(component.authService, "logOut");
-        component.user$ = of({uid: "23423f", email: "test@test.com"});
-
-        fixture.detectChanges();
-
-        const logoutButton = compiled.querySelector("button.logout");
-        logoutButton.click();
-
-        fixture.detectChanges();
-
-        expect(component.authService.logOut).toHaveBeenCalled();
-    }));
 });

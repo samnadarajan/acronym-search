@@ -5,6 +5,7 @@ import {catchError, map, mergeMap, switchMap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Action} from "@ngrx/store";
 import {SearchService} from "@app/services/search/search.service";
+import {Acronym} from "@app/model/acronym.model";
 
 @Injectable()
 export class AcronymEffect {
@@ -18,7 +19,17 @@ export class AcronymEffect {
             const code = payload["code"];
             const projectName = payload["project"];
             return this._searchService.search(code, projectName).pipe(
-                map(changes => changes.length > 0 ? changes[0] : payload)
+                map(actions => {
+                    if (actions.length > 0) {
+                        return actions.map(action => {
+                            const data = action.payload.doc.data() as Acronym;
+                            const id = action.payload.doc.id;
+                            return {id, ...data};
+                        })[0];
+                    } else {
+                        return {code: code, project: projectName} as Acronym;
+                    }
+                })
             );
         }),
         map(data => new acronymActions.SearchAcronymSuccess(data)),

@@ -1,7 +1,7 @@
 <form *ngIf="result && result.code.length > 2" [formGroup]="acronymForm">
     <div class="results" *ngIf="!editMode && result.meaning && result.description; else form" (click)="editMode = !editMode">
         stands for <span class="xeditable">{{result.meaning}}</span>
-        and it is <span class="xeditable">{{result.description}}</span>
+        and it <span class="xeditable">{{result.description}}</span>
     </div>
 
     <ng-template #form>
@@ -29,8 +29,8 @@
             </mat-card>
 
             <mat-form-field>
-                <mat-label>and it is</mat-label>
-                <textarea placeholder="and it is" matInput formControlName="description" maxlength="200"></textarea>
+                <mat-label>and it</mat-label>
+                <textarea placeholder="and it" matInput formControlName="description" maxlength="200"></textarea>
             </mat-form-field>
         </div>
     </ng-template>

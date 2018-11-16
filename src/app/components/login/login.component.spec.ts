@@ -32,6 +32,10 @@ const FireAuthStub = {
     authState: of({email: "test@test.com", password: "password"})
 };
 
+const AuthServiceStub = {
+    logOut: jest.fn()
+};
+
 describe("LoginComponent", () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
@@ -53,7 +57,7 @@ describe("LoginComponent", () => {
             providers: [
                 { provide: AngularFirestore, useValue: FirestoreStub },
                 { provide: AngularFireAuth, useValue: FireAuthStub },
-                AuthService
+                { provide: AuthService, useValue: AuthServiceStub },
             ],
             schemas: [
                 NO_ERRORS_SCHEMA

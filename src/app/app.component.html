@@ -1,2 +1,40 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container [style.height]="'100%'" (backdropClick)="sideNav.close()">
+    <mat-sidenav #sideNav  [style.width]="'15%'"> <!--TODO FIX THIS width to flex layout-->
+
+        <div *ngIf="(user$ | async) as user" fxLayout="row">
+            <mat-list [style.width]="'100%'">
+                <mat-list-item>
+                    <img class="user-img mr-1" [src]="user?.photoURL"> {{user?.displayName}}
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button class="acronym" (click)="navigate('/acronym')">Acronyms</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button class="projects" (click)="navigate('/projects')">Projects</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button class="report">Report Issue</button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <button mat-flat-button class="logout" (click)="authService.logOut()">Logout</button>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div *ngIf="(user$ | async) as user" fxLayout="row" fxLayoutAlign="start">
+            <button mat-icon-button (click)="sideNav.open()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+
 

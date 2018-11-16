@@ -1,9 +1,0 @@
-<div class="acronym-form">
-    <mat-form-field>
-        <mat-select (selectionChange)="onChange($event)" [formControl]="chosenProject" placeholder="Choose a Project">
-            <mat-option *ngFor="let project of projects" [value]="project">
-                {{project.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-</div>

@@ -1,0 +1,9 @@
+<div style="text-align:center" class="page">
+    <app-search [projects]="(projectList$ | async)" (searchString)="search($event)"></app-search>
+
+    <ng-container *ngIf="(selectedProject$ | async) as selectedProject">
+        <mat-spinner aria-label="loading acronym results" *ngIf="(acronymLoading$ | async)"></mat-spinner>
+        <app-result [result]="(acronymResult$ | async)" (saveAcronym)="save($event, selectedProject)"></app-result>
+    </ng-container>
+
+</div>

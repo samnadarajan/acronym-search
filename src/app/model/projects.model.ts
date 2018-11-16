@@ -1,6 +1,8 @@
 import {Project} from "./project.model";
+import {DefaultProject} from "@app/model/default-project.model";
 
 export interface Projects {
     list: Project[];
-    selected?: Project;
+    default: DefaultProject;
+    selected?: string;
 }

@@ -3,7 +3,6 @@ import {NgModule} from "@angular/core";
 
 import {AppComponent} from "./app.component";
 import {environment} from "../environments/environment";
-import {CodeSearchInputComponent} from "./components/search/code-search-input.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "./material/material.module";
@@ -13,11 +12,10 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from "./components/login/login.component";
-import { AcronymPageComponent } from "./components/acronym/acronym-page.component";
+import { AcronymPageComponent } from "./components/acronym-page/acronym-page.component";
 import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
 import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import { ProjectSelectComponent } from "./components/project-select/project-select.component";
 import {EffectsModule} from "@ngrx/effects";
 import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
@@ -26,6 +24,10 @@ import {NgxMaskModule} from "ngx-mask";
 import {FirebaseUIModule} from "firebaseui-angular";
 import * as firebase from "firebase/app";
 import * as firebaseui from "firebaseui";
+import { ProjectsPageComponent } from "./components/projects-page/projects-page.component";
+import { AddProjectDialogComponent } from "./components/add-project-dialog/add-project-dialog.component";
+import { DeleteProjectDialogComponent } from "./components/delete-project-dialog/delete-project-dialog.component";
+import { SearchComponent } from "./components/search/search.component";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
@@ -37,6 +39,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymPageComponent, canActivate: [AuthGuard]},
+    {path: "projects", component: ProjectsPageComponent},
     {path: "login", component: LoginComponent},
     {path: "", component: LoginComponent}
 ];
@@ -44,13 +47,15 @@ const ROUTES: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        CodeSearchInputComponent,
         ResultComponent,
         LoginComponent,
         AcronymPageComponent,
-        ProjectSelectComponent,
         UppercaseDirective,
         ResultComponent,
+        ProjectsPageComponent,
+        AddProjectDialogComponent,
+        DeleteProjectDialogComponent,
+        SearchComponent,
     ],
     imports: [
         BrowserModule,
@@ -67,7 +72,11 @@ const ROUTES: Routes = [
         NgxMaskModule.forRoot(),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects),
-        FirebaseUIModule.forRoot(firebaseUiAuthConfig)
+        FirebaseUIModule.forRoot(firebaseUiAuthConfig),
+    ],
+    entryComponents: [
+        AddProjectDialogComponent,
+        DeleteProjectDialogComponent
     ],
     providers: [],
     bootstrap: [AppComponent]
