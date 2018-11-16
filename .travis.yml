@@ -16,13 +16,14 @@ node_js:
 before_install:
 - openssl aes-256-cbc -K $encrypted_ca75c2c8c2a6_key -iv $encrypted_ca75c2c8c2a6_iv -in src/config/firebase.config.prod.ts.enc -out src/config/firebase.config.prod.ts -d
 
-install:
-- npm install -g @angular/cli
+before_script:
+- npm install -g --silent firebase-tools
+- npm install -g --silent @angular/cli
 
 script:
 - jest
 - ng lint
-- ng build --prod --aot
+- ng build --prod --aot=false --build-optimizer=false
 
 deploy:
   provider: firebase
