@@ -94,6 +94,7 @@ describe("AppComponent", () => {
 
     it("should have a menu with a link for logging out", () => {
         spyOn(component.authService, "logOut");
+        spyOn(component, "closeSideNav");
         component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
         fixture.detectChanges();
 
@@ -103,6 +104,7 @@ describe("AppComponent", () => {
         logoutButton.click();
         fixture.detectChanges();
 
+        expect(component.closeSideNav).toHaveBeenCalled();
         expect(component.authService.logOut).toHaveBeenCalled();
     });
 

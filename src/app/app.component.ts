@@ -26,6 +26,11 @@ export class AppComponent {
         this._router.navigate([routeUrl]);
     }
 
+    logOut() {
+        this.closeSideNav();
+        this.authService.logOut();
+    }
+
     closeSideNav() {
        return this.sideNav.close();
     }
