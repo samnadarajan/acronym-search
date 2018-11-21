@@ -23,8 +23,8 @@ export class AcronymEffect {
                     if (actions.length > 0) {
                         return actions.map(action => {
                             const data = action.payload.doc.data() as Acronym;
-                            const id = action.payload.doc.id;
-                            return {id, ...data};
+                            data.id = action.payload.doc.id;
+                            return {...data};
                         })[0];
                     } else {
                         return {code: code, project: projectName} as Acronym;
