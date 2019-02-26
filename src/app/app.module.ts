@@ -6,7 +6,6 @@ import {environment} from "../environments/environment";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "./material/material.module";
-import { ResultComponent } from "./components/result/result.component";
 import {AngularFireModule} from "@angular/fire";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireStorageModule} from "@angular/fire/storage";
@@ -21,13 +20,11 @@ import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
 import {StoreModule} from "@ngrx/store";
 import {NgxMaskModule} from "ngx-mask";
-import {FirebaseUIModule} from "firebaseui-angular";
-import * as firebase from "firebase/app";
-import * as firebaseui from "firebaseui";
-import { ProjectsPageComponent } from "./components/projects-page/projects-page.component";
-import { AddProjectDialogComponent } from "./components/add-project-dialog/add-project-dialog.component";
-import { DeleteProjectDialogComponent } from "./components/delete-project-dialog/delete-project-dialog.component";
-import { SearchComponent } from "./components/search/search.component";
+import {FirebaseUIModule, firebase, firebaseui} from "firebaseui-angular";
+import { ProjectsPageComponent } from "./modules/projects/components/projects-page/projects-page.component";
+import {ProjectsModule} from "@app/modules/projects/projects.module";
+import {AcronymsModule} from "@app/modules/acronyms/acronyms.module";
+import {AngularFireFunctionsModule, FunctionsRegionToken} from "@angular/fire/functions";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
@@ -47,38 +44,30 @@ const ROUTES: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        ResultComponent,
         LoginComponent,
-        AcronymPageComponent,
         UppercaseDirective,
-        ResultComponent,
-        ProjectsPageComponent,
-        AddProjectDialogComponent,
-        DeleteProjectDialogComponent,
-        SearchComponent,
     ],
     imports: [
+        AcronymsModule,
         BrowserModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
         AngularFireStorageModule,
+        AngularFireFunctionsModule,
         BrowserAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
         RouterModule.forRoot(ROUTES),
         MaterialModule,
         AuthModule,
         FlexLayoutModule,
+        ProjectsModule,
         NgxMaskModule.forRoot(),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects),
         FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     ],
-    entryComponents: [
-        AddProjectDialogComponent,
-        DeleteProjectDialogComponent
+    providers: [
+        { provide: FunctionsRegionToken, useValue: "us-central1"}
     ],
-    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
