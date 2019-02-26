@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, Inject} from "@angular/core";
-import {Project} from "@app/model/project.model";
+import {Project} from "../../../../model/project.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {Store} from "@ngrx/store";
-import {AppState} from "@app/store/app.state";
-import * as ProjectActions from "../../store/actions/project.actions";
-import {AddProjectDialogComponent} from "@app/components/add-project-dialog/add-project-dialog.component";
+import {AppState} from "../../../../store/app.state";
+import * as ProjectActions from "../../../../store/actions/project.actions";
+import {AddProjectDialogComponent} from "../add-project-dialog/add-project-dialog.component";
 
 @Component({
     selector: "app-delete-project-dialog",

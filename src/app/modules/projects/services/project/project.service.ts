@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import {config} from "@app/app.config";
+import {config} from "../../../../app.config";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {Observable, of} from "rxjs";
-import {Project} from "@app/model/project.model";
-import {DefaultProject} from "@app/model/default-project.model";
+import {Project} from "../../../../model/project.model";
+import {DefaultProject} from "../../../../model/default-project.model";
 
 @Injectable({
   providedIn: "root"

@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ProjectsPageComponent } from "./projects-page.component";
-import {MaterialModule} from "@app/material/material.module";
+import {MaterialModule} from "../../../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BehaviorSubject, of} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
-import * as ProjectActions from "../../store/actions/project.actions";
-import {DeleteProjectDialogComponent} from "@app/components/delete-project-dialog/delete-project-dialog.component";
+import * as ProjectActions from "../../../../store/actions/project.actions";
+import {DeleteProjectDialogComponent} from "../delete-project-dialog/delete-project-dialog.component";
 import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
-import {AddProjectDialogComponent} from "@app/components/add-project-dialog/add-project-dialog.component";
+import {AddProjectDialogComponent} from "../add-project-dialog/add-project-dialog.component";
 
 const FirestoreStub = {
     collection: (name: string) => ({

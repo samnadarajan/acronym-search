@@ -2,11 +2,11 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { AddProjectDialogComponent } from "./add-project-dialog.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MaterialModule} from "@app/material/material.module";
+import {MaterialModule} from "../../../../material/material.module";
 import {StoreModule} from "@ngrx/store";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import * as ProjectActions from "@app/store/actions/project.actions";
+import * as ProjectActions from "../../../../store/actions/project.actions";
 
 describe("AddProjectDialogComponent", () => {
     let component: AddProjectDialogComponent;

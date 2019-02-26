@@ -4,7 +4,7 @@ import {Store, StoreModule} from "@ngrx/store";
 import {TestBed} from "@angular/core/testing";
 import {provideMockActions} from "@ngrx/effects/testing";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {ProjectService} from "@app/services/project/project.service";
+import {ProjectService} from "@app/modules/projects/services/project/project.service";
 import {cold, hot} from "jasmine-marbles";
 import * as fromActions from "@app/store/actions/project.actions";
 import {ProjectEffect} from "@app/store/effects/project.effect";

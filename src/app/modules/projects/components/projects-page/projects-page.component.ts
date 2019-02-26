@@ -1,17 +1,17 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
-import * as ProjectActions from "../../store/actions/project.actions";
+import * as ProjectActions from "../../../../store/actions/project.actions";
 import {select, Store} from "@ngrx/store";
-import {AppState} from "@app/store/app.state";
-import {Project} from "@app/model/project.model";
+import {AppState} from "../../../../store/app.state";
+import {Project} from "../../../../model/project.model";
 import {Observable, SubscriptionLike} from "rxjs";
 import {map} from "rxjs/operators";
-import {User} from "@app/model/user.model";
-import {DefaultProject} from "@app/model/default-project.model";
-import {getAllProjects, getDefaultProject} from "@app/store/selectors/project.selectors";
-import {ISubscribe} from "@app/interfaces/subscribe.interface";
+import {User} from "../../../../model/user.model";
+import {DefaultProject} from "../../../../model/default-project.model";
+import {getAllProjects, getDefaultProject} from "../../../../store/selectors/project.selectors";
+import {ISubscribe} from "../../../../interfaces/subscribe.interface";
 import {MatDialog, MatSnackBar} from "@angular/material";
-import {AddProjectDialogComponent} from "@app/components/add-project-dialog/add-project-dialog.component";
-import {DeleteProjectDialogComponent} from "@app/components/delete-project-dialog/delete-project-dialog.component";
+import {AddProjectDialogComponent} from "../add-project-dialog/add-project-dialog.component";
+import {DeleteProjectDialogComponent} from "../delete-project-dialog/delete-project-dialog.component";
 
 @Component({
     selector: "app-projects-page",
