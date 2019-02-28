@@ -5,6 +5,7 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build --prod",
+        "build:kla": "ng build --configuration=klaproduction --prod=true && firebase use kla-acronyms && firebase deploy",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:ci": "jest --runInBand",
