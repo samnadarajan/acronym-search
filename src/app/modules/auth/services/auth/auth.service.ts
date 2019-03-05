@@ -7,10 +7,8 @@ import {Store} from "@ngrx/store";
 import {AppState} from "@app/store/app.state";
 import * as AuthUserActions from "@app/store/actions/auth-user.actions";
 import * as ProjectActions from "@app/store/actions/project.actions";
-import {AngularFireFunctions} from "@angular/fire/functions";
 import {HttpClient} from "@angular/common/http";
-
-
+import {fnReturnPattern} from "@app/utils/function-urls";
 
 @Injectable({
   providedIn: "root"
@@ -23,10 +21,9 @@ export class AuthService {
         private afs: AngularFirestore,
         private router: Router,
         private _zone: NgZone,
-        private fns: AngularFireFunctions,
         private http: HttpClient) {
 
-        this.http.get("https://us-central1-kla-acronyms.cloudfunctions.net/getEmailPatterns")
+        this.http.get(fnReturnPattern)
             .toPromise()
             .then((result: string[]) => {
                 const patterns = result.map(p => RegExp(p["pattern"]));
@@ -41,12 +38,7 @@ export class AuthService {
                             this.navigate("/acronym");
                         } else {
                             this.logOut();
-                            this.store.dispatch(new AuthUserActions.Logout());
-                            this.navigate("/login");
                         }
-                    } else {
-                        this.store.dispatch(new AuthUserActions.Logout());
-                        this.navigate("/login");
                     }
                 });
         });
@@ -54,6 +46,7 @@ export class AuthService {
 
     logOut() {
         this.afAuth.auth.signOut().then(() => {
+            this.store.dispatch(new AuthUserActions.Logout());
             this.router.navigate(["/login"]);
         });
     }

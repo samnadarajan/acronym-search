@@ -4,7 +4,6 @@ import {NgModule} from "@angular/core";
 import {AppComponent} from "./app.component";
 import {environment} from "../environments/environment";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "./material/material.module";
 import {AngularFireModule} from "@angular/fire";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
@@ -25,6 +24,7 @@ import { ProjectsPageComponent } from "./modules/projects/components/projects-pa
 import {ProjectsModule} from "@app/modules/projects/projects.module";
 import {AcronymsModule} from "@app/modules/acronyms/acronyms.module";
 import {AngularFireFunctionsModule, FunctionsRegionToken} from "@angular/fire/functions";
+import {HttpClientModule} from "@angular/common/http";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
@@ -59,6 +59,7 @@ const ROUTES: Routes = [
         MaterialModule,
         AuthModule,
         FlexLayoutModule,
+        HttpClientModule,
         ProjectsModule,
         NgxMaskModule.forRoot(),
         StoreModule.forRoot(reducers),
