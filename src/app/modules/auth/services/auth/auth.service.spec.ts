@@ -6,6 +6,7 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Store, StoreModule} from "@ngrx/store";
+import {HttpClient} from "@angular/common/http";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -23,6 +24,14 @@ const FireAuthStub = {
     authState: of({email: "test@test.com", password: "password"})
 };
 
+const HttpStub = {
+    get: () => ({
+        toPromise: () => ({
+            then: () => {}
+        })
+    })
+}
+
 describe("AuthService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -32,6 +41,7 @@ describe("AuthService", () => {
         ],
         providers: [
             AuthService,
+            { provide: HttpClient, useValue: HttpStub},
             Store,
             { provide: AngularFirestore, useValue: FirestoreStub },
             { provide: AngularFireAuth, useValue: FireAuthStub },
