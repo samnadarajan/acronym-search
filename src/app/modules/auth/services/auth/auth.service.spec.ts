@@ -1,6 +1,6 @@
-import { TestBed, inject } from "@angular/core/testing";
+import {TestBed, inject} from "@angular/core/testing";
 
-import { AuthService } from "./auth.service";
+import {AuthService} from "./auth.service";
 import {BehaviorSubject, of} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
@@ -11,7 +11,7 @@ import {HttpClient} from "@angular/common/http";
 const FirestoreStub = {
     collection: (name: string) => ({
         doc: (_id: string) => ({
-            valueChanges: () => new BehaviorSubject({ foo: "bar" }),
+            valueChanges: () => new BehaviorSubject({foo: "bar"}),
             set: (_d: any) => new Promise((resolve, _reject) => resolve()),
         }),
     }),
@@ -19,7 +19,8 @@ const FirestoreStub = {
 
 const FireAuthStub = {
     auth: {
-        onAuthStateChanged: () => {}
+        onAuthStateChanged: () => {
+        }
     },
     authState: of({email: "test@test.com", password: "password"})
 };
@@ -27,29 +28,30 @@ const FireAuthStub = {
 const HttpStub = {
     get: () => ({
         toPromise: () => ({
-            then: () => {}
+            then: () => {
+            }
         })
     })
-}
+};
 
 describe("AuthService", () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-        imports: [
-            RouterTestingModule,
-            StoreModule.forRoot({})
-        ],
-        providers: [
-            AuthService,
-            { provide: HttpClient, useValue: HttpStub},
-            Store,
-            { provide: AngularFirestore, useValue: FirestoreStub },
-            { provide: AngularFireAuth, useValue: FireAuthStub },
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                RouterTestingModule,
+                StoreModule.forRoot({})
+            ],
+            providers: [
+                AuthService,
+                {provide: HttpClient, useValue: HttpStub},
+                Store,
+                {provide: AngularFirestore, useValue: FirestoreStub},
+                {provide: AngularFireAuth, useValue: FireAuthStub},
+            ]
+        });
     });
-  });
 
-  it("should be created", inject([AuthService], (service: AuthService) => {
-    expect(service).toBeTruthy();
-  }));
+    it("should be created", inject([AuthService], (service: AuthService) => {
+        expect(service).toBeTruthy();
+    }));
 });

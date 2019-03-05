@@ -23,28 +23,29 @@ export class AuthService {
         private _zone: NgZone,
         private http: HttpClient) {
 
-        this.http.get(fnReturnPattern)
-            .toPromise()
-            .then((result: string[]) => {
-                const patterns = result.map(p => RegExp(p["pattern"]));
+        this.login();
+    }
 
-                this.afAuth.authState.subscribe(response => {
-                    if (response) {
-                        if (this.isValidEmail(patterns, response.email)) {
-                            const {uid, email, photoURL, displayName} = response;
-                            const newUser = {uid, email, photoURL, displayName};
-                            this.store.dispatch(new AuthUserActions.Login(newUser));
-                            this.store.dispatch(new ProjectActions.LoadDefaultProject(uid));
-                            this.navigate("/acronym");
-                        } else {
-                            this.logOut();
-                        }
-                    }
-                });
+    async login() {
+        const patternsResult = await this.http.get<any[]>(fnReturnPattern).toPromise();
+        const patterns = patternsResult.map(p => RegExp(p["pattern"]));
+
+        this.afAuth.authState.subscribe(response => {
+            if (response) {
+                if (this.isValidEmail(patterns, response.email)) {
+                    const {uid, email, photoURL, displayName} = response;
+                    const newUser = {uid, email, photoURL, displayName};
+                    this.store.dispatch(new AuthUserActions.Login(newUser));
+                    this.store.dispatch(new ProjectActions.LoadDefaultProject(uid));
+                    this.navigate("/acronym");
+                } else {
+                    this.logout();
+                }
+            }
         });
     }
 
-    logOut() {
+    logout() {
         this.afAuth.auth.signOut().then(() => {
             this.store.dispatch(new AuthUserActions.Logout());
             this.router.navigate(["/login"]);
