@@ -54,4 +54,21 @@ describe("AuthService", () => {
     it("should be created", inject([AuthService], (service: AuthService) => {
         expect(service).toBeTruthy();
     }));
+
+    it("should indicate valid emails", inject([AuthService], (service: AuthService) => {
+        const emailPatterns = [RegExp("@test.com"), RegExp("@kunzleigh.com")];
+        const email = "s.test@kunzleigh.com";
+
+        const result = service.isValidEmail(emailPatterns, email);
+        expect(result).toEqual(true);
+    }));
+
+    it("should indicate invalid emails", inject([AuthService], (service: AuthService) => {
+        const emailPatterns = [RegExp("@test.com"), RegExp("@kunzleigh.com")];
+        const email = "s.test@gmail.com";
+
+        const result = service.isValidEmail(emailPatterns, email);
+        console.log(result);
+        expect(result).toEqual(false);
+    }));
 });

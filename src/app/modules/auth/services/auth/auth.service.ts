@@ -21,7 +21,7 @@ export class AuthService {
         private afs: AngularFirestore,
         private router: Router,
         private _zone: NgZone,
-        private http: HttpClient) {
+        public http: HttpClient) {
 
         this.login();
     }
@@ -58,7 +58,7 @@ export class AuthService {
         });
     }
 
-    isValidEmail(emailPatterns, email) {
+    isValidEmail(emailPatterns, email): string[] {
         return emailPatterns.filter(p => p.test(email)).length > 0;
     }
 
