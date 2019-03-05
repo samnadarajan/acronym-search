@@ -1,21 +1,21 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {AcronymPageComponent} from "./acronym-page.component";
-import {ResultComponent} from "../result/result.component";
-import {MaterialModule} from "@app/material/material.module";
+import {AcronymResultComponent} from "../acronym-result/acronym-result.component";
+import {MaterialModule} from "../../../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {BehaviorSubject, of} from "rxjs";
 import {StoreModule} from "@ngrx/store";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import * as ProjectActions from "../../store/actions/project.actions";
-import * as AcronymActions from "../../store/actions/acronym.actions";
+import * as ProjectActions from "../../../../store/actions/project.actions";
+import * as AcronymActions from "../../../../store/actions/acronym.actions";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {promise} from "selenium-webdriver";
 import Promise = promise.Promise;
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {RouterTestingModule} from "@angular/router/testing";
-import {AuthService} from "@app/modules/auth/services/auth/auth.service";
+import {AuthService} from "../../../auth/services/auth/auth.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -49,7 +49,7 @@ describe("AcronymPageComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 AcronymPageComponent,
-                ResultComponent
+                AcronymResultComponent
             ],
             imports: [
                 MaterialModule,
@@ -93,7 +93,7 @@ describe("AcronymPageComponent", () => {
         expect(compiled.querySelector("app-search")).toBeTruthy();
     });
 
-    it("should have the search and result component", async(() => {
+    it("should have the search and acronym-result component", async(() => {
         component.projectList$ = of([]);
         component.acronymResult$ = of({code: "", id: "2345efdr3"});
         component.selectedProject$ = of("TEM");

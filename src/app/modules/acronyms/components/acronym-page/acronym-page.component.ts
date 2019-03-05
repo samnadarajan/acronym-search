@@ -1,15 +1,15 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
-import {Acronym} from "@app/model/acronym.model";
-import {AppState} from "@app/store/app.state";
+import {Acronym} from "../../../../model/acronym.model";
+import {AppState} from "../../../../store/app.state";
 import {Observable, SubscriptionLike} from "rxjs";
 import {select, Store} from "@ngrx/store";
-import {Project} from "@app/model/project.model";
-import * as AcronymActions from "../../store/actions/acronym.actions";
-import * as ProjectActions from "../../store/actions/project.actions";
-import {ISubscribe} from "@app/interfaces/subscribe.interface";
-import {AuthService} from "@app/modules/auth/services/auth/auth.service";
-import {getAllProjects, getSelectedProject} from "@app/store/selectors/project.selectors";
-import {getAcronymLoading, getAcronymResult} from "@app/store/selectors/acronym.selectors";
+import {Project} from "../../../../model/project.model";
+import * as AcronymActions from "../../../../store/actions/acronym.actions";
+import * as ProjectActions from "../../../../store/actions/project.actions";
+import {ISubscribe} from "../../../../interfaces/subscribe.interface";
+import {AuthService} from "../../../auth/services/auth/auth.service";
+import {getAllProjects, getSelectedProject} from "../../../../store/selectors/project.selectors";
+import {getAcronymLoading, getAcronymResult} from "../../../../store/selectors/acronym.selectors";
 
 
 @Component({

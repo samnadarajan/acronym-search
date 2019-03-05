@@ -4,7 +4,7 @@ import {Actions, Effect, ofType} from "@ngrx/effects";
 import {catchError, map, mergeMap, switchMap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Action} from "@ngrx/store";
-import {SearchService} from "@app/services/search/search.service";
+import {SearchService} from "@app/modules/acronyms/services/search/search.service";
 import {Acronym} from "@app/model/acronym.model";
 
 @Injectable()

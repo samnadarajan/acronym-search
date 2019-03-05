@@ -1,19 +1,19 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
-import {ResultComponent} from "./result.component";
+import {AcronymResultComponent} from "./acronym-result.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "@app/material/material.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 
-describe("ResultComponent", () => {
-    let component: ResultComponent;
-    let fixture: ComponentFixture<ResultComponent>;
+describe("AcronymResultComponent", () => {
+    let component: AcronymResultComponent;
+    let fixture: ComponentFixture<AcronymResultComponent>;
     let compiled;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ResultComponent],
+            declarations: [AcronymResultComponent],
             imports: [
                 MaterialModule,
                 FormsModule,
@@ -26,7 +26,7 @@ describe("ResultComponent", () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ResultComponent);
+        fixture = TestBed.createComponent(AcronymResultComponent);
         component = fixture.componentInstance;
         compiled = fixture.debugElement.nativeElement;
     });
@@ -46,7 +46,7 @@ describe("ResultComponent", () => {
         expect(component.onChanges).toHaveBeenCalled();
     });
 
-    it("should not set the form when there is no result", () => {
+    it("should not set the form when there is no acronym-result", () => {
         spyOn(component, "onChanges");
 
         component.ngOnChanges();

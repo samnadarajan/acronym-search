@@ -1,17 +1,17 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {LoginComponent} from "./login.component";
-import {MaterialModule} from "@app/material/material.module";
+import {MaterialModule} from "../../../../material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
-import {AuthModule} from "@app/modules/auth/auth.module";
+import {AuthModule} from "../../auth.module";
 import {BehaviorSubject, of} from "rxjs";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {RouterTestingModule} from "@angular/router/testing";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {StoreModule} from "@ngrx/store";
-import {AuthService} from "@app/modules/auth/services/auth/auth.service";
+import {AuthService} from "../../services/auth/auth.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({

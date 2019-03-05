@@ -7,7 +7,7 @@ import {cold, hot} from "jasmine-marbles";
 import {Store} from "@ngrx/store";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {SearchService} from "@app/services/search/search.service";
+import {SearchService} from "@app/modules/acronyms/services/search/search.service";
 
 const FirestoreStub = {
     collection: (name: string) => ({
@@ -95,11 +95,11 @@ describe("Acronym Effects", () => {
         //     const payload = {code: "SAM", project: "SWAN"};
         //     const action = new fromActions.SaveAcronym(payload);
         //     const error = new Error();
-        //     const result = new fromActions.SaveAcronymFail(error);
+        //     const acronym-result = new fromActions.SaveAcronymFail(error);
         //
         //     actions = hot("-a", {a: action});
         //     const response = cold("-#|", {}, error);
-        //     const expected = cold("--(b|)", {b: result});
+        //     const expected = cold("--(b|)", {b: acronym-result});
         //
         //     searchService.save = jest.fn(() => response);
         //

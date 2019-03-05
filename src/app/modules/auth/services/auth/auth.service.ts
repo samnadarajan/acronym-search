@@ -2,7 +2,7 @@ import {Injectable, NgZone} from "@angular/core";
 import {Router} from "@angular/router";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {SearchService} from "@app/services/search/search.service";
+import {SearchService} from "@app/modules/acronyms/services/search/search.service";
 import {Store} from "@ngrx/store";
 import {AppState} from "@app/store/app.state";
 import * as AuthUserActions from "@app/store/actions/auth-user.actions";

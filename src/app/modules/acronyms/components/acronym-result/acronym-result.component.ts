@@ -1,14 +1,14 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
-import {Acronym} from "@app/model/acronym.model";
+import {Acronym} from "../../../../model/acronym.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
     selector: "app-result",
-    templateUrl: "./result.component.html",
-    styleUrls: ["./result.component.css"],
+    templateUrl: "./acronym-result.component.html",
+    styleUrls: ["./acronym-result.component.css"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResultComponent implements OnInit, OnChanges {
+export class AcronymResultComponent implements OnInit, OnChanges {
     @Input() result: Acronym;
     @Output() saveAcronym = new EventEmitter();
 

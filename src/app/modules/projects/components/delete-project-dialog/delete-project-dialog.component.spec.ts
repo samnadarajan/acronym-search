@@ -4,7 +4,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {StoreModule} from "@ngrx/store";
 import {MaterialModule} from "@app/material/material.module";
 import {MAT_DIALOG_DATA} from "@angular/material";
-import * as ProjectActions from "../../store/actions/project.actions";
+import * as ProjectActions from "../../../../store/actions/project.actions";
 
 describe("DeleteProjectDialogComponent", () => {
     let component: DeleteProjectDialogComponent;

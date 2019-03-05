@@ -4,7 +4,7 @@ import {MaterialModule} from "./material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BehaviorSubject, of} from "rxjs";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ResultComponent} from "./components/result/result.component";
+import {AcronymResultComponent} from "./modules/acronyms/components/acronym-result/acronym-result.component";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AngularFireAuth} from "@angular/fire/auth";
@@ -39,7 +39,7 @@ describe("AppComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 AppComponent,
-                ResultComponent
+                AcronymResultComponent
             ],
             imports: [
                 MaterialModule,

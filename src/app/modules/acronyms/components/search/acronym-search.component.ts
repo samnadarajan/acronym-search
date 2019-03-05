@@ -1,22 +1,22 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from "@angular/core";
-import {Project} from "@app/model/project.model";
+import {Project} from "../../../../model/project.model";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Observable, SubscriptionLike} from "rxjs";
-import {getDefaultProject} from "@app/store/selectors/project.selectors";
+import {getDefaultProject} from "../../../../store/selectors/project.selectors";
 import {MatSelectChange} from "@angular/material";
-import {DefaultProject} from "@app/model/default-project.model";
+import {DefaultProject} from "../../../../model/default-project.model";
 import {select, Store} from "@ngrx/store";
-import {AppState} from "@app/store/app.state";
-import * as ProjectActions from "@app/store/actions/project.actions";
-import {ISubscribe} from "@app/interfaces/subscribe.interface";
-import {Acronym} from "@app/model/acronym.model";
+import {AppState} from "../../../../store/app.state";
+import * as ProjectActions from "../../../../store/actions/project.actions";
+import {ISubscribe} from "../../../../interfaces/subscribe.interface";
+import {Acronym} from "../../../../model/acronym.model";
 
 @Component({
     selector: "app-search",
-    templateUrl: "./search.component.html",
-    styleUrls: ["./search.component.css"]
+    templateUrl: "./acronym-search.component.html",
+    styleUrls: ["./acronym-search.component.css"]
 })
-export class SearchComponent implements ISubscribe, OnDestroy {
+export class AcronymSearchComponent implements ISubscribe, OnDestroy {
     @Input() projects: Project[];
     @Output() searchString = new EventEmitter<string>();
 
