@@ -30,7 +30,7 @@ export class AppComponent {
 
     logOut() {
         this.closeSideNav();
-        this.authService.logOut();
+        this.authService.logout();
     }
 
     closeSideNav() {
