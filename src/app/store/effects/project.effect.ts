@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {ProjectService} from "@app/services/project/project.service";
+import {ProjectService} from "@app/modules/projects/services/project/project.service";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import * as projectActions from "../actions/project.actions";
 import {catchError, map, switchMap} from "rxjs/operators";

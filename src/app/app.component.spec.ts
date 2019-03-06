@@ -4,7 +4,7 @@ import {MaterialModule} from "./material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BehaviorSubject, of} from "rxjs";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ResultComponent} from "./components/result/result.component";
+import {AcronymResultComponent} from "./modules/acronyms/components/acronym-result/acronym-result.component";
 import {AngularFirestoreModule, AngularFirestore} from "@angular/fire/firestore";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AngularFireAuth} from "@angular/fire/auth";
@@ -29,7 +29,7 @@ const FireAuthStub = {
 };
 
 const AuthServiceStub = {
-    logOut: jest.fn()
+    logout: jest.fn()
 };
 
 describe("AppComponent", () => {
@@ -39,7 +39,7 @@ describe("AppComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 AppComponent,
-                ResultComponent
+                AcronymResultComponent
             ],
             imports: [
                 MaterialModule,
@@ -93,7 +93,7 @@ describe("AppComponent", () => {
     });
 
     it("should have a menu with a link for logging out", () => {
-        spyOn(component.authService, "logOut");
+        spyOn(component.authService, "logout");
         spyOn(component, "closeSideNav");
         component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
         fixture.detectChanges();
@@ -105,13 +105,13 @@ describe("AppComponent", () => {
         fixture.detectChanges();
 
         expect(component.closeSideNav).toHaveBeenCalled();
-        expect(component.authService.logOut).toHaveBeenCalled();
+        expect(component.authService.logout).toHaveBeenCalled();
     });
 
     it("should log the user out when logging out", async(() => {
         component.projectList$ = of([]);
         component.acronymResult$ = of({code: "", id: "2345efdr3"});
-        spyOn(component.authService, "logOut");
+        spyOn(component.authService, "logout");
         component.user$ = of({uid: "23423f", email: "test@test.com"});
 
         fixture.detectChanges();
@@ -121,6 +121,6 @@ describe("AppComponent", () => {
 
         fixture.detectChanges();
 
-        expect(component.authService.logOut).toHaveBeenCalled();
+        expect(component.authService.logout).toHaveBeenCalled();
     }));
 });

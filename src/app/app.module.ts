@@ -4,15 +4,13 @@ import {NgModule} from "@angular/core";
 import {AppComponent} from "./app.component";
 import {environment} from "../environments/environment";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "./material/material.module";
-import { ResultComponent } from "./components/result/result.component";
 import {AngularFireModule} from "@angular/fire";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {RouterModule, Routes} from "@angular/router";
-import { LoginComponent } from "./components/login/login.component";
-import { AcronymPageComponent } from "./components/acronym-page/acronym-page.component";
+import { LoginComponent } from "./modules/auth/components/login/login.component";
+import { AcronymPageComponent } from "./modules/acronyms/components/acronym-page/acronym-page.component";
 import {AuthGuard} from "./modules/auth/guards/auth/auth.guard";
 import {AuthModule} from "./modules/auth/auth.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -21,13 +19,11 @@ import {reducers, effects} from "./store";
 import {UppercaseDirective} from "@app/directives/uppercase.directive";
 import {StoreModule} from "@ngrx/store";
 import {NgxMaskModule} from "ngx-mask";
-import {FirebaseUIModule} from "firebaseui-angular";
-import * as firebase from "firebase/app";
-import * as firebaseui from "firebaseui";
-import { ProjectsPageComponent } from "./components/projects-page/projects-page.component";
-import { AddProjectDialogComponent } from "./components/add-project-dialog/add-project-dialog.component";
-import { DeleteProjectDialogComponent } from "./components/delete-project-dialog/delete-project-dialog.component";
-import { SearchComponent } from "./components/search/search.component";
+import {FirebaseUIModule, firebase, firebaseui} from "firebaseui-angular";
+import {ProjectsModule} from "@app/modules/projects/projects.module";
+import {AcronymsModule} from "@app/modules/acronyms/acronyms.module";
+import {AngularFireFunctionsModule, FunctionsRegionToken} from "@angular/fire/functions";
+import {HttpClientModule} from "@angular/common/http";
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: "popup",
@@ -39,7 +35,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymPageComponent, canActivate: [AuthGuard]},
-    {path: "projects", component: ProjectsPageComponent},
+    {path: "projects", loadChildren: "./modules/projects/projects.module#ProjectsModule"},
     {path: "login", component: LoginComponent},
     {path: "", component: LoginComponent}
 ];
@@ -47,38 +43,30 @@ const ROUTES: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        ResultComponent,
         LoginComponent,
-        AcronymPageComponent,
         UppercaseDirective,
-        ResultComponent,
-        ProjectsPageComponent,
-        AddProjectDialogComponent,
-        DeleteProjectDialogComponent,
-        SearchComponent,
     ],
     imports: [
+        AcronymsModule,
         BrowserModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
         AngularFireStorageModule,
+        AngularFireFunctionsModule,
         BrowserAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
         RouterModule.forRoot(ROUTES),
         MaterialModule,
         AuthModule,
         FlexLayoutModule,
+        HttpClientModule,
         NgxMaskModule.forRoot(),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects),
         FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     ],
-    entryComponents: [
-        AddProjectDialogComponent,
-        DeleteProjectDialogComponent
+    providers: [
+        { provide: FunctionsRegionToken, useValue: "us-central1"}
     ],
-    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {

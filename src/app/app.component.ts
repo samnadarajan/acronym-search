@@ -1,4 +1,4 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, OnDestroy, ViewChild} from "@angular/core";
 import {AuthService} from "./modules/auth/services/auth/auth.service";
 import {Observable} from "rxjs";
 import {User} from "@app/model/user.model";
@@ -15,10 +15,12 @@ import {MatSidenav} from "@angular/material";
 })
 export class AppComponent {
     user$: Observable<User>;
+    isLoggedIn$: Observable<boolean>;
     @ViewChild("sideNav") sideNav: MatSidenav;
 
     constructor(public store: Store<AppState>, public authService: AuthService, private _router: Router) {
         this.user$ = this.store.pipe(select(state => state.authUser), map(data => data ? data["user"] : null));
+        this.isLoggedIn$ = this.store.pipe(select(state => state.authUser), map(data => data ? data["isLoggedIn"] : false));
     }
 
     navigate(routeUrl: string) {
@@ -28,7 +30,7 @@ export class AppComponent {
 
     logOut() {
         this.closeSideNav();
-        this.authService.logOut();
+        this.authService.logout();
     }
 
     closeSideNav() {

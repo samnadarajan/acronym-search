@@ -4,7 +4,7 @@ import {Store, StoreModule} from "@ngrx/store";
 import {TestBed} from "@angular/core/testing";
 import {provideMockActions} from "@ngrx/effects/testing";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {ProjectService} from "@app/services/project/project.service";
+import {ProjectService} from "@app/modules/projects/services/project/project.service";
 import {cold, hot} from "jasmine-marbles";
 import * as fromActions from "@app/store/actions/project.actions";
 import {ProjectEffect} from "@app/store/effects/project.effect";
@@ -60,14 +60,14 @@ describe("Project Effects", () => {
         // it("should return a LoadProjectsSuccess action, with projects, on success", () => {
         //     const payload = [{name: "SAM", id: "321rwfe"}, {name: "SAMN", id: "23rwfergt"}];
         //     const action = new fromActions.LoadProjects(payload);
-        //     const result = new fromActions.LoadProjectsSuccess(payload);
+        //     const acronym-result = new fromActions.LoadProjectsSuccess(payload);
         //
         //     const data = {payload: {doc: {data: payload}}};
         //     const responsePayload = jest.fn(() => data);
         //
         //     actions = hot("-a", {a: action});
         //     const response = cold("-c|", {c: responsePayload});
-        //     const expected = cold("--b", {b: result});
+        //     const expected = cold("--b", {b: acronym-result});
         //
         //     projectService.getProjects = jest.fn(() => response);
         //
@@ -109,11 +109,11 @@ describe("Project Effects", () => {
         //     const payload = {name: "BOSS"};
         //     const action = new fromActions.AddProject(payload);
         //     const error = new Error();
-        //     const result = new fromActions.AddProjectFail(error);
+        //     const acronym-result = new fromActions.AddProjectFail(error);
         //
         //     actions = hot("-a", {a: action});
         //     const response = cold("-#|", {}, error);
-        //     const expected = cold("--(b|)", {b: result});
+        //     const expected = cold("--(b|)", {b: acronym-result});
         //
         //     projectService.addProject = jest.fn(() => response);
         //

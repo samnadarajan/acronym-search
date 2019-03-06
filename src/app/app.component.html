@@ -12,7 +12,7 @@
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
-                    <button mat-flat-button class="projects" (click)="navigate('/projects')">Projects</button>
+                    <button mat-flat-button class="projects" (click)="navigate('/projects/list')">Projects</button>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
@@ -26,7 +26,7 @@
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div *ngIf="(user$ | async) as user" fxLayout="row" fxLayoutAlign="start">
+        <div *ngIf="(isLoggedIn$ | async) == true" fxLayout="row" fxLayoutAlign="start">
             <button mat-icon-button (click)="sideNav.open()">
                 <mat-icon>menu</mat-icon>
             </button>

@@ -13,7 +13,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/acronym-search",
+                        "outputPath": "dist",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -24,6 +24,7 @@
                         ],
                         "styles": [
                             "src/styles.css",
+                            "src/theme.scss",
                             "node_modules/firebaseui/dist/firebaseui.css"
                         ],
                         "scripts": []
@@ -34,6 +35,27 @@
                                 {
                                     "replace": "src/environments/environment.ts",
                                     "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true
+                        },
+                        "klaproduction": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.kla.ts"
+                                },
+                                {
+                                    "replace": "src/app/utils/function-urls.ts",
+                                    "with": "src/app/utils/function-urls.kla.ts"
                                 }
                             ],
                             "optimization": true,
@@ -74,6 +96,7 @@
                         "karmaConfig": "src/karma.conf.js",
                         "styles": [
                             "src/styles.css",
+                            "src/theme.scss",
                             "node_modules/firebaseui/dist/firebaseui.css"
                         ],
                         "scripts": [],

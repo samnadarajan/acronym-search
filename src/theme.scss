@@ -1,0 +1,41 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$company-app-primary: mat-palette($mat-blue, 800);
+$company-app-accent:  mat-palette($mat-orange, A400);
+$company-app-warn:    mat-palette($mat-deep-orange);
+// Create the theme object (a Sass map containing all of the palettes).
+$company-theme: mat-light-theme($company-app-primary, $company-app-accent, $company-app-warn);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($company-theme);
+
+.user-img {
+    height: 40px;
+    border-radius: 50%;
+}
+
+.mr-1 {
+    margin-right: 1rem;
+}
+
+.selected-card {
+    background-color: #0c71c3;
+    color: #ffffff;
+}
+
+.container {
+    min-width: 10%;
+    max-width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.danger-text {
+    color: #B00020;
+}
