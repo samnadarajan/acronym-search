@@ -45,20 +45,20 @@ export class AuthService {
         });
     }
 
-    logout() {
+    logout(): void {
         this.afAuth.auth.signOut().then(() => {
             this.store.dispatch(new AuthUserActions.Logout());
             this.router.navigate(["/login"]);
         });
     }
 
-    navigate(route: string) {
+    navigate(route: string): void {
         this._zone.run(() => { // TODO address this properly
             this.router.navigate([route]);
         });
     }
 
-    isValidEmail(emailPatterns, email): string[] {
+    isValidEmail(emailPatterns, email): boolean {
         return emailPatterns.filter(p => p.test(email)).length > 0;
     }
 
