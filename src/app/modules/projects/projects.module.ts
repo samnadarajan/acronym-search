@@ -10,7 +10,7 @@ import {RouterModule, Routes} from "@angular/router";
 
 const PROJECT_ROUTES: Routes = [
     { path: "list", component: ProjectsPageComponent}
-]
+];
 
 @NgModule({
     declarations: [
