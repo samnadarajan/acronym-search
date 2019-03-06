@@ -6,6 +6,11 @@ import {DeleteProjectDialogComponent} from "@app/modules/projects/components/del
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "@app/material/material.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {RouterModule, Routes} from "@angular/router";
+
+const PROJECT_ROUTES: Routes = [
+    { path: "list", component: ProjectsPageComponent}
+]
 
 @NgModule({
     declarations: [
@@ -19,6 +24,10 @@ import {FlexLayoutModule} from "@angular/flex-layout";
         FormsModule,
         MaterialModule,
         ReactiveFormsModule,
+        RouterModule.forChild(PROJECT_ROUTES)
+    ],
+    exports: [
+        RouterModule
     ],
     entryComponents: [
         AddProjectDialogComponent,

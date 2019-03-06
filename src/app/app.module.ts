@@ -20,7 +20,6 @@ import {UppercaseDirective} from "@app/directives/uppercase.directive";
 import {StoreModule} from "@ngrx/store";
 import {NgxMaskModule} from "ngx-mask";
 import {FirebaseUIModule, firebase, firebaseui} from "firebaseui-angular";
-import { ProjectsPageComponent } from "./modules/projects/components/projects-page/projects-page.component";
 import {ProjectsModule} from "@app/modules/projects/projects.module";
 import {AcronymsModule} from "@app/modules/acronyms/acronyms.module";
 import {AngularFireFunctionsModule, FunctionsRegionToken} from "@angular/fire/functions";
@@ -36,7 +35,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
 
 const ROUTES: Routes = [
     {path: "acronym", component: AcronymPageComponent, canActivate: [AuthGuard]},
-    {path: "projects", component: ProjectsPageComponent},
+    {path: "projects", loadChildren: "./modules/projects/projects.module#ProjectsModule"},
     {path: "login", component: LoginComponent},
     {path: "", component: LoginComponent}
 ];
@@ -60,7 +59,6 @@ const ROUTES: Routes = [
         AuthModule,
         FlexLayoutModule,
         HttpClientModule,
-        ProjectsModule,
         NgxMaskModule.forRoot(),
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot(effects),
