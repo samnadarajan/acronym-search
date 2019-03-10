@@ -84,14 +84,6 @@ describe("AppComponent", () => {
         expect(projectsButton).toBeTruthy();
     });
 
-    it("should have a menu with a link for reporting issues", () => {
-        component.user$ = of({uid: "23423f", email: "test@test.com", photoURL: "http://www.pictures.com/sam.jpg"});
-        fixture.detectChanges();
-
-        const reportIssuesButton = compiled.querySelector("button.report");
-        expect(reportIssuesButton).toBeTruthy();
-    });
-
     it("should have a menu with a link for logging out", () => {
         spyOn(component.authService, "logout");
         spyOn(component, "closeSideNav");
