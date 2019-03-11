@@ -1,4 +1,4 @@
-<form *ngIf="result && result.code.length > 2" [formGroup]="acronymForm">
+<form *ngIf="result && result.code.length > 1" [formGroup]="acronymForm">
     <div class="results" *ngIf="!editMode && result.meaning && result.description; else form" (click)="editMode = !editMode">
         stands for <span class="xeditable">{{result.meaning}}</span>
         and it <span class="xeditable">{{result.description}}</span>

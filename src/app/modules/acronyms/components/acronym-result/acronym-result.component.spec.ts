@@ -46,6 +46,26 @@ describe("AcronymResultComponent", () => {
         expect(component.onChanges).toHaveBeenCalled();
     });
 
+    it("should show the form if the acronym code is more than 1 letter", () => {
+        spyOn(component, "onChanges");
+        component.result = {code: "SS"};
+
+        component.ngOnChanges();
+        fixture.detectChanges();
+
+        expect(compiled.querySelector("form")).toBeTruthy();
+    });
+
+    it("should not show the form if the acronym code is only 1 letter", () => {
+        spyOn(component, "onChanges");
+        component.result = {code: "S"};
+
+        component.ngOnChanges();
+        fixture.detectChanges();
+
+        expect(compiled.querySelector("form")).toBeFalsy();
+    });
+
     it("should not set the form when there is no acronym-result", () => {
         spyOn(component, "onChanges");
 
